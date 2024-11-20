@@ -1,5 +1,3 @@
-import React, { StrictMode } from "react"
-import ReactDOM from "react-dom/client"
 import {
   Outlet,
   RouterProvider,
@@ -10,25 +8,28 @@ import {
 } from "@tanstack/react-router"
 import { TanStackRouterDevtools } from "@tanstack/router-devtools"
 import Header from "@/sections/Header"
+import LoginPage from "@/pages/Auth/Login"
+import { Route as rootRoute } from "./__root"
+import { authRoute } from "./auth"
 
-const rootRoute = createRootRoute({
-  component: () => (
-    <>
-      <div className="p-2 flex gap-2">
-        <Link to="/" className="[&.active]:font-bold">
-          Home
-        </Link>{" "}
-        <Link to="/about" className="[&.active]:font-bold">
-          About
-        </Link>
-      </div>
-      <hr />
-      <Header />
-      <Outlet />
-      <TanStackRouterDevtools />
-    </>
-  ),
-})
+// const rootRoute = createRootRoute({
+//   component: () => (
+//     <>
+//       <div className="p-2 flex gap-2">
+//         <Link to="/" className="[&.active]:font-bold">
+//           Home
+//         </Link>{" "}
+//         <Link to="/about" className="[&.active]:font-bold">
+//           About
+//         </Link>
+//       </div>
+//       <hr />
+//       <Header />
+//       <Outlet />
+//       <TanStackRouterDevtools />
+//     </>
+//   ),
+// })
 
 const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -50,7 +51,7 @@ const aboutRoute = createRoute({
   },
 })
 
-const routeTree = rootRoute.addChildren([indexRoute, aboutRoute])
+const routeTree = rootRoute.addChildren([indexRoute, aboutRoute, authRoute])
 
 const router = createRouter({ routeTree })
 
