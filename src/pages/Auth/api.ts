@@ -12,7 +12,7 @@ async function _callbackSSO<T>(oauth_service: string, params: T) {
 }
 
 async function callbackGoogle(params: GoogleSSOCallback) {
-  await _callbackSSO<GoogleSSOCallback>("google", params)
+  return (await _callbackSSO<GoogleSSOCallback>("google", params)).data
 }
 
 export default {
