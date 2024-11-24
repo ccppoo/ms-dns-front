@@ -10,7 +10,7 @@ import { useQuery } from "@tanstack/react-query"
 // import { xbox } from '@/api/auth/oauth';
 import { FlexBox, FullSizeCenteredFlexBox, Image } from "@/components/styled"
 // import useAuthState from '@/store/auth';
-import api from "./api"
+import api from "@/pages/Auth/api"
 
 const closeThisTab = (): void => {
   window.close()

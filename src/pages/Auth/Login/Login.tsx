@@ -8,7 +8,7 @@ import { FlexBox, FullSizeCenteredFlexBox, Image } from "@/components/styled"
 // import xboxIcon from "@/image/xbox.png"
 // import useAuthState from "@/store/auth"
 import { API_HOST } from "@/api"
-import api from "./api"
+import api from "@/pages/Auth/api"
 const openInNewTab = (url: string): void => {
   const newWindow = window.open(url, "_blank", "noopener,noreferrer")
   if (newWindow) newWindow.opener = null
