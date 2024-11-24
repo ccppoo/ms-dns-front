@@ -45,7 +45,6 @@ function Header() {
             <AuthHeader />
           </FlexBox>
         </Toolbar>
-        <MenuNavigation leftPadding={MainTitleWidth} />
       </AppBar>
     </Box>
   )
