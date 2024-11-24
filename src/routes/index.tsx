@@ -6,41 +6,14 @@ import {
   createRoute,
   createRootRoute,
 } from "@tanstack/react-router"
-import { TanStackRouterDevtools } from "@tanstack/router-devtools"
-import Header from "@/sections/Header"
-import LoginPage from "@/pages/Auth/Login"
+
 import { Route as rootRoute } from "./__root"
-import { authRoute } from "./auth"
-
-// const rootRoute = createRootRoute({
-//   component: () => (
-//     <>
-//       <div className="p-2 flex gap-2">
-//         <Link to="/" className="[&.active]:font-bold">
-//           Home
-//         </Link>{" "}
-//         <Link to="/about" className="[&.active]:font-bold">
-//           About
-//         </Link>
-//       </div>
-//       <hr />
-//       <Header />
-//       <Outlet />
-//       <TanStackRouterDevtools />
-//     </>
-//   ),
-// })
-
+import Home from "@/pages/Home"
+import authRoute from "@/pages/Auth/routes"
 const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
-  component: function Index() {
-    return (
-      <div className="p-2">
-        <h3>Welcome Home!</h3>
-      </div>
-    )
-  },
+  component: Home,
 })
 
 const aboutRoute = createRoute({
