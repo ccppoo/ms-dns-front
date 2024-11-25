@@ -1,7 +1,7 @@
 import type { Notifications } from "./types"
 import isMobile from "@/utils/is-mobile"
 
-const title = "ForzaWeek"
+const title = "MC server"
 const email = "example@example.com"
 const messages = {
   app: {

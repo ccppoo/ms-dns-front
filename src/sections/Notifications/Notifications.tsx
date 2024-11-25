@@ -1,9 +1,11 @@
-import { Ref, forwardRef } from 'react';
+import type { Ref} from 'react';
+import { forwardRef } from 'react';
 
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 
-import { CustomContentProps, SnackbarProvider } from 'notistack';
+import type { CustomContentProps} from 'notistack';
+import { SnackbarProvider } from 'notistack';
 
 import { notifications } from '@/config';
 

@@ -1,5 +1,6 @@
-import { FC } from 'react';
-import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
+import type { FC } from 'react';
+import type { FallbackProps } from 'react-error-boundary';
+import { ErrorBoundary } from 'react-error-boundary';
 
 function getDisplayName(WrappedComponent: FC) {
   return WrappedComponent.displayName || WrappedComponent.name || 'Component';
