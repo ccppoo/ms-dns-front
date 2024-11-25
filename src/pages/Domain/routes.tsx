@@ -1,27 +1,29 @@
-import { createRoute } from "@tanstack/react-router"
-import { Route as rootRoute } from "@/routes/__root"
-import DomainRegisterPage from "./Register"
-import DomainSearchPage from "./Search"
-import { domainSearchParams } from "./Search/models"
+import { createRoute } from '@tanstack/react-router';
+
+import { Route as rootRoute } from '@/routes/__root';
+
+import DomainRegisterPage from './Register';
+import DomainSearchPage from './Search';
+import { domainSearchParams } from './Search/models';
 
 const domainRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "domain",
-})
+  path: 'domain',
+});
 
 const domainSearchRoute = createRoute({
   getParentRoute: () => domainRoute,
-  path: "/search",
+  path: '/search',
   component: DomainSearchPage,
-  validateSearch: search => domainSearchParams.parse(search),
-})
+  validateSearch: (search) => domainSearchParams.parse(search),
+});
 
 const domainRegisterRoute = createRoute({
   getParentRoute: () => domainRoute,
-  path: "/register",
+  path: '/register',
   component: DomainRegisterPage,
-})
+});
 
-domainRoute.addChildren([domainSearchRoute, domainRegisterRoute])
+domainRoute.addChildren([domainSearchRoute, domainRegisterRoute]);
 
-export default domainRoute
+export default domainRoute;
