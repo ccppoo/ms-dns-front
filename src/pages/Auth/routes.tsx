@@ -1,42 +1,35 @@
-import { createRoute } from "@tanstack/react-router"
-import { Route as rootRoute } from "@/routes/__root"
-import LoginPage from "@/pages/Auth/Login"
-import CallbackPage from "@/pages/Auth/Callback"
+import { createRoute } from '@tanstack/react-router';
+
+import CallbackPage from '@/pages/Auth/Callback';
+import LoginPage from '@/pages/Auth/Login';
+import { Route as rootRoute } from '@/routes/__root';
 
 const authRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "auth",
-})
+  path: 'auth',
+});
 
 const loginRoute = createRoute({
   getParentRoute: () => authRoute,
-  path: "/login",
+  path: '/login',
   component: LoginPage,
-})
+});
 
 // callback routes by login methods - sso(google, ... etc)
 
 const callbackRoute = createRoute({
   getParentRoute: () => authRoute,
-  path: "/callback",
-  // component: LoginPage,
-})
+  path: '/callback',
+});
 
-const ssoRoute = createRoute({
+const ssoCallbackRoute = createRoute({
   getParentRoute: () => callbackRoute,
-  path: "/sso",
-})
-
-const googleSSORoute = createRoute({
-  getParentRoute: () => ssoRoute,
-  path: "/google",
+  path: '/sso/$SSO_Provider',
   component: CallbackPage,
-})
+});
 
-authRoute.addChildren([loginRoute, callbackRoute])
+authRoute.addChildren([loginRoute, callbackRoute]);
 
-callbackRoute.addChildren([ssoRoute])
+callbackRoute.addChildren([ssoCallbackRoute]);
 
-ssoRoute.addChildren([googleSSORoute])
-
-export default authRoute
+export default authRoute;

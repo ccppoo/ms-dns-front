@@ -1,21 +1,17 @@
-import API from "@/api"
-import type { GoogleSSOCallback } from "./models"
+import API from '@/api';
 
-async function _loginSSO(oauth_service: string) {
-  return await API.get(`/auth/${oauth_service}/login`)
+// import type { GoogleSSOCallback } from './models';
+
+async function getLoginSSO(sso_provider: string) {
+  return await API.get(`/auth/${sso_provider}/login`);
 }
 
-const loginGoogle = async () => await _loginSSO("google")
-
-async function _callbackSSO<T>(oauth_service: string, params: T) {
-  return await API.get(`/auth/${oauth_service}/callback`, { params })
-}
-
-async function callbackGoogle(params: GoogleSSOCallback) {
-  return (await _callbackSSO<GoogleSSOCallback>("google", params)).data
+async function callbackSSO(SSO_Provider: string, params: any) {
+  const resp = await API.get(`/auth/${SSO_Provider}/callback`, { params: params });
+  return resp;
 }
 
 export default {
-  loginGoogle,
-  callbackGoogle,
-}
+  getLoginSSO,
+  callbackSSO,
+};
