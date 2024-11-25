@@ -13,6 +13,37 @@ const goto: DevLink[] = [
     name: "home",
     path: "/",
   },
+  {
+    name: "login",
+    path: "/auth/login",
+  },
+  {
+    name: "callback - google",
+    path: "/auth/sso/google/callback",
+  },
+
+  {
+    name: "dev",
+    path: "/dev",
+  },
+
+  {
+    name: "server example",
+    path: "/server/example",
+  },
+  {
+    name: "user example",
+    path: "/user/example",
+  },
+  {
+    name: "domain search",
+    path: "/domain/search?subdomain=example",
+  },
+
+  {
+    name: "domain register",
+    path: "/domain/register",
+  },
 ]
 
 function DevHeaderLink({ name, path }: DevLink) {

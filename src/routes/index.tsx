@@ -1,15 +1,13 @@
-import {
-  Outlet,
-  RouterProvider,
-  Link,
-  createRouter,
-  createRoute,
-  createRootRoute,
-} from "@tanstack/react-router"
+import { createRouter, createRoute } from "@tanstack/react-router"
 
 import { Route as rootRoute } from "./__root"
 import Home from "@/pages/Home"
 import authRoute from "@/pages/Auth/routes"
+import devRoute from "@/pages/Dev/routes"
+import userRoute from "@/pages/User/routes"
+import serverRoute from "@/pages/Server/routes"
+import domainRoute from "@/pages/Domain/routes"
+
 const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
@@ -24,7 +22,15 @@ const aboutRoute = createRoute({
   },
 })
 
-const routeTree = rootRoute.addChildren([indexRoute, aboutRoute, authRoute])
+const routeTree = rootRoute.addChildren([
+  indexRoute,
+  aboutRoute,
+  authRoute,
+  devRoute,
+  userRoute,
+  serverRoute,
+  domainRoute,
+])
 
 const router = createRouter({ routeTree })
 

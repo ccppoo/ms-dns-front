@@ -1,5 +1,4 @@
 import { useEffect } from "react"
-// import { useSearchParams } from 'react-router-dom';
 import { useSearch } from "@tanstack/react-router"
 
 import { Box, Button, ButtonBase, Paper, Typography } from "@mui/material"
@@ -7,7 +6,6 @@ import Container from "@mui/material/Container"
 
 import { useQuery } from "@tanstack/react-query"
 
-// import { xbox } from '@/api/auth/oauth';
 import { FlexBox, FullSizeCenteredFlexBox, Image } from "@/components/styled"
 // import useAuthState from '@/store/auth';
 import api from "@/pages/Auth/api"
