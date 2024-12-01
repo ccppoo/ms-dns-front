@@ -37,6 +37,18 @@ const goto: DevLink[] = [
     path: '/user/user123',
   },
   {
+    name: 'my profile',
+    path: '/me/profile',
+  },
+  {
+    name: 'my server',
+    path: '/me/server',
+  },
+  {
+    name: 'my domain',
+    path: '/me/domain',
+  },
+  {
     name: 'domain search',
     path: '/domain/search?subdomain=server123',
   },
@@ -59,7 +71,7 @@ export default function DevHeader() {
     // <Box sx={{ width: '100%', position: 'sticky' }} data-pw={`theme-${theme}`}>
     <Box sx={{ width: '100%', position: 'sticky' }}>
       <AppBar color="transparent" elevation={1} position="sticky" sx={{ top: 0, paddingX: 0 }}>
-        <FlexBox sx={{ paddingX: 3, columnGap: 3, fontSize: 21 }}>
+        <FlexBox sx={{ paddingX: 3, columnGap: 3, fontSize: 18 }}>
           {goto.map((devLink, idx) => (
             <DevHeaderLink {...devLink} key={`dev-href-${idx}`} />
           ))}

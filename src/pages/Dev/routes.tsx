@@ -1,11 +1,18 @@
-import { createRoute } from "@tanstack/react-router"
-import { Route as rootRoute } from "@/routes/__root"
-import DevPage from "@/pages/Dev/Dev"
+import { createRoute } from '@tanstack/react-router';
+
+import DevPage from '@/pages/Dev/Dev';
+import { Route as rootRoute } from '@/routes/__root';
+import Header from '@/sections/Header';
 
 const devRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "dev",
-  component: DevPage,
-})
+  path: 'dev',
+  component: () => (
+    <>
+      <Header />
+      <DevPage />
+    </>
+  ),
+});
 
-export default devRoute
+export default devRoute;

@@ -4,6 +4,7 @@ import authRoute from '@/pages/Auth/routes';
 import devRoute from '@/pages/Dev/routes';
 import domainRoute from '@/pages/Domain/routes';
 import indexRoute from '@/pages/Home/routes';
+import meRoute from '@/pages/Me/routes';
 import serverRoute from '@/pages/Server/routes';
 import userRoute from '@/pages/User/routes';
 
@@ -16,6 +17,7 @@ const routeTree = rootRoute.addChildren([
   userRoute,
   serverRoute,
   domainRoute,
+  meRoute,
 ]);
 
 const router = createRouter({ routeTree });

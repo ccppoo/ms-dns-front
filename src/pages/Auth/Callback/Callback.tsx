@@ -6,7 +6,9 @@ import Container from '@mui/material/Container';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useSearch } from '@tanstack/react-router';
 
+import { getMyProfile } from '@/api/authed/profile';
 import { FlexBox, FullSizeCenteredFlexBox, Image } from '@/components/styled';
+import useUserProfile from '@/hooks/useUserProfile';
 import api from '@/pages/Auth/api';
 
 const closeThisTab = (): void => {
@@ -21,8 +23,10 @@ export default function CallBack() {
   const { code } = useSearch({
     strict: false,
   });
+  const [_, { setNickname, setProfileImage }] = useUserProfile();
+  // callback하고 받는 데이터에 user profile 담에서 보내기
+  // 여기서 redux에 사용자 정보 저장하기
 
-  console.log(`SSO_Provider : ${SSO_Provider}`);
   const { data, isLoading, isSuccess, isError } = useQuery({
     queryKey: ['oauth callback', code!],
     queryFn: async () => await api.callbackSSO(SSO_Provider, { code }),
@@ -30,9 +34,15 @@ export default function CallBack() {
     enabled: !!code,
   });
 
-  // console.log(`data : ${JSON.stringify(data)}`);
+  // const { data: profileData, isSuccess: profileDataSucces } = useQuery({
+  //   queryKey: ['get profile'],
+  //   queryFn: async () => await getMyProfile(),
+  //   retry: false,
+  //   enabled: !!isSuccess,
+  // });
 
-  console.log(`searchParams code : ${code}`);
+  // console.log(`data : ${JSON.stringify(data)}`);
+  // console.log(`searchParams code : ${code}`);
 
   if (isLoading) {
     return (
@@ -55,8 +65,11 @@ export default function CallBack() {
   // // 할 것 - 백엔드에서 Token 또는 인증 성공시 탭 닫기 (원래 이전에 있던 창으로 돌아가기)
   if (isSuccess && data) {
     console.log(`isSuccess`);
-    // setAuthTokens(data);
-    // closeThisTab();
+    // data.nickname
+    console.log(`data : ${JSON.stringify(data)}`);
+    setNickname(data.nickname, data.expires);
+    setProfileImage(data.profileImage, data.expires);
+    closeThisTab();
 
     return (
       <Container sx={{ height: '100%' }}>
@@ -69,7 +82,7 @@ export default function CallBack() {
                 justifyContent: 'center',
               }}
             >
-              <Typography>Redirecting...</Typography>
+              <Typography>Fetching data...</Typography>
             </FlexBox>
           </Paper>
         </FullSizeCenteredFlexBox>
@@ -77,7 +90,29 @@ export default function CallBack() {
     );
   }
 
-  // if(isError){
+  // if (isSuccess && profileDataSucces) {
+  //   console.log(`profileData: ${JSON.stringify(profileData)}`);
+  //   // dispatch(setUserProfile(profileData!));
+  //   // setNickname()
+
+  //   return (
+  //     <Container sx={{ height: '100%' }}>
+  //       <FullSizeCenteredFlexBox sx={{ alignItems: 'center', justifyContent: 'center' }}>
+  //         <Paper sx={{ width: 400, height: 600 }}>
+  //           <FlexBox
+  //             sx={{
+  //               width: '100%',
+  //               alignItems: 'center',
+  //               justifyContent: 'center',
+  //             }}
+  //           >
+  //             <Typography>Good!</Typography>
+  //           </FlexBox>
+  //         </Paper>
+  //       </FullSizeCenteredFlexBox>
+  //     </Container>
+  //   );
+  // }
   return (
     <Container sx={{ height: '100%' }}>
       <FullSizeCenteredFlexBox sx={{ alignItems: 'center', justifyContent: 'center' }}>

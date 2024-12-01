@@ -1,6 +1,7 @@
-import { createRoute } from '@tanstack/react-router';
+import { Outlet, createRoute } from '@tanstack/react-router';
 
 import { Route as rootRoute } from '@/routes/__root';
+import Header from '@/sections/Header';
 
 import DomainRegisterPage from './Register';
 import DomainSearchPage from './Search';
@@ -9,6 +10,12 @@ import { domainSearchParams } from './Search/models';
 const domainRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: 'domain',
+  component: () => (
+    <>
+      <Header />
+      <Outlet />
+    </>
+  ),
 });
 
 const domainSearchRoute = createRoute({
