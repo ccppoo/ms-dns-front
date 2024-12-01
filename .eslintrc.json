@@ -8,18 +8,29 @@
   "rules": {
     "@typescript-eslint/consistent-type-imports": [2, { "fixStyle": "separate-type-imports" }],
     "@typescript-eslint/no-restricted-imports": [
-      2,
       {
         "paths": [
           {
             "name": "react-redux",
             "importNames": ["useSelector", "useStore", "useDispatch"],
-            "message": "Please use pre-typed versions from `src/app/hooks.ts` instead."
+            "message": "Please use pre-typed versions from `src/app/hooks/index.ts` instead."
           }
         ]
       }
     ],
-    "eslint-plugin-import/no-anonymous-default-export": "off"
+    "import/no-anonymous-default-export": [
+      "error",
+      {
+        "allowArray": false,
+        "allowArrowFunction": true,
+        "allowAnonymousClass": false,
+        "allowAnonymousFunction": true,
+        "allowCallExpression": true, // The true value here is for backward compatibility
+        "allowNew": false,
+        "allowLiteral": false,
+        "allowObject": true
+      }
+    ]
   },
   "overrides": [
     { "files": ["*.{c,m,}{t,j}s", "*.{t,j}sx"] },
