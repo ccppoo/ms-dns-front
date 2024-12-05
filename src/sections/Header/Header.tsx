@@ -6,15 +6,13 @@ import { FlexBox } from '@/components/styled';
 
 // import useTheme from '@/store/theme';
 import MenuNavigation from './MenuNavigation';
-import AuthHeader from './components/Auth';
+import ProfileHeader from './ProfileHeader';
 import GameSeriesHeader from './components/GameSeries';
 import LanguageHeader from './components/Language';
 import ThemeHeader from './components/Theme';
 import TitleLogoHeader from './components/TitleLogo';
 
 function Header() {
-  // const [theme] = useTheme();
-
   const naviButtonSize = 35;
   const MainTitleWidth = 100;
 
@@ -37,7 +35,7 @@ function Header() {
           <FlexBox sx={{ alignItems: 'center', columnGap: 1 }}>
             <LanguageHeader />
             <ThemeHeader />
-            <AuthHeader />
+            <ProfileHeader />
           </FlexBox>
         </Toolbar>
       </AppBar>

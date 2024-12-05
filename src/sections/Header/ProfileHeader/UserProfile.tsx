@@ -17,10 +17,10 @@ import { height, width } from '@mui/system';
 
 import { Link as RouterLink } from '@tanstack/react-router';
 
+import { logout } from '@/api/authed/logout';
 import { FlexBox } from '@/components/styled';
 import { Image } from '@/components/styled';
 import useUserProfile from '@/hooks/useUserProfile';
-import { readUserProfile } from '@/store/userProfile/hooks';
 
 import './border.css';
 
@@ -30,38 +30,14 @@ export const RouterLinkWrapper = styled(RouterLink)`
   position: relative;
 `;
 
-function LogginButton() {
-  const loginPath = '/auth/login';
-  const borderRadius = 1;
-
-  return (
-    <RouterLinkWrapper to={loginPath}>
-      <FlexBox
-        sx={{
-          flexDirection: 'row',
-          columnGap: 0.8,
-          alignItems: 'center',
-          justifyContent: 'center',
-          border: '1px black solid',
-          paddingX: 0.5,
-          paddingY: 0.2,
-          borderRadius,
-        }}
-      >
-        <Typography fontSize={13}>로그인</Typography>
-        <AccountCircleOutlinedIcon />
-      </FlexBox>
-    </RouterLinkWrapper>
-  );
-}
-
 function PopoverLogout({ closeMenu }: { closeMenu: () => void }) {
+  const [_, { removeUserProfile }] = useUserProfile();
   // const [authInfo, state, action] = useAuthState();
 
-  const handleLogout = () => {
-    // send login api request to backend
+  const handleLogout = async () => {
     console.log(`logout!!`);
-    // action.clearAuthInfo();
+    removeUserProfile();
+    await logout();
   };
 
   return (
@@ -104,11 +80,8 @@ function PopoverLogout({ closeMenu }: { closeMenu: () => void }) {
   );
 }
 
-const TEMP_IMAGE =
-  'https://mc-dns-static-f0bdc9a7-520b-4a4c-a384-ca2d66544787.s3.ap-northeast-2.amazonaws.com/mc-server-logo-200x200.png';
-
 function PopoverProfilePortal({ closeMenu }: { closeMenu: () => void }) {
-  const userProfile = readUserProfile();
+  const [userProfile, {}] = useUserProfile();
 
   const avatarSize = 75;
 
@@ -147,13 +120,13 @@ function PopoverProfilePortal({ closeMenu }: { closeMenu: () => void }) {
   );
 }
 
-function UserProfileHeader() {
+export default function UserProfile() {
   const [userProfile, {}] = useUserProfile();
 
   // const userName = profile.gamerTag;
   // const userIcon = profile.profileImage;
 
-  const avatarSize = 36;
+  const avatarSize = 32;
   const size = { width: avatarSize, height: avatarSize };
 
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -174,31 +147,35 @@ function UserProfileHeader() {
     setAnchorElUser(null);
   };
 
-  console.log(`userProfile.profileImage :${userProfile.profileImage}`);
   return (
     <FlexBox sx={{ flexGrow: 0 }}>
       <FlexBox
         className="gradient"
         sx={{
-          columnGap: 0.8,
-          alignItems: 'center',
-          justifyContent: 'center',
-          paddingX: 1,
-          paddingY: 0.6,
+          paddingX: 0.5,
+          paddingY: 0.2,
         }}
-        component={ButtonBase}
-        onClick={handleOpenUserMenu}
       >
-        <Typography>{userProfile.nickname as string}</Typography>
-        <Avatar
-          alt={userProfile.nickname as string}
-          src={userProfile.profileImage}
-          sx={{ ...size }}
-        />
+        <ButtonBase
+          onClick={handleOpenUserMenu}
+          sx={{
+            display: 'flex',
+            columnGap: 0.8,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Avatar
+            alt={userProfile.nickname as string}
+            src={userProfile.profileImage}
+            sx={{ ...size }}
+          />
+          <Typography>{userProfile.nickname as string}</Typography>
+        </ButtonBase>
       </FlexBox>
       <Popover
         id="menu-appbar"
-        sx={{ mt: '30px' }}
+        sx={{ mt: '40px' }}
         anchorEl={anchorElUser}
         anchorOrigin={{
           vertical: 'top',
@@ -226,15 +203,4 @@ function UserProfileHeader() {
       </Popover>
     </FlexBox>
   );
-}
-
-export default function AuthHeader() {
-  // const userProfile = readUserProfile();
-  const [userProfile] = useUserProfile();
-
-  const profileLoaded = !!userProfile.nickname;
-  // console.log(`profile : ${JSON.stringify(userProfile)}`);
-  // console.log(`profile image : ${userProfile.profileImage}`);
-
-  return <FlexBox>{profileLoaded ? <UserProfileHeader /> : <LogginButton />}</FlexBox>;
 }
