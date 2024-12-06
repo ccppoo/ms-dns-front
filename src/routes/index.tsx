@@ -3,6 +3,7 @@ import { createRouter } from '@tanstack/react-router';
 import authRoute from '@/pages/Auth/routes';
 import devRoute from '@/pages/Dev/routes';
 import domainRoute from '@/pages/Domain/routes';
+import editorRoute from '@/pages/Editor/routes';
 import indexRoute from '@/pages/Home/routes';
 import meRoute from '@/pages/Me/routes';
 import serverRoute from '@/pages/Server/routes';
@@ -18,6 +19,7 @@ const routeTree = rootRoute.addChildren([
   serverRoute,
   domainRoute,
   meRoute,
+  editorRoute,
 ]);
 
 const router = createRouter({ routeTree });

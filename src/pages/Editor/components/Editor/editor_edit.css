@@ -1,0 +1,36 @@
+.codex-editor--narrow .ce-toolbar__actions {
+}
+
+.codex-editor .ce-toolbar__actions {
+}
+
+.codex-editor {
+  /* max-width: 800px; */
+}
+/* 이건 에디터 전체 */
+/* TODO: Media width query */
+.codex-editor__redactor {
+  /* margin: 0 minmax(96px, auto); */
+  /* margin: 0 96px 0 96px; */
+}
+
+/* 이거는 좌우 마진 포함 블럭 */
+/* .ce-block {
+  max-width: 700px;
+} */
+
+/* 블럭 안에 컨텐츠 */
+.ce-block .ce-block__content {
+  transition: background-color 30ms ease-in;
+}
+
+.ce-block__content:hover {
+  border-radius: 4px;
+  background-color: rgba(55, 53, 47, 0.06);
+}
+/* disable block converting -> THIS IS MAKING UNEXCEPECTED BEHAVIORS */
+div.ce-popover__items {
+  div.ce-popover-item[data-item-name='convert-to'] {
+    display: none;
+  }
+}
