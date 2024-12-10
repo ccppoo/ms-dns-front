@@ -6,6 +6,7 @@ import { Box, Button, Paper } from '@mui/material';
 
 import { API, BlockMutationEvent } from '@editorjs/editorjs';
 
+import { uploadImage } from '@/api/image/postImageUpload';
 import { FlexBox } from '@/components/styled';
 import useUserProfile from '@/hooks/useUserProfile';
 
@@ -46,17 +47,12 @@ export default function EditorWrapper<T extends OutputDataSchemaType>(props: Edi
     saveOnChange(content as FormDataType);
   };
 
-  const imageUploader = useMemo(
-    () => boardImageAPI.getBoardCreate.imageUploader(userProfile.uid!),
-    [userProfile.uid!],
-  );
+  // const imageUploader = useMemo(
+  //   () => boardImageAPI.getBoardCreate.imageUploader(userProfile.uid!),
+  //   [userProfile.uid!],
+  // );
 
   return (
-    <EditorBase
-      onChange={onChange}
-      data={data}
-      imageUploader={imageUploader}
-      readOnly={!!readOnly}
-    />
+    <EditorBase onChange={onChange} data={data} imageUploader={uploadImage} readOnly={!!readOnly} />
   );
 }

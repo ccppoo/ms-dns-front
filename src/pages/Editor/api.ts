@@ -8,7 +8,7 @@ async function getPostEditMode({ queryKey }: { queryKey: string[] }) {
 }
 
 async function getPostReadMode({ queryKey }: { queryKey: string[] }) {
-  const resp = await API.get(`/healthcheck`);
+  const resp = await API.get(`/post/read`);
   return resp.data;
 }
 
@@ -22,6 +22,11 @@ async function editBoardPost() {
   return resp.data;
 }
 
+async function createBoardPost<T>({ data }: { data: T }) {
+  const resp = await API.post(`/post/write`, data);
+  return resp.data;
+}
+
 export default {
   queryFn: {
     getPostEditMode,
@@ -30,5 +35,6 @@ export default {
   },
   query: {
     editBoardPost,
+    createBoardPost,
   },
 };

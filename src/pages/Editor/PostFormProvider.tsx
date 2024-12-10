@@ -23,14 +23,16 @@ export default function PostFormProvider<T extends FieldValues>(
   const isEditMode = !!postID;
   // console.log(`methods.getValues('id') : ${methods.getValues('id')}`);
 
-  const submit = async () => {
+  const submit = async (formData: T) => {
     const allValues = methods.getValues();
+    // const allValues = methods.
     console.log(`data : ${JSON.stringify(allValues)}`);
     if (isEditMode) {
       await api.query.editBoardPost();
       // await editBoardPost({ token: auth.id_token, data: allValues, postID: postID });
     }
     if (!isEditMode) {
+      await api.query.createBoardPost<T>({ data: formData });
       // await createBoardPost2<T>({ token: auth.id_token, data: allValues });
       //   await AddNewTrack({ track: data });
     }

@@ -8,12 +8,12 @@ import type { BlockMovedEvent, EditorConfig } from '@editorjs/editorjs';
 // @ts-ignore
 // import DragDrop from 'editorjs-drag-drop';
 import * as editorjs from '@/FormData/editorjs';
+import type { BoardImageUploadType, UploadByFileType } from '@/api/image/postImageUpload';
 import { FlexBox } from '@/components/styled';
 
 import getEditorConfig from '../config';
 import '../editor.css';
 import '../editor_edit.css';
-import type { BoardImageUploadType, RemoveBoardImageType, UploadByFileType } from '../types';
 import type { OutputData, onChangeEditorJS } from '../types';
 
 type EditorJSOnChangeEvent = BlockMutationEvent | BlockMutationEvent[];

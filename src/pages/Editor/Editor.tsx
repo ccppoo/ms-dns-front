@@ -64,19 +64,21 @@ export default function Editor({ data, readOnly }: { data?: any; readOnly?: bool
           </Paper>
         </FlexBox>
         {/* 글 작성, 취소 버튼 */}
-        <FlexBox
-          sx={{
-            width: '100%',
-            border: '1px black solid',
-            justifyContent: 'end',
-            padding: 2,
-            maxWidth: MAX_WIDTH,
-          }}
-        >
-          <Button variant="contained" type="submit">
-            submit
-          </Button>
-        </FlexBox>
+        {!readOnly && (
+          <FlexBox
+            sx={{
+              width: '100%',
+              border: '1px black solid',
+              justifyContent: 'end',
+              padding: 2,
+              maxWidth: MAX_WIDTH,
+            }}
+          >
+            <Button variant="contained" type="submit">
+              submit
+            </Button>
+          </FlexBox>
+        )}
       </FlexBox>
     </PostFormProvider>
   );

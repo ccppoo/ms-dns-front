@@ -1,3 +1,5 @@
+import { Typography } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
 
 import { useQuery } from '@tanstack/react-query';
@@ -30,9 +32,20 @@ export default function EditorReadMode() {
   // const queryEnabled = false && !!userProfile.uid;
   // const queryEnabled = !!postID;
 
-  return (
-    <Container sx={{ height: '100%' }} maxWidth={'lg'}>
-      <Editor data={outputSchemaDefault} readOnly />
-    </Container>
-  );
+  console.log(`data : ${JSON.stringify(data)}`);
+
+  if (isFetching) {
+    <FlexBox>
+      <CircularProgress />
+    </FlexBox>;
+  }
+
+  if (isSuccess && data) {
+    return (
+      <Container sx={{ height: '100%' }} maxWidth={'lg'}>
+        {/* <Typography>{JSON.stringify(data)}</Typography> */}
+        <Editor data={data} readOnly />
+      </Container>
+    );
+  }
 }

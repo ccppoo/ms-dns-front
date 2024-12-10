@@ -2,7 +2,8 @@ import type { EditorConfig, ToolboxConfig } from '@editorjs/editorjs';
 import type { OutputData } from '@editorjs/editorjs';
 import ImageTool from '@editorjs/image';
 
-import type { BoardImageUploadType, RemoveBoardImageType, UploadByFileType } from '../types';
+import type { BoardImageUploadType, UploadByFileType } from '@/api/image/postImageUpload';
+
 import type { onChangeEditorJS } from '../types';
 import { embedTools, getImageTools } from './mediaTools';
 import basicEditorTools from './tools';

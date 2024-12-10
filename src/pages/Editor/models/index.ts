@@ -33,25 +33,9 @@ const imageItem = z.object({
   url: z.string(),
 });
 
-const boardPostVote = z.object({
-  vote: z.optional(
-    z
-      .object({
-        up: z.number().nonnegative(),
-        down: z.number().nonnegative(),
-      })
-      .default({
-        up: 0,
-        down: 0,
-      }),
-  ),
-});
-
 export const boardPostMetadata = z.object({
-  user_id: z.undefined(z.string()), // 게시물 작성자 public user id
   uploaded_at: z.optional(z.date()), // 작성일
   modified_at: z.optional(z.date()), // 수정일
-  comments: z.number().nonnegative().default(0),
 });
 
 export const boardPostTitle = z.object({
@@ -67,7 +51,6 @@ export const boardPostCategory = z.object({
 export const outputSchema = documentBase
   .merge(boardPostTitle)
   .merge(_outputDataSchema) // 본문
-  .merge(boardPostVote)
   .merge(boardPostMetadata);
 
 const DEFAULT_INITIAL_DATA: OutputDataType = {
@@ -84,12 +67,12 @@ const DEFAULT_INITIAL_DATA: OutputDataType = {
 
 export const outputSchemaDefault: OutputSchemaType = {
   id: undefined,
-  comments: 0,
+  // comments: 0,
   data: DEFAULT_INITIAL_DATA,
   uploaded_at: undefined,
   modified_at: undefined,
-  vote: undefined,
-  user_id: undefined,
+  // vote: undefined,
+  // user_id: undefined,
   title: '',
 };
 
