@@ -1,20 +1,26 @@
-import axios from "axios"
+import axios from 'axios';
 
 export const AuthHeaders = (token: string) => {
-  return { Authorization: `Bearer ${token}` }
-}
+  return { Authorization: `Bearer ${token}` };
+};
 
 export const ContentTypeHeader = {
-  JSON: { "Content-Type": "application/json" },
-  FORM: { "Content-Type": "multipart/form-data" },
-}
+  JSON: { 'Content-Type': 'application/json' },
+  FORM: { 'Content-Type': 'multipart/form-data' },
+};
 
-export const API_HOST = import.meta.env.VITE_API_HOST
+export const API_HOST = import.meta.env.VITE_API_HOST;
+export const CDN_HOST = import.meta.env.VITE_CDN_HOST;
 
 const instance = axios.create({
   baseURL: API_HOST,
   withCredentials: true,
-})
+});
+
+export const CDN_OnlyInstance = axios.create({
+  baseURL: CDN_HOST,
+  withCredentials: true,
+});
 
 // instance.interceptors.response.use(
 //   (config) => {
@@ -68,4 +74,4 @@ const instance = axios.create({
 //   return config
 // })
 
-export default instance
+export default instance;
