@@ -21,13 +21,10 @@ export default function UserProfile() {
   });
 
   return (
-    <Container sx={{ height: '100%' }} maxWidth={'xl'}>
+    <Container sx={{ height: '100%' }} maxWidth={'lg'}>
       <FlexBox
         sx={{
           flexDirection: 'column',
-          justifyContent: 'center',
-          paddingY: 3,
-          rowGap: 2,
         }}
       >
         user profile page

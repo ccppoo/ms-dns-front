@@ -20,11 +20,6 @@ const goto: DevLink[] = [
     path: '/auth/login',
   },
   {
-    name: 'callback - google',
-    path: '/auth/sso/google/callback',
-  },
-
-  {
     name: 'dev',
     path: '/dev',
   },
@@ -49,13 +44,16 @@ const goto: DevLink[] = [
     path: '/me/domain',
   },
   {
-    name: 'domain search',
-    path: '/domain/search?subdomain=server123',
+    name: 'edit-write',
+    path: '/editor/write',
   },
-
   {
-    name: 'domain register',
-    path: '/domain/register',
+    name: 'edit-edit',
+    path: '/editor/edit',
+  },
+  {
+    name: 'edit-read',
+    path: '/editor/read',
   },
 ];
 
