@@ -23,7 +23,7 @@ export default function CallBack() {
   const { code } = useSearch({
     strict: false,
   });
-  const [_, { setNickname, setProfileImage }] = useUserProfile();
+  const [_, { setNickname, setProfileImage, setUID }] = useUserProfile();
   // callback하고 받는 데이터에 user profile 담에서 보내기
   // 여기서 redux에 사용자 정보 저장하기
 
@@ -64,11 +64,12 @@ export default function CallBack() {
 
   // // 할 것 - 백엔드에서 Token 또는 인증 성공시 탭 닫기 (원래 이전에 있던 창으로 돌아가기)
   if (isSuccess && data) {
-    console.log(`isSuccess`);
+    // console.log(`isSuccess`);
     // data.nickname
-    console.log(`data : ${JSON.stringify(data)}`);
+    // console.log(`data : ${JSON.stringify(data)}`);
     setNickname(data.nickname, data.expires);
     setProfileImage(data.profileImage, data.expires);
+    setUID(data.uid, data.expires);
     closeThisTab();
 
     return (
