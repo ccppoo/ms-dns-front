@@ -1,3 +1,3 @@
-import UserDomainPage from './UserDomain';
+import MyDomain from './MyDomain';
 
-export default UserDomainPage;
+export default MyDomain;
