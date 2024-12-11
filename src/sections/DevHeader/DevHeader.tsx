@@ -36,23 +36,27 @@ const goto: DevLink[] = [
     path: '/me/profile',
   },
   {
-    name: 'my server',
+    name: '내 server',
     path: '/me/server',
   },
   {
-    name: 'my domain',
+    name: '내 domain',
     path: '/me/domain',
   },
   {
-    name: 'edit-write',
+    name: 'domain 등록',
+    path: '/domain/register',
+  },
+  {
+    name: '글 쓰기',
     path: '/editor/write',
   },
   {
-    name: 'edit-edit',
+    name: '글 수정',
     path: '/editor/edit',
   },
   {
-    name: 'edit-read',
+    name: '글 읽기',
     path: '/editor/read',
   },
 ];
