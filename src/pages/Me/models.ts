@@ -25,8 +25,30 @@ const userDomains = z.object({
   domain: z.array(userDomain).default([]),
 });
 
+const userSubdomainRecord = z.object({
+  recordType: z.string(),
+  name: z.string(),
+  values: z.array(z.string()),
+});
+
+const userSubdomainInfo = z.object({
+  name: z.string(),
+  note: z.string(),
+  subdomain: z.string(),
+  records: z.array(userSubdomainRecord),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});
+
+const userSubdomains = z.object({
+  subdomains: z.array(userSubdomainInfo),
+});
+
 type UserDomain = z.infer<typeof userDomain>;
 
 type UserDomains = z.infer<typeof userDomains>;
 
-export type { UserProfile, UserDomain, UserDomains };
+type UserSubdomainInfo = z.infer<typeof userSubdomainInfo>;
+type UserSubdomains = z.infer<typeof userSubdomains>;
+
+export type { UserProfile, UserDomain, UserDomains, UserSubdomains, UserSubdomainInfo };

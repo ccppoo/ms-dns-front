@@ -6,7 +6,7 @@ import { useParams } from '@tanstack/react-router';
 
 import { FlexBox } from '@/components/styled';
 import useUserProfile from '@/hooks/useUserProfile';
-import type { UserDomain, UserDomains, UserProfile } from '@/pages/Me/models';
+import type { UserDomain, UserDomains, UserSubdomainInfo, UserSubdomains } from '@/pages/Me/models';
 import api from '@/pages/User/api';
 
 import apiii from '../api';
@@ -40,9 +40,26 @@ function DomainItem({ userDomain }: { userDomain: UserDomain }) {
   );
 }
 
-export default function MyDomain() {
-  // /me/server
+function SubomainItem({ userSubdomain }: { userSubdomain: UserSubdomainInfo }) {
+  return (
+    <FlexBox sx={{ columnGap: 2 }}>
+      <FlexBox>{userSubdomain.name}</FlexBox>
+      <FlexBox sx={{ columnGap: 1 }}>
+        <FlexBox sx={{ flexDirection: 'column' }}>
+          <FlexBox>Name</FlexBox>
 
+          <FlexBox>{userSubdomain.name}</FlexBox>
+        </FlexBox>
+        <FlexBox sx={{ flexDirection: 'column' }}>
+          <FlexBox>Values</FlexBox>
+          {/* <DNSRecordValues values={userSubdomain.} /> */}
+        </FlexBox>
+      </FlexBox>
+    </FlexBox>
+  );
+}
+
+export default function MyDomain() {
   const [userProfile] = useUserProfile();
 
   const { data, isSuccess } = useQuery({
@@ -51,24 +68,18 @@ export default function MyDomain() {
     enabled: !!userProfile.uid,
   });
 
+  console.log(`data : ${JSON.stringify(data)}`);
+
   return (
-    <Container sx={{ height: '100%' }} maxWidth={'xl'}>
-      <FlexBox
-        sx={{
-          flexDirection: 'column',
-          justifyContent: 'center',
-          paddingY: 3,
-          rowGap: 2,
-        }}
-      >
-        my domain page
-      </FlexBox>
+    <Container sx={{ height: '100%' }} maxWidth={'lg'}>
+      <FlexBox sx={{ flexDirection: 'column', rowGap: 2, paddingY: 3 }}></FlexBox>
+
       {isSuccess && (
         <FlexBox sx={{ rowGap: 2, flexDirection: 'column' }}>
-          {data?.domain.map((userDomain) => (
-            <DomainItem
-              userDomain={userDomain}
-              key={`${userDomain.recordType}-${userDomain.name}`}
+          {data?.subdomains.map((userSubdomain) => (
+            <SubomainItem
+              userSubdomain={userSubdomain}
+              key={`user-sub-domain-${userSubdomain.name}`}
             />
           ))}
         </FlexBox>
