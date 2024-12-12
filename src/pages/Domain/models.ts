@@ -13,8 +13,8 @@ const availableDomains = z.object({
 type AvailableDomains = z.infer<typeof availableDomains>;
 
 const registerDomain = z.object({
-  // domain: z.string(),
-  host: z.string(),
+  domain: z.string(),
+  // host: z.string(),
   subdomain: z.string(),
   port: z.number().gte(3000).lte(65565),
   ip: z.string(),

@@ -27,47 +27,34 @@ const searchBarForm = z.object({
 
 type SearchBarForm = z.infer<typeof searchBarForm>;
 
-function SelectDomainHost({
-  domainHost,
-  setDomainHost,
-}: {
-  domainHost: string;
-  setDomainHost: (host: string) => void;
-}) {
-  const { data, isSuccess, isFetching } = useQuery({
-    queryKey: ['getAvailableDomains'],
-    queryFn: api.queryFn.getAvailableDomains,
-  });
+function SelectDomainHost({ availableDomains }: { availableDomains: string[] }) {
+  const methods = useFormContext<RegisterDomain>();
 
   const handleChange = (event: SelectChangeEvent) => {
-    setDomainHost(event.target.value);
+    // setDomainHost(event.target.value);
+    // setDomainHost(event.target.value);
+    methods.setValue('domain', event.target.value);
   };
 
-  if (isFetching) {
-    return <CircularProgress />;
-  }
+  const domain = methods.watch('domain');
 
-  if (isSuccess && data) {
-    setDomainHost(data.domains[0]);
-
-    return (
-      <Select<string>
-        labelId="demo-simple-select-autowidth-label"
-        id="demo-simple-select-autowidth"
-        value={domainHost}
-        onChange={handleChange}
-        defaultValue={data.domains[0]}
-        label="host"
-        size="small"
-      >
-        {data.domains.map((domain, idx) => (
-          <MenuItem value={domain} key={`select-domain-${domain}`}>
-            {domain}
-          </MenuItem>
-        ))}
-      </Select>
-    );
-  }
+  return (
+    <Select<string>
+      labelId="demo-simple-select-autowidth-label"
+      id="demo-simple-select-autowidth"
+      value={domain}
+      onChange={handleChange}
+      // defaultValue={availableDomains[0]}
+      label="host"
+      size="small"
+    >
+      {availableDomains.map((domain, idx) => (
+        <MenuItem value={domain} key={`select-domain-${domain}`}>
+          {domain}
+        </MenuItem>
+      ))}
+    </Select>
+  );
 }
 
 type DomainStatus = {
@@ -80,19 +67,12 @@ type DomainStatus = {
 type DomainAvailableAsk = DomainStatus & {
   msg: string;
 };
-export default function DomainSearchBar() {
+export default function DomainSearchBar({ availableDomains }: { availableDomains: string[] }) {
   const methods = useFormContext<RegisterDomain>();
 
-  // const methods = useForm<SearchBarForm>({
-  //   defaultValues: { value: '' },
-  // });
   const formPathSubdomain = 'subdomain' as FieldPath<RegisterDomain>;
 
-  const [domainHost, setDomainHost] = useState<string>('');
-  const handleChange = (event: SelectChangeEvent) => {
-    // setDomainHost(event.target.value);
-    methods.setValue('host', event.target.value);
-  };
+  const domain = methods.watch('domain');
 
   const [domainCheckLoading, setDomainCheckLoading] = useState<boolean>(false);
   const [domainCheckStatus, setDomainCheckStatus] = useState<DomainAvailableAsk>({
@@ -105,7 +85,7 @@ export default function DomainSearchBar() {
   const checkSubDomainAvailable = async () => {
     setDomainCheckLoading(true);
     const data = await api.query.checkDomainAvailable({
-      host: domainHost,
+      host: methods.getValues('domain'),
       subdomain: methods.getValues(formPathSubdomain) as string,
     });
     setDomainCheckStatus(data);
@@ -180,11 +160,11 @@ export default function DomainSearchBar() {
                 }
               }}
             />
-            <SelectDomainHost domainHost={domainHost} setDomainHost={setDomainHost} />
+            <SelectDomainHost availableDomains={availableDomains} />
           </FlexBox>
           <FlexBox sx={{ alignItems: 'center', columnGap: 1 }}>
             <Typography variant="h6">
-              {subDomain}.{domainHost}
+              {subDomain}.{domain}
             </Typography>
             <LoadingButton
               size="small"

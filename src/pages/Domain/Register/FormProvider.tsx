@@ -12,9 +12,9 @@ interface PostFormProviderPropsIntf<T> {
 }
 
 const defaultData: RegisterDomainInput = {
-  // domain: '',
+  domain: '',
   subdomain: '',
-  host: '',
+  // host: '',
   ip: '',
   port: 25565,
 };
@@ -31,7 +31,7 @@ export default function DomainRegisterFormProvider(
   const submit = async (formData: RegisterDomainInput) => {
     const allValues = methods.getValues();
     console.log(`data : ${JSON.stringify(allValues)}`);
-    // await api.query.registerNewDomain({data:allValues})
+    await api.query.registerNewDomain({ data: allValues });
     return;
   };
 
