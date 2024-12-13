@@ -50,7 +50,7 @@ function SSOLoginButton({ sso }: { sso: string }) {
 
 export default function Login() {
   return (
-    <Container sx={{ height: '100%' }}>
+    <Container sx={{ height: '100%' }} maxWidth={'md'}>
       <FullSizeCenteredFlexBox sx={{ alignItems: 'center', justifyContent: 'center' }}>
         <Paper sx={{ width: 400, height: 600 }}>
           <FlexBox

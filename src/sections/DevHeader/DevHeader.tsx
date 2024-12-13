@@ -28,9 +28,13 @@ const goto: DevLink[] = [
     path: '/server/server123',
   },
   {
-    name: 'user profile',
-    path: '/user/user123',
+    name: 'server list',
+    path: '/server/list',
   },
+  // {
+  //   name: 'user profile',
+  //   path: '/user/user123',
+  // },
   {
     name: 'my profile',
     path: '/me/profile',
@@ -48,7 +52,7 @@ const goto: DevLink[] = [
     path: '/domain/register',
   },
   {
-    name: '글 쓰기',
+    name: '서버 쓰기',
     path: '/editor/write',
   },
   {

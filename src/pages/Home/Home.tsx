@@ -183,7 +183,7 @@ function ServerList() {
 
 export default function Home() {
   return (
-    <Container sx={{ height: '100%' }} maxWidth={'lg'}>
+    <Container sx={{ height: '100%' }} maxWidth={'md'}>
       <FlexBox
         sx={{
           paddingTop: 1,

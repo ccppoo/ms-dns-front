@@ -383,7 +383,7 @@ export default function ServerProfile() {
 
   console.log(`serverID  : ${serverID}`);
   return (
-    <Container sx={{ height: '100%' }} maxWidth={'lg'}>
+    <Container sx={{ height: '100%' }} maxWidth={'md'}>
       <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>
         <ServerSystemDetail />
         <ServerProfileHeader />

@@ -15,7 +15,7 @@ export default function MyServer() {
   // });
 
   return (
-    <Container sx={{ height: '100%' }} maxWidth={'xl'}>
+    <Container sx={{ height: '100%' }} maxWidth={'md'}>
       <FlexBox
         sx={{
           flexDirection: 'column',
