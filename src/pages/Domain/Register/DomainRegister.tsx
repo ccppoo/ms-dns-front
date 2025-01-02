@@ -39,7 +39,7 @@ export default function DomainRegister() {
     subdomain: '',
     // host: '',
     ip: '',
-    port: 25565,
+    // port: 25565,
   };
 
   if (isFetching) {
@@ -50,7 +50,7 @@ export default function DomainRegister() {
       domain: availableDomains.domains[0],
       subdomain: '',
       ip: '',
-      port: 25565,
+      // port: 25565,
     };
     return (
       <Container sx={{ height: '100%' }} maxWidth={'lg'}>

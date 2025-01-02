@@ -16,7 +16,7 @@ const defaultData: RegisterDomainInput = {
   subdomain: '',
   // host: '',
   ip: '',
-  port: 25565,
+  // port: 25565,
 };
 
 // export default function DomainRegisterFormProvider<T extends FieldValues>(

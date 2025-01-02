@@ -16,7 +16,7 @@ const registerDomain = z.object({
   domain: z.string(),
   // host: z.string(),
   subdomain: z.string(),
-  port: z.number().gte(3000).lte(65565),
+  // port: z.number().gte(3000).lte(65565),
   ip: z.string(),
 });
 
