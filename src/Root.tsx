@@ -5,8 +5,9 @@ import { createRoot } from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 
+import { queryClient } from '@/api';
 import { store } from '@/store';
 import ThemeProvider from '@/theme/Provider';
 
@@ -14,7 +15,6 @@ import ThemeProvider from '@/theme/Provider';
 // import { mainSocketConfig } from '@/api/globalSocket';
 
 const container = document.getElementById('root') as HTMLElement;
-const queryClient = new QueryClient();
 const root = createRoot(container);
 
 function render(App: ComponentType) {

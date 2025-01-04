@@ -1,8 +1,17 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import axios from 'axios';
+
+export const queryClient = new QueryClient();
 
 export const AuthHeaders = (token: string) => {
   return { Authorization: `Bearer ${token}` };
 };
+
+async function refetchQuery(queryKeys: string[]): Promise<void> {
+  await queryClient.fetchQuery({ queryKey: queryKeys });
+}
+
+export { refetchQuery };
 
 export const ContentTypeHeader = {
   JSON: { 'Content-Type': 'application/json' },
