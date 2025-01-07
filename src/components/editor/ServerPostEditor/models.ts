@@ -13,7 +13,9 @@ const minecraftInfo = z.object({
 
 const serverInfo = z.object({
   tags: z.array(z.string()).default([]),
-  serviceTime: z.string(),
+  service24hr: z.boolean().default(true),
+  serviceTerm: z.string(),
+  // serviceTime: z.array(z.number().gte(0).lte(24)),
 });
 
 const serverContact = z.object({
@@ -56,7 +58,8 @@ export const serverPostSchemaDefault: ServerPostSchema = {
     version: [],
   },
   serverInfo: {
-    serviceTime: '',
+    service24hr: true,
+    serviceTerm: 'long',
     tags: [],
   },
   serverContact: {

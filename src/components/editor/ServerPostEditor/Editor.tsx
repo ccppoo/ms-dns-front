@@ -11,6 +11,8 @@ import useUserProfile from '@/hooks/useUserProfile';
 
 import EditorWrapper from '../components/Editor';
 import Title from '../components/Title';
+import MinecraftInfo from './MinecraftInfo';
+import ServerInfo from './ServerInfo';
 import api from './api';
 import type { ServerPostSchema } from './models';
 import { serverPostSchemaDefault } from './models';
@@ -64,7 +66,8 @@ export default function ServerPostEditor({ data, readOnly }: { data?: any; readO
               flexDirection: 'column',
               rowGap: 2,
               alignItems: 'center',
-              maxWidth: 1200,
+              // maxWidth: 1200,
+              maxWidth: MAX_WIDTH,
               width: '100%',
             }}
           >
@@ -74,18 +77,27 @@ export default function ServerPostEditor({ data, readOnly }: { data?: any; readO
                 <Title<ServerPostSchema> readOnly={!!readOnly} />
               </FlexBox>
             </FlexBox>
+            {/* 서버 운영 시간, 태그 */}
+            <ServerInfo readOnly={!!readOnly} />
+
+            {/* 마크 버전, 런처 */}
+            <MinecraftInfo readOnly={!!readOnly} />
+
             {/* 본문 */}
-            <Paper
-              sx={{
-                display: 'flex',
-                height: 'fit-content',
-                flexGrow: 1,
-                width: '100%',
-                maxWidth: MAX_WIDTH,
-              }}
-            >
-              <EditorWrapper<ServerPostSchema> readOnly={!!readOnly} />
-            </Paper>
+            <FlexBox sx={{ flexDirection: 'column', width: '100%', rowGap: 2 }}>
+              <Typography>서버 소개</Typography>
+              <Paper
+                sx={{
+                  display: 'flex',
+                  height: 'fit-content',
+                  flexGrow: 1,
+                  width: '100%',
+                  maxWidth: MAX_WIDTH,
+                }}
+              >
+                <EditorWrapper<ServerPostSchema> readOnly={!!readOnly} />
+              </Paper>
+            </FlexBox>
           </FlexBox>
           {/* 글 작성, 취소 버튼 */}
           {!readOnly && (
