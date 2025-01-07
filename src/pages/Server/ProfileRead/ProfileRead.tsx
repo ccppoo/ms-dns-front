@@ -374,9 +374,9 @@ function ServerProfileStatus() {
   );
 }
 
-export default function ServerProfile() {
+export default function ProfileRead() {
   const serverID = useParams({
-    from: '/server/$serverID',
+    from: '/server/profile/$serverID',
     select: (params) => params.serverID,
     strict: true,
   });
