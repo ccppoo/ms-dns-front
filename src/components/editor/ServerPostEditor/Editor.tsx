@@ -12,6 +12,7 @@ import useUserProfile from '@/hooks/useUserProfile';
 import EditorWrapper from '../components/Editor';
 import Title from '../components/Title';
 import MinecraftInfo from './MinecraftInfo';
+import ServerCommunity from './ServerCommunity';
 import ServerInfo from './ServerInfo';
 import api from './api';
 import type { ServerPostSchema } from './models';
@@ -83,6 +84,8 @@ export default function ServerPostEditor({ data, readOnly }: { data?: any; readO
             {/* 마크 버전, 런처 */}
             <MinecraftInfo readOnly={!!readOnly} />
 
+            {/* 서버 연락, 카페, 등 */}
+            <ServerCommunity readOnly={!!readOnly} />
             {/* 본문 */}
             <FlexBox sx={{ flexDirection: 'column', width: '100%', rowGap: 2 }}>
               <Typography>서버 소개</Typography>
@@ -104,14 +107,14 @@ export default function ServerPostEditor({ data, readOnly }: { data?: any; readO
             <FlexBox
               sx={{
                 width: '100%',
-                border: '1px black solid',
+                // border: '1px black solid',
                 justifyContent: 'end',
                 padding: 2,
                 maxWidth: MAX_WIDTH,
               }}
             >
               <Button variant="contained" type="submit">
-                submit
+                저장하기
               </Button>
             </FlexBox>
           )}

@@ -18,12 +18,14 @@ const serverInfo = z.object({
   // serviceTime: z.array(z.number().gte(0).lte(24)),
 });
 
-const serverContact = z.object({
-  discord: z.optional(z.string()),
-  kakaoTalk: z.optional(z.string()),
-  naverCafe: z.optional(z.string()),
-  websites: z.array(z.string()).default([]),
-});
+const serverCommunity = z
+  .array(
+    z.object({
+      name: z.string(),
+      link: z.string().url(),
+    }),
+  )
+  .default([]);
 
 const serverPostSchema = postBase
   .merge(_outputDataSchema)
@@ -31,7 +33,7 @@ const serverPostSchema = postBase
   .merge(boardPostMetadata)
   .extend({ minecraftInfo: minecraftInfo })
   .extend({ serverInfo: serverInfo })
-  .extend({ serverContact: serverContact });
+  .extend({ serverCommunity: serverCommunity });
 
 export type ServerPostSchema = z.input<typeof serverPostSchema>;
 
@@ -62,10 +64,5 @@ export const serverPostSchemaDefault: ServerPostSchema = {
     serviceTerm: 'long',
     tags: [],
   },
-  serverContact: {
-    discord: undefined,
-    kakaoTalk: undefined,
-    naverCafe: undefined,
-    websites: [],
-  },
+  serverCommunity: [],
 };

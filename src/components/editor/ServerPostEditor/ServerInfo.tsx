@@ -4,6 +4,7 @@ import type { FieldPath, PathValue } from 'react-hook-form';
 
 import { Button, Divider, Typography } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
+import Chip from '@mui/material/Chip';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -27,55 +28,72 @@ interface ServerVersionIntf {
 
 function ServerTags() {
   const methods = useFormContext<ServerPostSchema>();
-  const serverTags = methods.watch('serverInfo.tags');
+  const serverTags = methods.watch('serverInfo.tags')!;
+  const [tagInput, setTagInput] = React.useState<string>('');
+
+  const [dupliacateErrorText, setDupliacateErrorText] = React.useState<string>('');
+
+  const onEnterServerTag = () => {
+    const prevTags = methods.getValues('serverInfo.tags')!;
+    if (prevTags.includes(tagInput)) {
+      setDupliacateErrorText('이미 존재하는 태그입니다');
+      return;
+    }
+    methods.setValue('serverInfo.tags', [...prevTags, tagInput]);
+    setTagInput('');
+  };
+
+  const onDeleteServerTag = (tagIdx: number) => {
+    const prevTags = methods.getValues('serverInfo.tags')!;
+    const removedTags = prevTags.filter((_, idx) => idx != tagIdx);
+    methods.setValue('serverInfo.tags', [...removedTags]);
+  };
 
   return (
-    <FlexBox sx={{ flexDirection: 'column' }}>
-      <FlexBox>
-        <TextField />
+    <FlexBox sx={{ flexDirection: 'column', paddingY: 1 }}>
+      <FlexBox sx={{ paddingY: 0.5, alignItems: 'center' }}>
+        <TextField
+          value={tagInput}
+          size="small"
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            !!dupliacateErrorText && setDupliacateErrorText('');
+            event.preventDefault();
+            event.stopPropagation();
+            setTagInput(event.target.value);
+          }}
+          onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
+            if (event.key.toLowerCase() == 'enter') {
+              event.preventDefault();
+              event.stopPropagation();
+              onEnterServerTag();
+            }
+          }}
+          slotProps={{
+            htmlInput: {
+              placeholder: '서버를 설명하는 태그',
+            },
+          }}
+          onBlur={(event: React.FocusEvent<HTMLInputElement>) => {
+            setDupliacateErrorText('');
+          }}
+          // label="서버를 설명하는 태그를 추가하세요"
+          helperText={dupliacateErrorText}
+          error={!!dupliacateErrorText}
+          fullWidth
+        />
       </FlexBox>
       <Divider flexItem orientation="horizontal" />
-      <FlexBox>태그 1,2,3,4</FlexBox>
+      <FlexBox sx={{ flexWrap: 'wrap', paddingTop: 1, columnGap: 1, minHeight: 40 }}>
+        {serverTags.map((tag, idx) => (
+          <Chip label={tag} onDelete={() => onDeleteServerTag(idx)} key={`server-tag-${idx}`} />
+        ))}
+      </FlexBox>
     </FlexBox>
   );
 }
 
 function ServerServiceTime() {
   const methods = useFormContext<ServerPostSchema>();
-
-  const marks = [
-    {
-      value: 0,
-      label: '0 AM',
-    },
-    {
-      value: 6,
-      label: '6 AM',
-    },
-    {
-      value: 12,
-      label: '12 PM',
-    },
-    {
-      value: 18,
-      label: '6 PM',
-    },
-    {
-      value: 22,
-      label: '10 PM',
-    },
-  ];
-
-  const onClickLauncher = (launcherName: string) => {
-    const selectedVersions = methods.getValues('minecraftInfo.launcher')!;
-    if (selectedVersions.includes(launcherName)) {
-      const otherVersionValues = selectedVersions.filter((vSelected) => vSelected != launcherName);
-      methods.setValue('minecraftInfo.launcher', [...otherVersionValues]);
-    } else {
-      const otherVersionValues = methods.getValues('minecraftInfo.launcher')!;
-      methods.setValue('minecraftInfo.launcher', [...otherVersionValues, launcherName]);
-    }
-  };
 
   const service24hr = methods.watch('serverInfo.service24hr');
   const serviceTerm = methods.watch('serverInfo.serviceTerm');
