@@ -8,7 +8,7 @@ async function getPostEditMode({ queryKey }: { queryKey: string[] }) {
 }
 
 async function getPostReadMode({ queryKey }: { queryKey: string[] }) {
-  const resp = await API.get(`/post/read`);
+  const resp = await API.get(`/post/server/read`);
   return resp.data;
 }
 
@@ -23,7 +23,7 @@ async function editBoardPost() {
 }
 
 async function createBoardPost<T>({ data }: { data: T }) {
-  const resp = await API.post(`/post/write`, data);
+  const resp = await API.post(`/post/server/write`, data);
   return resp.data;
 }
 

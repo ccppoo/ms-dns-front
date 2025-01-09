@@ -302,7 +302,8 @@ function ServerCommunityAdd() {
     setCommunityLinkInput('');
   };
 
-  const onClickAdd = () => {
+  const onClickAddServerCommunity = () => {
+    console.log(`onClickAddServerCommunity`);
     const prevCommu = methods.getValues('serverCommunity')!;
 
     const duplicated = !!prevCommu.find(
@@ -381,8 +382,8 @@ function ServerCommunityAdd() {
             size="small"
           />
         </FlexBox>
-        <FlexBox>
-          <Button variant="contained" onClick={onClickAdd}>
+        <FlexBox sx={{ width: 'fit-content' }}>
+          <Button variant="contained" onClick={onClickAddServerCommunity}>
             추가
           </Button>
         </FlexBox>
