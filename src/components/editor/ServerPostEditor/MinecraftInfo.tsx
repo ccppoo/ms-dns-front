@@ -38,7 +38,7 @@ function MinecraftVersionCheckBox(props: IMinecraftVersionCheckBox) {
     patchVersion > 0 ? `${major}.${minor}.${patchVersion}` : `${major}.${minor}`,
   );
   const versionSelected = methods
-    .watch('minecraftInfo.version')!
+    .watch('minecraft_info.version')!
     .filter((vSelected) => versions.includes(vSelected));
 
   const allSelected = versionSelected.length == versions.length;
@@ -46,27 +46,27 @@ function MinecraftVersionCheckBox(props: IMinecraftVersionCheckBox) {
   const onClickVersion_x = () => {
     if (!allSelected) {
       const otherVersionValues = methods
-        .getValues('minecraftInfo.version')!
+        .getValues('minecraft_info.version')!
         .filter((vSelected) => !versions.includes(vSelected));
-      methods.setValue('minecraftInfo.version', [...otherVersionValues, ...versions]);
+      methods.setValue('minecraft_info.version', [...otherVersionValues, ...versions]);
       return;
     }
     if (allSelected) {
       const otherVersionValues = methods
-        .getValues('minecraftInfo.version')!
+        .getValues('minecraft_info.version')!
         .filter((vSelected) => !versions.includes(vSelected));
-      methods.setValue('minecraftInfo.version', [...otherVersionValues]);
+      methods.setValue('minecraft_info.version', [...otherVersionValues]);
     }
   };
 
   const onClickVersion = (thisVersion: string) => {
-    const selectedVersions = methods.getValues('minecraftInfo.version')!;
+    const selectedVersions = methods.getValues('minecraft_info.version')!;
     if (selectedVersions.includes(thisVersion)) {
       const otherVersionValues = selectedVersions.filter((vSelected) => vSelected != thisVersion);
-      methods.setValue('minecraftInfo.version', [...otherVersionValues]);
+      methods.setValue('minecraft_info.version', [...otherVersionValues]);
     } else {
-      const otherVersionValues = methods.getValues('minecraftInfo.version')!;
-      methods.setValue('minecraftInfo.version', [...otherVersionValues, thisVersion]);
+      const otherVersionValues = methods.getValues('minecraft_info.version')!;
+      methods.setValue('minecraft_info.version', [...otherVersionValues, thisVersion]);
     }
   };
 
@@ -91,7 +91,7 @@ function MinecraftVersionCheckBox(props: IMinecraftVersionCheckBox) {
             label={patchVersion}
             control={
               <Checkbox
-                checked={methods.watch('minecraftInfo.version')!.includes(patchVersion)}
+                checked={methods.watch('minecraft_info.version')!.includes(patchVersion)}
                 onChange={() => onClickVersion(patchVersion)}
               />
             }
@@ -126,13 +126,13 @@ function MinecraftLauncher(props: IMinecraftLauncherCheckbox) {
   const { launchers } = props;
 
   const onClickLauncher = (launcherName: string) => {
-    const selectedVersions = methods.getValues('minecraftInfo.launcher')!;
+    const selectedVersions = methods.getValues('minecraft_info.launcher')!;
     if (selectedVersions.includes(launcherName)) {
       const otherVersionValues = selectedVersions.filter((vSelected) => vSelected != launcherName);
-      methods.setValue('minecraftInfo.launcher', [...otherVersionValues]);
+      methods.setValue('minecraft_info.launcher', [...otherVersionValues]);
     } else {
-      const otherVersionValues = methods.getValues('minecraftInfo.launcher')!;
-      methods.setValue('minecraftInfo.launcher', [...otherVersionValues, launcherName]);
+      const otherVersionValues = methods.getValues('minecraft_info.launcher')!;
+      methods.setValue('minecraft_info.launcher', [...otherVersionValues, launcherName]);
     }
   };
 
@@ -143,7 +143,7 @@ function MinecraftLauncher(props: IMinecraftLauncherCheckbox) {
           label={launcher}
           control={
             <Checkbox
-              checked={methods.watch('minecraftInfo.launcher')!.includes(launcher)}
+              checked={methods.watch('minecraft_info.launcher')!.includes(launcher)}
               onChange={() => onClickLauncher(launcher)}
             />
           }
@@ -172,7 +172,7 @@ export default function MinecraftInfo(props: ServerVersionIntf) {
   };
 
   const launchers: string[] = ['바닐라', 'CurseForge'];
-  const formPath = 'minecraftInfo.launcher' as FieldPath<ServerPostSchema>;
+  const formPath = 'minecraft_info.launcher' as FieldPath<ServerPostSchema>;
   // type FormDataType = PathValue<T, FieldPath<T>>;
 
   const helperText = methods.formState.errors.title?.message

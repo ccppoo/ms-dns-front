@@ -23,7 +23,7 @@ async function editBoardPost() {
 }
 
 async function createBoardPost<T>({ data }: { data: T }) {
-  const resp = await API.post(`/post/server/write`, data);
+  const resp = await API.post(`/server/profile/create`, data);
   return resp.data;
 }
 

@@ -13,8 +13,9 @@ const minecraftInfo = z.object({
 
 const serverInfo = z.object({
   tags: z.array(z.string()).default([]),
+  server_logo: z.optional(z.string()),
   service24hr: z.boolean().default(true),
-  serviceTerm: z.string(),
+  service_term: z.string(),
   // serviceTime: z.array(z.number().gte(0).lte(24)),
 });
 
@@ -22,7 +23,7 @@ const serverCommunity = z
   .array(
     z.object({
       name: z.string(),
-      link: z.string().url(),
+      url: z.string().url(),
     }),
   )
   .default([]);
@@ -31,9 +32,9 @@ const serverPostSchema = postBase
   .merge(_outputDataSchema)
   .merge(boardPostTitle)
   .merge(boardPostMetadata)
-  .extend({ minecraftInfo: minecraftInfo })
-  .extend({ serverInfo: serverInfo })
-  .extend({ serverCommunity: serverCommunity });
+  .extend({ minecraft_info: minecraftInfo })
+  .extend({ server_info: serverInfo })
+  .extend({ server_community: serverCommunity });
 
 export type ServerPostSchema = z.input<typeof serverPostSchema>;
 
@@ -50,19 +51,20 @@ const DEFAULT_INITIAL_DATA = {
 };
 
 export const serverPostSchemaDefault: ServerPostSchema = {
-  id: undefined,
+  _id: undefined,
   data: DEFAULT_INITIAL_DATA,
   uploaded_at: undefined,
-  modified_at: undefined,
+  updated_at: undefined,
   title: '',
-  minecraftInfo: {
+  minecraft_info: {
     launcher: [],
     version: [],
   },
-  serverInfo: {
+  server_info: {
     service24hr: true,
-    serviceTerm: 'long',
+    service_term: 'long',
+    server_logo: undefined,
     tags: [],
   },
-  serverCommunity: [],
+  server_community: [],
 };

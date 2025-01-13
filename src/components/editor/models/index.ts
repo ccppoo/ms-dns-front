@@ -35,7 +35,7 @@ const imageItem = z.object({
 
 export const boardPostMetadata = z.object({
   uploaded_at: z.optional(z.date()), // 작성일
-  modified_at: z.optional(z.date()), // 수정일
+  updated_at: z.optional(z.date()), // 수정일
 });
 
 export const boardPostTitle = z.object({
@@ -70,7 +70,7 @@ export const outputSchemaDefault: OutputSchemaType = {
   // comments: 0,
   data: DEFAULT_INITIAL_DATA,
   uploaded_at: undefined,
-  modified_at: undefined,
+  updated_at: undefined,
   // vote: undefined,
   // user_id: undefined,
   title: '',

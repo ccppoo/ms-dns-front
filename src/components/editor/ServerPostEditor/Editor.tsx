@@ -6,6 +6,7 @@ import { Box, Button, Paper, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from '@tanstack/react-router';
 
+import { uploadImage } from '@/api/image/postImageUpload';
 import { FlexBox, FullSizeCenteredFlexBox } from '@/components/styled';
 import useUserProfile from '@/hooks/useUserProfile';
 
@@ -37,12 +38,26 @@ export default function ServerPostEditor({ data, readOnly }: { data?: any; readO
     console.log(`data : ${JSON.stringify(allValues)}`);
     if (isEditMode) {
       await api.query.editBoardPost();
-      // await editBoardPost({ token: auth.id_token, data: allValues, postID: postID });
     }
     if (!isEditMode) {
+      // NOTE: blob 이미지는 https://로 보내게 CDN API로 먼저 업로드 한 후 전송하기
+
+      // {
+      //   "success": 1,
+      //   "file": gin.H{
+      //     "url": imageFileURL,
+      //   },
+      // }
+      // const logo_uri = formData.server_info.server_logo
+      // if(logo_uri?.startsWith('blob')){
+      //   const blobUploadForm = new FormData();
+      //   const response = await fetch(logo_uri);
+      //   const imgFile = await response.blob();
+      //   new File([imgFile], 'logo', {type:imgFile.type})
+      //   // blobUploadForm.append('file', imgFile);
+      //   const {success, file : file_} = uploadImage(imgFile)
+      // }
       await api.query.createBoardPost<ServerPostSchema>({ data: formData });
-      // await createBoardPost2<T>({ token: auth.id_token, data: allValues });
-      //   await AddNewTrack({ track: data });
     }
     return;
   };

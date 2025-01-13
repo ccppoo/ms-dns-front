@@ -32,25 +32,25 @@ interface ServerVersionIntf {
 
 function ServerTags() {
   const methods = useFormContext<ServerPostSchema>();
-  const serverTags = methods.watch('serverInfo.tags')!;
+  const serverTags = methods.watch('server_info.tags')!;
   const [tagInput, setTagInput] = React.useState<string>('');
 
   const [dupliacateErrorText, setDupliacateErrorText] = React.useState<string>('');
 
   const onEnterServerTag = () => {
-    const prevTags = methods.getValues('serverInfo.tags')!;
+    const prevTags = methods.getValues('server_info.tags')!;
     if (prevTags.includes(tagInput)) {
       setDupliacateErrorText('이미 존재하는 태그입니다');
       return;
     }
-    methods.setValue('serverInfo.tags', [...prevTags, tagInput]);
+    methods.setValue('server_info.tags', [...prevTags, tagInput]);
     setTagInput('');
   };
 
   const onDeleteServerTag = (tagIdx: number) => {
-    const prevTags = methods.getValues('serverInfo.tags')!;
+    const prevTags = methods.getValues('server_info.tags')!;
     const removedTags = prevTags.filter((_, idx) => idx != tagIdx);
-    methods.setValue('serverInfo.tags', [...removedTags]);
+    methods.setValue('server_info.tags', [...removedTags]);
   };
 
   return (
@@ -138,7 +138,7 @@ function ServerHrefButton({ name, url }: { name: string; url: string }) {
 
 function ServerCommunityRowItem({ idx }: { idx: number }) {
   const methods = useFormContext<ServerPostSchema>();
-  const srvCommunity = methods.watch(`serverCommunity.${idx}`)!;
+  const srvCommunity = methods.watch(`server_community.${idx}`)!;
 
   const imageIcon = {
     discord: icon.discordIconBlue,
@@ -150,14 +150,14 @@ function ServerCommunityRowItem({ idx }: { idx: number }) {
   const [editMode, setEditMode] = React.useState<boolean>(false);
 
   const updateSrvCommunity = (value: string) => {
-    methods.setValue(`serverCommunity.${idx}.link`, value);
+    methods.setValue(`server_community.${idx}.url`, value);
   };
 
   const onEnterServerCommunityLinkEdit = () => {
-    const linkValue = methods.getValues(`serverCommunity.${idx}.link`)!;
+    const linkValue = methods.getValues(`server_community.${idx}.url`)!;
 
     // check link regex
-    // methods.setValue(`serverCommunity.${idx}.link`, 'value');
+    // methods.setValue(`server_community.${idx}.url`, 'value');
     setEditMode(false);
   };
 
@@ -170,9 +170,9 @@ function ServerCommunityRowItem({ idx }: { idx: number }) {
   };
 
   const onClickDelete = () => {
-    const commu = methods.getValues('serverCommunity')!;
+    const commu = methods.getValues('server_community')!;
     const commu_filt = commu.filter((_, c_idx) => c_idx != idx);
-    methods.setValue('serverCommunity', commu_filt);
+    methods.setValue('server_community', commu_filt);
   };
 
   return (
@@ -197,12 +197,12 @@ function ServerCommunityRowItem({ idx }: { idx: number }) {
         </FlexBox>
         {!editMode ? (
           <FlexBox sx={{ alignItems: 'center', paddingLeft: 1, width: '100%', height: '100%' }}>
-            <Typography>{srvCommunity.link}</Typography>
+            <Typography>{srvCommunity.url}</Typography>
           </FlexBox>
         ) : (
           <FlexBox sx={{ alignItems: 'center', paddingLeft: 1, width: '100%', height: '100%' }}>
             <TextField
-              value={srvCommunity.link}
+              value={srvCommunity.url}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 // !!dupliacateErrorText && setDupliacateErrorText('');
                 event.preventDefault();
@@ -270,7 +270,7 @@ function ServerCommunityAdd() {
   ];
 
   const [communitySelection, setCommunitySelection] = React.useState('discord');
-  const [communityLinkInput, setCommunityLinkInput] = React.useState('');
+  const [communityURLInput, setCommunityLinkInput] = React.useState('');
 
   const onChangeCommunity = (event: SelectChangeEvent) => {
     setCommunitySelection(event.target.value);
@@ -278,24 +278,24 @@ function ServerCommunityAdd() {
 
   const [errorText, setErrorText] = React.useState<string>('');
 
-  const commus = methods.watch('serverCommunity')!;
+  const commus = methods.watch('server_community')!;
 
   const onEnterServerCommunity = () => {
-    const prevCommu = methods.getValues('serverCommunity')!;
+    const prevCommu = methods.getValues('server_community')!;
 
     const duplicated = !!prevCommu.find(
-      ({ name, link }) => name == communitySelection && link == communityLinkInput,
+      ({ name, url }) => name == communitySelection && url == communityURLInput,
     );
     if (duplicated) {
       setErrorText('중복');
       return;
     }
 
-    methods.setValue('serverCommunity', [
+    methods.setValue('server_community', [
       ...prevCommu,
       {
         name: communitySelection,
-        link: communityLinkInput,
+        url: communityURLInput,
       },
     ]);
     setCommunitySelection('discord');
@@ -304,21 +304,21 @@ function ServerCommunityAdd() {
 
   const onClickAddServerCommunity = () => {
     console.log(`onClickAddServerCommunity`);
-    const prevCommu = methods.getValues('serverCommunity')!;
+    const prevCommu = methods.getValues('server_community')!;
 
     const duplicated = !!prevCommu.find(
-      ({ name, link }) => name == communitySelection && link == communityLinkInput,
+      ({ name, url }) => name == communitySelection && url == communityURLInput,
     );
     if (duplicated) {
       setErrorText('중복');
       return;
     }
 
-    methods.setValue('serverCommunity', [
+    methods.setValue('server_community', [
       ...prevCommu,
       {
         name: communitySelection,
-        link: communityLinkInput,
+        url: communityURLInput,
       },
     ]);
     setCommunitySelection('discord');
@@ -357,7 +357,7 @@ function ServerCommunityAdd() {
         {/* <Divider flexItem orientation="vertical" /> */}
         <FlexBox sx={{ alignItems: 'center', justifyContent: 'center', width: '100%' }}>
           <TextField
-            value={communityLinkInput}
+            value={communityURLInput}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               !!errorText && setErrorText('');
               event.preventDefault();
