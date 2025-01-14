@@ -33,9 +33,6 @@ export default function ServerProfileWrite() {
 
   return (
     <Container sx={{ height: '100%' }} maxWidth={'md'}>
-      <FlexBox>
-        <Typography>서버 프로필 쓰기</Typography>
-      </FlexBox>
       <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>
         <ServerProfileEditor readOnly={false} />
       </FlexBox>

@@ -2,15 +2,22 @@ import { useEffect, useRef } from 'react';
 
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import { Button, ButtonBase, Chip, Divider, Paper, Typography } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
 
-import { useParams } from '@tanstack/react-router';
+import { useQuery } from '@tanstack/react-query';
+import { useParams, useSearch } from '@tanstack/react-router';
 import { Link } from '@tanstack/react-router';
 import { z } from 'zod';
 
+import type { ServerInfo } from '@/components/editor/ServerPostEditor/models';
+// import ServerProfileEditor from '@/components/editor/ServerPostEditor';
+import EditorReader from '@/components/editor/components/Reader';
 import { FlexBox, FlexPaper } from '@/components/styled';
 import { ExternalLink, ExternalLinkNewTab, Image } from '@/components/styled';
 import { icon, sample } from '@/static';
+
+import api from '../api';
 
 const TEMP_IMAGE = 'https://cdn.mc-server.kr/static/mc-server-logo-200x200.png';
 
@@ -51,17 +58,29 @@ function CopyToClipBoard({ text, value }: { text: string; value: string }) {
   );
 }
 
-function ServerProfileHeader() {
+interface IServerProfileHeader {
+  title?: string;
+  serverInfo?: ServerInfo;
+}
+
+function ServerProfileHeader(props: IServerProfileHeader) {
+  const { title, serverInfo } = props;
+
+  const serverName = title || SERVER_NAME;
+  const serverTags = serverInfo?.tags || SERVER_TAG;
+  const server24Hour = !!serverInfo?.service24hr;
+  const serverAddress = serverInfo?.server_address || SERVER_URL;
+
   return (
     <FlexPaper sx={{ padding: 1, width: '100%', flexDirection: 'column' }}>
       <FlexBox sx={{ flexDirection: 'column', paddingX: 2, rowGap: 0.5 }}>
         <FlexBox>
-          <Typography variant="h6">{SERVER_NAME}</Typography>
+          <Typography variant="h6">{serverName}</Typography>
         </FlexBox>
         <Divider flexItem />
         <FlexBox>
           <FlexBox sx={{ columnGap: 1 }}>
-            {SERVER_TAG.map((tag, idx) => (
+            {serverTags.map((tag, idx) => (
               <Chip label={tag} variant="outlined" size="small" key={`server-tag-${idx}`} />
             ))}
           </FlexBox>
@@ -92,17 +111,17 @@ function ServerProfileHeader() {
         <FlexBox sx={{ flexDirection: 'column', rowGap: 1 }}>
           <FlexBox sx={{ alignItems: 'center', columnGap: 1 }}>
             <Typography>서버 주소 </Typography>
-            <CopyToClipBoard text={SERVER_URL} value={SERVER_URL} />
+            <CopyToClipBoard text={serverAddress} value={serverAddress} />
           </FlexBox>
-          <FlexBox sx={{ alignItems: 'center', columnGap: 1 }}>
+          {/* <FlexBox sx={{ alignItems: 'center', columnGap: 1 }}>
             <Typography>접속자</Typography>
             <Typography>
               {PLAYER_COUNT} / {PLAYER_MAX}
             </Typography>
-          </FlexBox>
+          </FlexBox> */}
           <FlexBox sx={{ alignItems: 'center', columnGap: 1 }}>
-            <Typography>운영 시간</Typography>
-            <Typography>{SERVER_RUNNING_TIME}</Typography>
+            <Typography>24시간 운영</Typography>
+            {!!server24Hour ? <Typography>O</Typography> : <Typography>X</Typography>}
           </FlexBox>
         </FlexBox>
       </FlexBox>
@@ -110,7 +129,12 @@ function ServerProfileHeader() {
   );
 }
 
-function ServerSystemDetail() {
+interface IServerSystemDetail {
+  version?: string[];
+  launcher?: string[];
+}
+
+function ServerSystemDetail(props: IServerSystemDetail) {
   // 버전, 런처, 모드
 
   return (
@@ -235,7 +259,17 @@ function OtherHrefButton({ name, url }: { name: string; url: string }) {
   );
 }
 
-function ServerExternalLinks() {
+interface IServerExternalLinks {
+  community?: {
+    name: string;
+    service: string;
+    url: string;
+  }[];
+}
+
+function ServerExternalLinks(props: IServerExternalLinks) {
+  const { community } = props;
+
   const links: { name: string; service: string; url: string }[] = [
     {
       name: '7% 클랜 디스코드',
@@ -263,9 +297,12 @@ function ServerExternalLinks() {
       url: 'https://www.example.com',
     },
   ];
+
+  const commus = community || links;
+  // console.log(`community : ${JSON.stringify(community[0])}`);
   return (
-    <FlexPaper sx={{ padding: 1, width: '100%', columnGap: 2, justifyContent: 'center' }}>
-      {links.map((linkItem, idx) => {
+    <FlexPaper sx={{ padding: 1, width: '100%', columnGap: 2, rowGap: 1, flexWrap: 'wrap' }}>
+      {commus.map((linkItem, idx) => {
         switch (linkItem.service) {
           case 'discord': {
             return <DiscordHrefButton name={linkItem.name} url={linkItem.url} />;
@@ -375,24 +412,71 @@ function ServerProfileStatus() {
 }
 
 export default function ProfileRead() {
-  const serverID = useParams({
-    from: '/server/profile/$serverID',
-    select: (params) => params.serverID,
-    strict: true,
+  // const serverID = useParams({
+  //   from: '/server/profile/read',
+  //   select: (params) => params.serverID,
+  //   strict: true,
+  // });
+
+  const { id } = useSearch({
+    // from: '/server/profile/read',
+    strict: false,
   });
 
-  console.log(`serverID  : ${serverID}`);
+  console.log(`id : ${id}`);
+
+  const { data: postData } = useQuery({
+    queryKey: [id],
+    queryFn: api.queryFn.getServerProfile,
+    enabled: !!id,
+  });
+
+  if (!id) {
+    return (
+      <Container sx={{ height: '100%' }} maxWidth={'md'}>
+        <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>
+          <ServerSystemDetail />
+          <ServerProfileHeader />
+          <ServerExternalLinks />
+          <ServerProfileIndex />
+          <ServerProfileIntro />
+
+          <ServerProfileStatus />
+          <FlexBox>배너, 공유 등</FlexBox>
+        </FlexBox>
+      </Container>
+    );
+  }
+
+  if (postData) {
+    const { server_info, server_community, minecraft_info, title } = postData;
+    return (
+      <Container sx={{ height: '100%' }} maxWidth={'md'}>
+        <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>
+          {/* 제목 */}
+          {/* {data.title} */}
+          {/* 마크 버전, 런처 */}
+          <ServerSystemDetail version={minecraft_info.version} launcher={minecraft_info.launcher} />
+          {/* {data.server_info} */}
+          {/* 서버 운영 시간, 태그 */}
+          <ServerProfileHeader title={title} serverInfo={server_info} />
+
+          {/* {data.minecraft_info} */}
+          {/* 서버 연락, 카페, 등 */}
+          <ServerExternalLinks community={server_community} />
+
+          {/* {data.server_community} */}
+          {/* 본문 */}
+          <EditorReader data={postData} />
+        </FlexBox>
+      </Container>
+    );
+  }
+
   return (
     <Container sx={{ height: '100%' }} maxWidth={'md'}>
       <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>
-        <ServerSystemDetail />
-        <ServerProfileHeader />
-        <ServerExternalLinks />
-        <ServerProfileIndex />
-        <ServerProfileIntro />
-
-        <ServerProfileStatus />
-        <FlexBox>배너, 공유 등</FlexBox>
+        <CircularProgress />;
       </FlexBox>
     </Container>
   );
