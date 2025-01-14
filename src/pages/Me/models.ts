@@ -38,12 +38,18 @@ const userSubdomainInfo = z.object({
   subdomain: z.string(),
   records: z.array(userSubdomainRecord),
   createdAt: z.date(),
-  updatedAt: z.date(),
+  updatedAt: z.optional(z.date()),
 });
 
 const userSubdomains = z.object({
   subdomains: z.array(userSubdomainInfo),
 });
+
+const subdomainEditResponse = z.object({
+  msg: z.string(),
+});
+
+type SubdomainEditResponse = z.infer<typeof subdomainEditResponse>;
 
 type UserDomain = z.infer<typeof userDomain>;
 
@@ -59,4 +65,5 @@ export type {
   UserSubdomains,
   UserSubdomainInfo,
   UserSubdomainRecord,
+  SubdomainEditResponse,
 };

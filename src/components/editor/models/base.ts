@@ -5,5 +5,5 @@ export const documentBase = z.object({
 });
 
 export const postBase = z.object({
-  id: z.optional(z.string()),
+  _id: z.optional(z.string()),
 });
