@@ -213,5 +213,33 @@ export default function MinecraftInfo(props: ServerVersionIntf) {
     );
   }
 
-  return <Typography>{titleValue}</Typography>;
+  const readLaunchers = methods.getValues('minecraft_info.launcher')!;
+  const readVersions = methods.getValues('minecraft_info.version')!;
+
+  return (
+    <FlexBox sx={{ flexDirection: 'column', width: '100%', rowGap: 2 }}>
+      <FlexBox sx={{ flexDirection: 'column' }}>
+        <Typography>마크 런처</Typography>
+        <FlexBox sx={{ flexWrap: 'wrap', columnGap: 1 }}>
+          {/* <MinecraftLauncher launchers={launchers} /> */}
+          {readLaunchers.map((launcher, idx) => (
+            <FlexPaper sx={{ paddingX: 1 }} key={`server-launcher-${idx}`}>
+              <Typography>{launcher}</Typography>
+            </FlexPaper>
+          ))}
+        </FlexBox>
+      </FlexBox>
+
+      <FlexBox sx={{ flexDirection: 'column' }}>
+        <Typography>마크 버전</Typography>
+        <FlexBox sx={{ flexWrap: 'wrap', columnGap: 1 }}>
+          {readVersions.map((launcher, idx) => (
+            <FlexPaper sx={{ paddingX: 1 }} key={`server-launcher-${idx}`}>
+              <Typography>{launcher}</Typography>
+            </FlexPaper>
+          ))}
+        </FlexBox>
+      </FlexBox>
+    </FlexBox>
+  );
 }

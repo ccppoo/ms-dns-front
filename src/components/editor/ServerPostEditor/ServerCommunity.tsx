@@ -145,7 +145,7 @@ function ServerCommunityRowItem({ idx }: { idx: number }) {
     kakaoTalk: icon.kakaoTalk,
     naverCafe: icon.naverCafe,
     bluemap: icon.bluemap,
-  }[srvCommunity.name];
+  }[srvCommunity.service];
 
   const [editMode, setEditMode] = React.useState<boolean>(false);
 
@@ -180,7 +180,7 @@ function ServerCommunityRowItem({ idx }: { idx: number }) {
       sx={{
         width: '100%',
         alignItems: 'center',
-        height: 45,
+        height: 60,
         columnGap: 1,
         paddingX: 1,
       }}
@@ -190,14 +190,23 @@ function ServerCommunityRowItem({ idx }: { idx: number }) {
       >
         <FlexBox sx={{ padding: 1 }}>
           {!!imageIcon ? (
-            <Image src={imageIcon} sx={{ width: 30, height: 30 }} />
+            <Image src={imageIcon} sx={{ width: 45, height: 45 }} />
           ) : (
-            <LanguageOutlinedIcon sx={{ width: 30, height: 30 }} />
+            <LanguageOutlinedIcon sx={{ width: 45, height: 45 }} />
           )}
         </FlexBox>
         {!editMode ? (
-          <FlexBox sx={{ alignItems: 'center', paddingLeft: 1, width: '100%', height: '100%' }}>
-            <Typography>{srvCommunity.url}</Typography>
+          <FlexBox
+            sx={{
+              // alignItems: 'center',
+              paddingLeft: 1,
+              width: '100%',
+              height: '100%',
+              flexDirection: 'column',
+            }}
+          >
+            <Typography variant="h6">{srvCommunity.name}</Typography>
+            <Typography variant="body2">{srvCommunity.url}</Typography>
           </FlexBox>
         ) : (
           <FlexBox sx={{ alignItems: 'center', paddingLeft: 1, width: '100%', height: '100%' }}>
@@ -270,6 +279,7 @@ function ServerCommunityAdd() {
   ];
 
   const [communitySelection, setCommunitySelection] = React.useState('discord');
+  const [communityName, setCommunityName] = React.useState('');
   const [communityURLInput, setCommunityLinkInput] = React.useState('');
 
   const onChangeCommunity = (event: SelectChangeEvent) => {
@@ -294,12 +304,14 @@ function ServerCommunityAdd() {
     methods.setValue('server_community', [
       ...prevCommu,
       {
-        name: communitySelection,
+        name: communityName,
+        service: communitySelection,
         url: communityURLInput,
       },
     ]);
     setCommunitySelection('discord');
     setCommunityLinkInput('');
+    setCommunityName('');
   };
 
   const onClickAddServerCommunity = () => {
@@ -317,19 +329,21 @@ function ServerCommunityAdd() {
     methods.setValue('server_community', [
       ...prevCommu,
       {
-        name: communitySelection,
+        name: communityName,
+        service: communitySelection,
         url: communityURLInput,
       },
     ]);
     setCommunitySelection('discord');
     setCommunityLinkInput('');
+    setCommunityName('');
   };
 
   return (
     <FlexBox sx={{ flexDirection: 'column', rowGap: 1.5, paddingY: 1 }}>
       {/* 운영 기간 */}
       <FlexBox sx={{ alignItems: 'center', columnGap: 1 }}>
-        <FlexBox sx={{ justifyContent: 'center' }}>
+        <FlexBox sx={{ justifyContent: 'start', height: '100%' }}>
           <Select
             labelId="demo-select-small-label"
             id="demo-select-small"
@@ -355,7 +369,40 @@ function ServerCommunityAdd() {
           </Select>
         </FlexBox>
         {/* <Divider flexItem orientation="vertical" /> */}
-        <FlexBox sx={{ alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+        <FlexBox
+          sx={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
+            flexDirection: 'column',
+            rowGap: 1,
+          }}
+        >
+          <TextField
+            value={communityName}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              !!errorText && setErrorText('');
+              event.preventDefault();
+              event.stopPropagation();
+              setCommunityName(event.target.value);
+            }}
+            onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
+              if (event.key.toLowerCase() == 'enter') {
+                event.preventDefault();
+                event.stopPropagation();
+                // onEnterServerCommunity();
+              }
+            }}
+            slotProps={{
+              htmlInput: {
+                placeholder: '이름 입력하세요',
+              },
+            }}
+            helperText={errorText}
+            error={!!errorText}
+            fullWidth
+            size="small"
+          />
           <TextField
             value={communityURLInput}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {

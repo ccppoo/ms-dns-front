@@ -263,21 +263,59 @@ function ServerLogo() {
   );
 }
 
+function ServerAddress() {
+  const methods = useFormContext<ServerPostSchema>();
+
+  const serverAddress = methods.watch('server_info.server_address');
+  const [errorText, setErrorText] = React.useState<string>('');
+  const helperText = 'IP 주소 : 1.1.1.1 / 도메인 : example.mc-server.kr';
+  const onChangeServerAddress = (event: React.ChangeEvent<HTMLInputElement>) => {
+    methods.setValue('server_info.server_address', (event.target as HTMLInputElement).value);
+  };
+
+  return (
+    <FlexBox sx={{ flexDirection: 'column', rowGap: 0, paddingTop: 1, paddingBottom: 2 }}>
+      {/* 운영 기간 */}
+      <FlexBox sx={{ alignItems: 'center' }}>
+        <TextField
+          value={serverAddress}
+          size="small"
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            !!errorText && setErrorText('');
+            event.preventDefault();
+            event.stopPropagation();
+            onChangeServerAddress(event);
+          }}
+          onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
+            if (event.key.toLowerCase() == 'enter') {
+              event.preventDefault();
+              event.stopPropagation();
+              // onEnterServerTag();
+            }
+          }}
+          slotProps={{
+            htmlInput: {
+              placeholder: '1.1.1.1, abc.mc-server.kr',
+            },
+          }}
+          onBlur={(event: React.FocusEvent<HTMLInputElement>) => {
+            // setDupliacateErrorText('');
+          }}
+          // label="서버를 설명하는 태그를 추가하세요"
+          helperText={helperText}
+          error={!!errorText}
+          fullWidth
+        />
+      </FlexBox>
+    </FlexBox>
+  );
+}
+
 export default function ServerInfo(props: ServerVersionIntf) {
   const { readOnly } = props;
   const methods = useFormContext<ServerPostSchema>();
 
   // TODO: 서버에서 버전 정보 가져오기
-
-  const launchers: string[] = ['바닐라', 'CurseForge'];
-  const formPath = 'minecraftInfo.launcher' as FieldPath<ServerPostSchema>;
-  // type FormDataType = PathValue<T, FieldPath<T>>;
-
-  const helperText = methods.formState.errors.title?.message
-    ? 'Please input creator username'
-    : undefined;
-
-  const titleValue = methods.getValues(formPath);
 
   if (!readOnly) {
     return (
@@ -285,6 +323,11 @@ export default function ServerInfo(props: ServerVersionIntf) {
         <Typography>서버 아이콘</Typography>
         <FlexPaper sx={{ paddingX: 1, flexDirection: 'column' }}>
           <ServerLogo />
+        </FlexPaper>
+        <Typography>서버 주소</Typography>
+
+        <FlexPaper sx={{ paddingX: 1, flexDirection: 'column' }}>
+          <ServerAddress />
         </FlexPaper>
 
         <Typography>서버 운영 시간</Typography>
@@ -300,5 +343,47 @@ export default function ServerInfo(props: ServerVersionIntf) {
     );
   }
 
-  return <Typography>{titleValue}</Typography>;
+  const default_icon = 'https://cdn.mc-server.kr/static/mc-server-logo-200x200.png';
+  const readServerLogo = methods.getValues('server_info.server_logo') || default_icon;
+  const readServer24hr = methods.getValues('server_info.service24hr');
+  const readServiceTerm = methods.getValues('server_info.service_term')!;
+  const readServerTags = methods.getValues('server_info.tags')!;
+
+  return (
+    <FlexBox sx={{ flexDirection: 'column', width: '100%', rowGap: 2 }}>
+      <Typography>서버 아이콘</Typography>
+      <FlexPaper sx={{ paddingX: 1, flexDirection: 'column' }}>
+        <FlexBox
+          sx={{
+            width: 150,
+            height: 150,
+            flexShrink: 0,
+            padding: 0.5,
+            justifyContent: 'center',
+          }}
+        >
+          <Image
+            src={readServerLogo}
+            sx={{
+              objectFit: 'contain',
+              width: '100%',
+              height: '100%',
+            }}
+          />
+        </FlexBox>
+      </FlexPaper>
+
+      <Typography>서버 운영 시간</Typography>
+      <FlexPaper sx={{ paddingX: 1, flexDirection: 'column' }}>
+        {readServer24hr ? '24시간 운영' : '24시간 운영 x'}
+      </FlexPaper>
+
+      <Typography>서버 태그</Typography>
+      <FlexPaper sx={{ flexWrap: 'wrap', columnGap: 1 }}>
+        {readServerTags.map((tag, idx) => (
+          <Chip label={tag} key={`server-tag-${idx}`} />
+        ))}
+      </FlexPaper>
+    </FlexBox>
+  );
 }

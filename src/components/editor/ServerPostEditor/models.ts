@@ -16,13 +16,17 @@ const serverInfo = z.object({
   server_logo: z.optional(z.string()),
   service24hr: z.boolean().default(true),
   service_term: z.string(),
+  server_address: z.string(),
   // serviceTime: z.array(z.number().gte(0).lte(24)),
 });
+
+export type ServerInfo = z.infer<typeof serverInfo>;
 
 const serverCommunity = z
   .array(
     z.object({
       name: z.string(),
+      service: z.string(),
       url: z.string().url(),
     }),
   )
@@ -37,6 +41,7 @@ const serverPostSchema = postBase
   .extend({ server_community: serverCommunity });
 
 export type ServerPostSchema = z.input<typeof serverPostSchema>;
+export type ServerPostSchemaRead = z.infer<typeof serverPostSchema>;
 
 const DEFAULT_INITIAL_DATA = {
   blocks: [
@@ -64,6 +69,7 @@ export const serverPostSchemaDefault: ServerPostSchema = {
     service24hr: true,
     service_term: 'long',
     server_logo: undefined,
+    server_address: '',
     tags: [],
   },
   server_community: [],

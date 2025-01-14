@@ -4,7 +4,7 @@ import type { DefaultValues, FieldPath, FieldValues, PathValue } from 'react-hoo
 import { Box, Button, Paper, Typography } from '@mui/material';
 
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from '@tanstack/react-router';
+import { useNavigate } from '@tanstack/react-router';
 
 import { uploadImage } from '@/api/image/postImageUpload';
 import { FlexBox, FullSizeCenteredFlexBox } from '@/components/styled';
@@ -22,13 +22,20 @@ import { serverPostSchemaDefault } from './models';
 // NOTE:  이 Component는 글 쓰기, 수정 모두 사용될 수 있음
 
 // .ce-block .ce-block__content maxWidth가 보이는 화면 최대 넓이
-export default function ServerPostEditor({ data, readOnly }: { data?: any; readOnly?: boolean }) {
+export default function ServerPostEditor({
+  data,
+  readOnly,
+}: {
+  data?: ServerPostSchema;
+  readOnly?: boolean;
+}) {
   const methods = useForm<ServerPostSchema>({
     defaultValues: data || serverPostSchemaDefault,
   });
 
   const [userProfile] = useUserProfile();
   const postID = methods.getValues('id' as FieldPath<ServerPostSchema>);
+  const navigate = useNavigate({});
   const isEditMode = !!postID;
   // console.log(`methods.getValues('id') : ${methods.getValues('id')}`);
 
@@ -40,24 +47,12 @@ export default function ServerPostEditor({ data, readOnly }: { data?: any; readO
       await api.query.editBoardPost();
     }
     if (!isEditMode) {
-      // NOTE: blob 이미지는 https://로 보내게 CDN API로 먼저 업로드 한 후 전송하기
-
-      // {
-      //   "success": 1,
-      //   "file": gin.H{
-      //     "url": imageFileURL,
-      //   },
-      // }
-      // const logo_uri = formData.server_info.server_logo
-      // if(logo_uri?.startsWith('blob')){
-      //   const blobUploadForm = new FormData();
-      //   const response = await fetch(logo_uri);
-      //   const imgFile = await response.blob();
-      //   new File([imgFile], 'logo', {type:imgFile.type})
-      //   // blobUploadForm.append('file', imgFile);
-      //   const {success, file : file_} = uploadImage(imgFile)
-      // }
-      await api.query.createBoardPost<ServerPostSchema>({ data: formData });
+      const resp = await api.query.createBoardPost<ServerPostSchema>({ data: formData });
+      if (resp.status == 200) {
+        methods.reset(); // 글 현재 쓰고 있는거 다 지우고
+        const { postID } = resp.data;
+        navigate({ to: `/server/profile/read?id=${postID}` });
+      }
     }
     return;
   };
