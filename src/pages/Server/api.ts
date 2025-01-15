@@ -11,7 +11,7 @@ import type { ServerProfileListing, UserProfile } from './models';
 async function getServerProfileList({
   queryKey,
 }: {
-  queryKey: [];
+  queryKey: [string, string, number];
 }): Promise<ServerProfileListing[]> {
   const resp = await API.get<ServerProfileListing[]>(`/server/profile/list`);
   return resp.data;

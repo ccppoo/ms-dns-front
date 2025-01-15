@@ -6,12 +6,12 @@ import { postBase } from '../models/base';
 const minecraftVersion = z.array(z.string()).default([]);
 const minecraftLauncher = z.array(z.string()).default([]);
 
-const minecraftInfo = z.object({
+export const minecraftInfo = z.object({
   version: minecraftVersion,
   launcher: minecraftLauncher,
 });
 
-const serverInfo = z.object({
+export const serverInfo = z.object({
   tags: z.array(z.string()).default([]),
   server_logo: z.optional(z.string()),
   service24hr: z.boolean().default(true),

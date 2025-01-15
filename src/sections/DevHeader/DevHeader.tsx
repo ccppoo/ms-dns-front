@@ -24,44 +24,24 @@ const goto: DevLink[] = [
     path: '/dev',
   },
   {
-    name: 'server profile',
-    path: '/server/server123',
-  },
-  {
-    name: 'server list',
+    name: '서버 리스트',
     path: '/server/list',
   },
-  // {
-  //   name: 'user profile',
-  //   path: '/user/user123',
-  // },
   {
-    name: 'my profile',
+    name: '내 프로필',
     path: '/me/profile',
   },
   {
-    name: '내 server',
+    name: '내 서버',
     path: '/me/server',
   },
   {
-    name: '내 domain',
+    name: '내 도메인',
     path: '/me/domain',
   },
   {
     name: 'domain 등록',
     path: '/domain/register',
-  },
-  {
-    name: '서버 쓰기',
-    path: '/editor/write',
-  },
-  {
-    name: '글 수정',
-    path: '/editor/edit',
-  },
-  {
-    name: '글 읽기',
-    path: '/editor/read',
   },
 ];
 

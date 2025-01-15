@@ -15,8 +15,10 @@ import Tooltip from '@mui/material/Tooltip';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from '@tanstack/react-router';
 
+import { refetchQuery } from '@/api';
 import { FlexBox, FlexPaper, Image } from '@/components/styled';
 import useUserProfile from '@/hooks/useUserProfile';
+import api from '@/pages/Me/api';
 import type {
   UserDomain,
   UserDomains,
@@ -24,7 +26,6 @@ import type {
   UserSubdomainRecord,
   UserSubdomains,
 } from '@/pages/Me/models';
-import api from '@/pages/User/api';
 import { icon } from '@/static';
 
 import apiii from '../api';
@@ -295,6 +296,7 @@ function SubdomainRecord({ recordIdx, editMode }: { recordIdx: number; editMode:
 function SubdomainItem({ userSubdomain }: { userSubdomain: UserSubdomainInfo }) {
   const fullDomain = `${userSubdomain.subdomain}.${userSubdomain.domain}`;
 
+  const [originSubdomainInfo, setOriginSubdomainInfo] = useState<UserSubdomainInfo>(userSubdomain);
   const methods = useForm<UserSubdomainInfo>({
     defaultValues: userSubdomain,
   });
@@ -312,6 +314,14 @@ function SubdomainItem({ userSubdomain }: { userSubdomain: UserSubdomainInfo }) 
     methods.setValue(`records`, [...prevRecords, { name: '', recordType: 'SRV', values: [''] }]);
   };
 
+  const onClickCancelEdit = () => {
+    // 비어있는 기록의 경우 ?
+    methods.reset();
+    setEditMode(false);
+    // const prevRecords = methods.getValues(`records`);
+    // methods.setValue(`records`, [...prevRecords, { name: '', recordType: 'SRV', values: [''] }]);
+  };
+
   const onClickAddMinecraftSRV = () => {
     const prevRecords = methods.getValues(`records`);
     const minecraftSRV_name = `_minecraft._tcp.${fullDomain}`;
@@ -322,29 +332,41 @@ function SubdomainItem({ userSubdomain }: { userSubdomain: UserSubdomainInfo }) 
     ]);
   };
 
-  const clickEditSubdomainRecord = () => {
+  const onClickEditSubdomainRecord = () => {
     setEditMode((prev) => !prev);
   };
-
+  // a = {
+  //   name: 'test2',
+  //   note: '',
+  //   subdomain: 'test2',
+  //   domain: 'mc-server.kr',
+  //   records: [{ recordType: 'A', name: 'test2.mc-server.kr', values: ['221.147.114.254'] }],
+  //   createdAt: '2024-12-30T06:19:18+00:00',
+  //   updatedAt: '2024-12-30T06:19:18+00:00',
+  // };
   const submit = async (formData: UserSubdomainInfo) => {
-    const allValues = methods.getValues();
+    const allValues = methods.getValues() as UserSubdomainInfo;
     const isChanged = methods.formState.isDirty;
     console.log(`isChanged  :${isChanged}`);
     console.log(`data : ${JSON.stringify(allValues)}`);
-    if (isChanged) {
+    // NOTE: if not changed, do nothing return
+    // if (!isChanged) {
+    //   setEditMode(false);
+    //   return;
+    // }
+    const { status, data } = await api.query.editMyDomain({ userSubdomainInfo: formData });
+    console.log(`status : ${status}`);
+    if (status != 200) {
+      // failed to edit record
     }
-    // if (isEditMode) {
-    //   await api.query.editBoardPost();
-    //   // await editBoardPost({ token: auth.id_token, data: allValues, postID: postID });
-    // }
-    // if (!isEditMode) {
-    //   await api.query.createBoardPost<T>({ data: formData });
-    //   // await createBoardPost2<T>({ token: auth.id_token, data: allValues });
-    //   //   await AddNewTrack({ track: data });
-    // }
-    setEditMode(false);
+    // if success reload all my domains
+    if (status == 200) {
+      setEditMode(false);
+      await refetchQuery(['getMyDomain', 'my domains']);
+    }
     return;
   };
+
   return (
     <FlexPaper sx={{ columnGap: 2, flexDirection: 'column', paddingY: 0.5, paddingX: 2 }}>
       <FormProvider {...methods}>
@@ -390,7 +412,7 @@ function SubdomainItem({ userSubdomain }: { userSubdomain: UserSubdomainInfo }) 
               <Button variant="contained" color="info" type="submit">
                 저장하기
               </Button>
-              <Button variant="contained" color="error" onClick={() => {}}>
+              <Button variant="contained" color="error" onClick={onClickCancelEdit}>
                 취소
               </Button>
             </FlexBox>
@@ -400,7 +422,7 @@ function SubdomainItem({ userSubdomain }: { userSubdomain: UserSubdomainInfo }) 
       {!isEditMode && (
         <FlexBox sx={{ paddingY: 1, justifyContent: 'end', columnGap: 1 }}>
           <>
-            <Button variant="contained" color="info" onClick={clickEditSubdomainRecord}>
+            <Button variant="contained" color="info" onClick={onClickEditSubdomainRecord}>
               수정하기
             </Button>
             <Button variant="contained" color="error" onClick={() => {}}>
@@ -417,7 +439,7 @@ export default function MyDomain() {
   const [userProfile] = useUserProfile();
 
   const { data, isSuccess } = useQuery({
-    queryKey: ['getMyDomain', userProfile.uid || ''],
+    queryKey: ['getMyDomain', 'my domains'],
     queryFn: apiii.queryFn.getMyDomains,
     enabled: !!userProfile.uid,
   });
