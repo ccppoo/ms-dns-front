@@ -139,7 +139,7 @@ interface IServerProfileLists {
   list: ServerProfileListing[];
 }
 
-function ServerProfileLists(props: IServerProfileLists) {
+export function ServerProfileLists(props: IServerProfileLists) {
   const { list } = props;
 
   return (
@@ -149,83 +149,4 @@ function ServerProfileLists(props: IServerProfileLists) {
       ))}
     </>
   );
-}
-
-function ServerProfileWriteButton() {
-  return (
-    <Paper
-      sx={{
-        display: 'flex',
-        columnGap: 0.5,
-        paddingX: 0.5,
-        paddingY: 0.2,
-        textDecoration: 'none',
-        flexGrow: 0,
-      }}
-      style={{ color: 'black' }}
-      component={Link}
-      to={'/server/new/write'}
-    >
-      <EditOutlinedIcon />
-      <Typography>새로 쓰기</Typography>
-    </Paper>
-  );
-}
-
-export default function ServerProfileList() {
-  // const serverID = useParams({
-  //   from: '/server/list',
-  //   select: (params) => params.serverID,
-  //   strict: true,
-  // });
-
-  const listingParams = useSearch({
-    from: '/server/list',
-  });
-
-  const { page } = listingParams;
-  const [listingPage, setListingPage] = useState<number>(page || 1);
-
-  const { data } = useQuery({
-    queryKey: ['server', 'list', listingPage],
-    queryFn: api.queryFn.getServerProfileList,
-  });
-
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setListingPage(value);
-  };
-
-  if (data) {
-    console.log(`data : ${JSON.stringify(data)}`);
-    return (
-      <Container sx={{ height: '100%' }} maxWidth={'md'}>
-        <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>
-          <Typography>서버 목록</Typography>
-          <FlexBox sx={{ justifyContent: 'end' }}>
-            <ServerProfileWriteButton />
-          </FlexBox>
-          <FlexBox sx={{ flexDirection: 'column', rowGap: 1, minHeight: 300 }}>
-            {!!data ? <ServerProfileLists list={data} /> : <CircularProgress />}
-          </FlexBox>
-
-          <FlexBox
-            sx={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              paddingTop: 3,
-              rowGap: 1,
-              flexDirection: 'column',
-            }}
-          >
-            <Divider variant="middle" />
-            <Pagination count={3} page={listingPage} onChange={handleChange} size="medium" />
-          </FlexBox>
-
-          <FlexBox sx={{ justifyContent: 'end' }}>
-            <ServerProfileWriteButton />
-          </FlexBox>
-        </FlexBox>
-      </Container>
-    );
-  }
 }

@@ -16,10 +16,6 @@ const goto: DevLink[] = [
     path: '/',
   },
   {
-    name: 'login',
-    path: '/auth/login',
-  },
-  {
     name: 'dev',
     path: '/dev',
   },
@@ -30,10 +26,6 @@ const goto: DevLink[] = [
   {
     name: '내 프로필',
     path: '/me/profile',
-  },
-  {
-    name: '내 서버',
-    path: '/me/server',
   },
   {
     name: '내 도메인',

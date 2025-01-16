@@ -2,7 +2,6 @@ import { Outlet, createRoute, redirect } from '@tanstack/react-router';
 
 import MyDomainPage from '@/pages/Me/Domain';
 import MyProfilePage from '@/pages/Me/Profile';
-import MyServerPage from '@/pages/Me/Server';
 import { Route as rootRoute } from '@/routes/__root';
 import Header from '@/sections/Header';
 
@@ -33,18 +32,12 @@ const myProfileRoute = createRoute({
   component: MyProfilePage,
 });
 
-const myServerRoute = createRoute({
-  getParentRoute: () => meRoute,
-  path: '/server',
-  component: MyServerPage,
-});
-
 const myDomainRoute = createRoute({
   getParentRoute: () => meRoute,
   path: '/domain',
   component: MyDomainPage,
 });
 
-meRoute.addChildren([myProfileRoute, myServerRoute, myDomainRoute]);
+meRoute.addChildren([myProfileRoute, myDomainRoute]);
 
 export default meRoute;

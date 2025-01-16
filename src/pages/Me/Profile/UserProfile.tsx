@@ -2,35 +2,25 @@ import { Controller, FormProvider, useFieldArray, useForm } from 'react-hook-for
 
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import FileUploadOutlined from '@mui/icons-material/FileUploadOutlined';
-import { Button, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
 
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from '@tanstack/react-router';
+import { Link } from '@tanstack/react-router';
 
 import { FlexBox, FlexPaper, Image, VisuallyHiddenInput } from '@/components/styled';
 import useUserProfile from '@/hooks/useUserProfile';
 import api from '@/pages/Me/api';
+import { ServerProfileLists } from '@/pages/Server/ProfileList/ProfileListItemListing';
 
-const CLAIMED_DOMAIN = [
-  {
-    domain: '7percent.mc-server.kr',
-    createdAt: new Date('2024-11-10 15:00'),
-  },
-];
-
-const CREATED_SERVER = [
-  {
-    name: '7% 갤 마크 서버',
-    domain: '7percent.mc-server.kr',
-    createdAt: new Date('2024-11-10 18:00'),
-  },
-  {
-    name: '재밌는 마크 서버',
-    domain: 'funfun.mc-server.kr',
-    createdAt: new Date('2024-11-12 18:00'),
-  },
-];
+import type {
+  UserDomain,
+  UserDomains,
+  UserSubdomainInfo,
+  UserSubdomainRecord,
+  UserSubdomains,
+} from '../models';
 
 function ProfileHead() {
   const [profile] = useUserProfile();
@@ -150,41 +140,90 @@ function ServerIcons() {
   );
 }
 
-function ClaimedDomains() {
+function SubdomainItem({ userSubdomain }: { userSubdomain: UserSubdomainInfo }) {
+  const fullDomain = `${userSubdomain.subdomain}.${userSubdomain.domain}`;
+
+  const createdAt = userSubdomain.createdAt;
   return (
-    <FlexBox sx={{ flexDirection: 'column' }}>
-      <FlexBox>
-        <Typography>등록한 도메인</Typography>
+    <FlexPaper sx={{ columnGap: 1, paddingY: 1, paddingX: 2, flexDirection: 'column' }}>
+      <FlexBox sx={{ justifyContent: 'space-between' }}>
+        <Typography variant="body1" fontSize={21}>
+          {fullDomain}
+        </Typography>
       </FlexBox>
-      <FlexPaper sx={{ padding: 2, flexDirection: 'column' }}>
-        {CLAIMED_DOMAIN.map((claimedDomain, idx) => (
-          <FlexBox sx={{ columnGap: 1 }} key={`claimed-domain-${idx}`}>
-            <Typography>{claimedDomain.domain}</Typography>
-            <Typography>등록일 : {claimedDomain.createdAt.toLocaleDateString()}</Typography>
-          </FlexBox>
-        ))}
-      </FlexPaper>
+      <FlexBox sx={{ columnGap: 1, flexDirection: 'column', rowGap: 1 }}>
+        <Typography variant="body2">
+          등록일 : {createdAt.toLocaleDateString()} {createdAt.toLocaleTimeString()}
+        </Typography>
+      </FlexBox>
+    </FlexPaper>
+  );
+}
+
+function MyRegisteredDomains() {
+  const [{ uid: userID }] = useUserProfile();
+  const { data, isSuccess } = useQuery({
+    queryKey: ['getMyDomain', 'my domains'],
+    queryFn: api.queryFn.getMyDomains,
+    enabled: !!userID,
+  });
+
+  return (
+    <FlexBox sx={{ flexDirection: 'column', rowGap: 1 }}>
+      <FlexBox>
+        <Typography variant="h6">내 도메인</Typography>
+      </FlexBox>
+      <FlexBox sx={{ justifyContent: 'end' }}>
+        <Box component={Link} to={'/me/domain'} style={{ color: 'black', textDecoration: 'none' }}>
+          <Typography>더 보기</Typography>
+        </Box>
+      </FlexBox>
+
+      <FlexBox sx={{ rowGap: 2, flexDirection: 'column' }}>
+        {isSuccess ? (
+          data?.subdomains.map((userSubdomain) => (
+            <SubdomainItem
+              userSubdomain={userSubdomain}
+              key={`user-sub-domain-${userSubdomain.name}`}
+            />
+          ))
+        ) : (
+          <CircularProgress />
+        )}
+      </FlexBox>
     </FlexBox>
   );
 }
 
-function CreatedServers() {
-  return (
-    <FlexBox sx={{ flexDirection: 'column' }}>
-      <FlexBox>
-        <Typography>등록한 서버</Typography>
+function MyServerProfiles() {
+  const [{ uid: userID }] = useUserProfile();
+  const { data } = useQuery({
+    queryKey: ['server', userID!],
+    queryFn: api.queryFn.getMyServerProfiles,
+    enabled: !!userID,
+  });
+
+  // console.log(`userID : ${userID}`);
+
+  if (!data) {
+    return (
+      <FlexBox sx={{ paddingY: 0, flexDirection: 'column', rowGap: 2 }}>
+        <CircularProgress />
       </FlexBox>
-      <FlexPaper sx={{ padding: 2, flexDirection: 'column', rowGap: 2 }}>
-        {CREATED_SERVER.map((createdServer, idx) => (
-          <FlexBox sx={{ flexDirection: 'column' }} key={`created-server-${idx}`}>
-            <Typography>서버 이름 : {createdServer.name}</Typography>
-            <Typography>서버 URL : {createdServer.domain}</Typography>
-            <Typography>등록일 : {createdServer.createdAt.toLocaleDateString()}</Typography>
-          </FlexBox>
-        ))}
-      </FlexPaper>
-    </FlexBox>
-  );
+    );
+  }
+
+  if (!!data) {
+    console.log(`data : ${JSON.stringify(data)}`);
+    return (
+      <FlexBox sx={{ paddingY: 0, flexDirection: 'column', rowGap: 2 }}>
+        <FlexBox>
+          <Typography variant="h6">작성한 서버 프로필</Typography>
+        </FlexBox>
+        <ServerProfileLists list={data} />
+      </FlexBox>
+    );
+  }
 }
 
 export default function MyProfile() {
@@ -200,8 +239,9 @@ export default function MyProfile() {
       <FlexBox sx={{ flexDirection: 'column', paddingY: 2, rowGap: 3 }}>
         <ProfileHead />
         <ServerIcons />
-        <ClaimedDomains />
-        <CreatedServers />
+        {/* <ClaimedDomains /> */}
+        <MyRegisteredDomains />
+        <MyServerProfiles />
       </FlexBox>
     </Container>
   );

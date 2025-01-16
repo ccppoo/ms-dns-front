@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 
 import API from '@/api';
+import type { ServerProfileListing } from '@/pages/Server/models';
 
 import type {
   SubdomainEditResponse,
@@ -18,6 +19,20 @@ async function getMyProfile({ queryKey }: { queryKey: [] }): Promise<UserProfile
 
 async function getMyDomains({ queryKey }: { queryKey: string[] }): Promise<UserSubdomains> {
   const resp = await API.get<UserSubdomains>(`/me/domain`);
+  const subdomains = resp.data.subdomains.map((value: UserSubdomainInfo) => {
+    return { ...value, createdAt: new Date(value.createdAt) };
+  });
+
+  return { subdomains: subdomains };
+}
+
+async function getMyServerProfiles({
+  queryKey,
+}: {
+  queryKey: [string, string];
+}): Promise<ServerProfileListing[]> {
+  const [_, userID] = queryKey;
+  const resp = await API.get<ServerProfileListing[]>(`/server/profile/list?user=${userID}`);
   return resp.data;
 }
 
@@ -34,6 +49,7 @@ export default {
   queryFn: {
     getMyProfile,
     getMyDomains,
+    getMyServerProfiles,
   },
   query: {
     editMyDomain,
