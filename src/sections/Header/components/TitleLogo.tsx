@@ -1,26 +1,29 @@
-import AppBar from "@mui/material/AppBar"
-import Box from "@mui/material/Box"
-import Button from "@mui/material/Button"
-import ButtonBase from "@mui/material/ButtonBase"
-import IconButton from "@mui/material/IconButton"
-import Menu from "@mui/material/Menu"
-import MenuItem from "@mui/material/MenuItem"
-import Toolbar from "@mui/material/Toolbar"
-import Tooltip from "@mui/material/Tooltip"
-import Typography from "@mui/material/Typography"
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import ButtonBase from '@mui/material/ButtonBase';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Toolbar from '@mui/material/Toolbar';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
 
-import { FlexBox } from "@/components/styled"
-import { Image } from "@/components/styled"
-import { title } from "@/config"
+import { FlexBox } from '@/components/styled';
+import { Image } from '@/components/styled';
+import { title } from '@/config';
+
 // import useNotifications from '@/store/notifications';
 
 function getRandomJoke() {
-  return "test random joke"
+  return 'test random joke';
 }
 export default function TitleLogoHeader() {
   // const [, notificationsActions] = useNotifications();
 
-  const MainTitleWidth = 100
+  const mcserver = 'https://cdn.mc-server.kr/static/mc-server-logo-200x200.png';
+
+  const MainTitleWidth = 100;
   // function showNotification() {
   //   notificationsActions.push({
   //     options: {
@@ -37,10 +40,10 @@ export default function TitleLogoHeader() {
   // }
 
   return (
-    <FlexBox sx={{ alignItems: "center", width: MainTitleWidth }}>
+    <FlexBox sx={{ alignItems: 'center', width: MainTitleWidth }}>
       <Button onClick={() => {}} color="info">
         {title}
       </Button>
     </FlexBox>
-  )
+  );
 }

@@ -1,3 +1,4 @@
+import { Container } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -17,19 +18,18 @@ function Header() {
   const MainTitleWidth = 100;
 
   return (
-    // <Box sx={{ width: '100%', position: 'sticky' }} data-pw={`theme-${theme}`}>
-    <Box sx={{ width: '100%', position: 'sticky' }}>
-      <AppBar color="transparent" elevation={1} position="sticky" sx={{ top: 0, paddingX: 0 }}>
+    <AppBar color="default" position="sticky" sx={{ top: 0, paddingX: 0 }}>
+      <Container maxWidth={'md'}>
         <Toolbar
           variant="dense"
           sx={{
             justifyContent: 'space-between',
-            borderBottom: '1px black solid',
+            paddingX: 0,
           }}
+          style={{ padding: 0 }}
         >
           <FlexBox sx={{ columnGap: 1 }}>
             <TitleLogoHeader />
-            {/* <GameSeriesHeader /> */}
           </FlexBox>
 
           <FlexBox sx={{ alignItems: 'center', columnGap: 1 }}>
@@ -38,8 +38,8 @@ function Header() {
             <ProfileHeader />
           </FlexBox>
         </Toolbar>
-      </AppBar>
-    </Box>
+      </Container>
+    </AppBar>
   );
 }
 

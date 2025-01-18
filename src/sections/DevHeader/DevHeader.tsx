@@ -15,6 +15,11 @@ const goto: DevLink[] = [
     name: 'home',
     path: '/',
   },
+
+  {
+    name: '로그인',
+    path: '/auth/login',
+  },
   {
     name: 'dev',
     path: '/dev',

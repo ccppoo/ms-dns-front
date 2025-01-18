@@ -7,12 +7,10 @@ import {
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 
 import DevHeader from '@/sections/DevHeader';
-import Footer from '@/sections/Footer';
-import Footer2 from '@/sections/Footer/Footer2';
+import Footer from '@/sections/Footer/Footer';
 import Header from '@/sections/Header';
 
 interface MyRouterContext {
-  // The ReturnType of your useAuth hook or the value of your AuthContext
   uid?: string;
 }
 
@@ -39,8 +37,7 @@ function RootComponent() {
       <div style={{ minHeight: '100vh' }}>
         <Outlet />
       </div>
-      {/* <Footer /> */}
-      <Footer2 />
+      <Footer />
       <TanStackRouterDevtools />
     </>
   );

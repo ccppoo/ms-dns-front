@@ -1,25 +1,16 @@
-import { MouseEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import ButtonBase from '@mui/material/ButtonBase';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Paper from '@mui/material/Paper';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
-import { height, width } from '@mui/system';
 
 import { Link as RouterLink } from '@tanstack/react-router';
 
 import { logout } from '@/api/authed/logout';
-import { FlexBox } from '@/components/styled';
-import { Image } from '@/components/styled';
+import { FlexBox, Image } from '@/components/styled';
 import useUserProfile from '@/hooks/useUserProfile';
 
 import './border.css';
@@ -32,12 +23,13 @@ export const RouterLinkWrapper = styled(RouterLink)`
 
 function PopoverLogout({ closeMenu }: { closeMenu: () => void }) {
   const [_, { removeUserProfile }] = useUserProfile();
-  // const [authInfo, state, action] = useAuthState();
 
   const handleLogout = async () => {
     console.log(`logout!!`);
     removeUserProfile();
     await logout();
+    // NOTE: 로그아웃하고 쿠키 dep 컴포넌트 바로 변화 감지 못해서 새로고침
+    window.location.reload();
   };
 
   return (

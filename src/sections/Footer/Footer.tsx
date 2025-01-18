@@ -5,7 +5,6 @@ import { Mail, Map, Phone } from '@mui/icons-material';
 import {
   Box,
   Container,
-  Grid,
   IconButton,
   Link,
   Switch,
@@ -14,6 +13,7 @@ import {
   useTheme,
 } from '@mui/material';
 import type { BoxProps, IconButtonProps, LinkProps } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import { styled } from '@mui/system';
 
 interface StyledFooterProps extends BoxProps {
@@ -26,7 +26,7 @@ const StyledFooter = styled(Box, {
   background: darkMode
     ? 'linear-gradient(45deg, #1a237e 30%, #311b92 90%)'
     : 'linear-gradient(45deg, #f5f5f5 30%, #e0e0e0 90%)',
-  padding: theme.spacing(6, 0),
+  padding: theme.spacing(3, 0),
   color: darkMode ? '#fff' : '#333',
   transition: 'all 0.3s ease-in-out',
   boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
@@ -110,69 +110,33 @@ const SmartFooter = () => {
 
   return (
     <StyledFooter darkMode={darkMode}>
-      <Container maxWidth="lg">
+      <Container maxWidth="md">
         <Grid container spacing={4}>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
               About Us
             </Typography>
             <Typography variant="body2" sx={{ mb: 2 }}>
-              We are dedicated to providing innovative solutions and exceptional services to our
-              valued customers worldwide.
+              mc-server는 좋은 서비스 입니다.
             </Typography>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Typography variant="body2" sx={{ mr: 1 }}>
-                Dark Mode
-              </Typography>
-              <Switch
-                checked={darkMode}
-                onChange={handleDarkModeToggle}
-                color="primary"
-                inputProps={{ 'aria-label': 'toggle dark mode' }}
-              />
-            </Box>
           </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
               Contact Info
             </Typography>
             <ContactItem>
               <Map style={{ marginRight: '8px' }} />
-
-              <Typography variant="body2">123 Business Street, NY 10001</Typography>
+              <Typography variant="body2">서울특별시 </Typography>
             </ContactItem>
             <ContactItem>
               <Phone style={{ marginRight: '8px' }} />
-              <Typography variant="body2">+1 234 567 8900</Typography>
+              <Typography variant="body2">전화번호</Typography>
             </ContactItem>
             <ContactItem>
               <Mail style={{ marginRight: '8px' }} />
               <Typography variant="body2">contact@example.com</Typography>
             </ContactItem>
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={3}>
-            <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
-              Follow Us
-            </Typography>
-            <Box>
-              <Tooltip title="Facebook" arrow>
-                <SocialButton aria-label="facebook" darkMode={darkMode}>
-                  <Facebook />
-                </SocialButton>
-              </Tooltip>
-              <Tooltip title="Twitter" arrow>
-                <SocialButton aria-label="twitter" darkMode={darkMode}>
-                  <Twitter />
-                </SocialButton>
-              </Tooltip>
-              <Tooltip title="Instagram" arrow>
-                <SocialButton aria-label="instagram" darkMode={darkMode}>
-                  <Instagram />
-                </SocialButton>
-              </Tooltip>
-            </Box>
           </Grid>
         </Grid>
 
@@ -185,7 +149,7 @@ const SmartFooter = () => {
           }}
         >
           <Typography variant="body2" align="center">
-            © {new Date().getFullYear()} Your Company Name. All rights reserved.
+            © {new Date().getFullYear()} mc-server.kr. All rights reserved.
           </Typography>
         </Box>
       </Container>
