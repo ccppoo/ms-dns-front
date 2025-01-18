@@ -1,16 +1,23 @@
-import { Outlet, createRoute } from '@tanstack/react-router';
+import { Outlet, createRoute, redirect } from '@tanstack/react-router';
 
 import { Route as rootRoute } from '@/routes/__root';
 import Header from '@/sections/Header';
 
 import DomainRegisterPage from './Register';
 
-// import DomainSearchPage from './Search';
-// import { domainSearchParams } from './Search/models';
-
 const domainRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: 'domain',
+  beforeLoad: async ({ location, context }) => {
+    if (!context.uid) {
+      throw redirect({
+        to: '/auth/login',
+        search: {
+          redirect: location.href,
+        },
+      });
+    }
+  },
   component: () => (
     <>
       <Header />
@@ -19,20 +26,12 @@ const domainRoute = createRoute({
   ),
 });
 
-// const domainSearchRoute = createRoute({
-//   getParentRoute: () => domainRoute,
-//   path: '/search',
-//   component: DomainSearchPage,
-//   validateSearch: (search) => domainSearchParams.parse(search),
-// });
-
 const domainRegisterRoute = createRoute({
   getParentRoute: () => domainRoute,
   path: '/register',
   component: DomainRegisterPage,
 });
 
-// domainRoute.addChildren([domainSearchRoute, domainRegisterRoute]);
 domainRoute.addChildren([domainRegisterRoute]);
 
 export default domainRoute;

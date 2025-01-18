@@ -1,4 +1,4 @@
-import { createRoute } from '@tanstack/react-router';
+import { createRoute, redirect } from '@tanstack/react-router';
 
 import CallbackPage from '@/pages/Auth/Callback';
 import LoginPage from '@/pages/Auth/Login';
@@ -7,6 +7,13 @@ import { Route as rootRoute } from '@/routes/__root';
 const authRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: 'auth',
+  beforeLoad: async ({ location, context }) => {
+    if (!!context.uid) {
+      throw redirect({
+        to: '/',
+      });
+    }
+  },
 });
 
 const loginRoute = createRoute({
@@ -14,8 +21,6 @@ const loginRoute = createRoute({
   path: '/login',
   component: LoginPage,
 });
-
-// callback routes by login methods - sso(google, ... etc)
 
 const callbackRoute = createRoute({
   getParentRoute: () => authRoute,

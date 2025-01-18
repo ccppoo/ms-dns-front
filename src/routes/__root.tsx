@@ -1,4 +1,9 @@
-import { Outlet, createRootRoute, createRoute } from '@tanstack/react-router';
+import {
+  Outlet,
+  createRootRoute,
+  createRootRouteWithContext,
+  createRoute,
+} from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 
 import DevHeader from '@/sections/DevHeader';
@@ -6,7 +11,12 @@ import Footer from '@/sections/Footer';
 import Footer2 from '@/sections/Footer/Footer2';
 import Header from '@/sections/Header';
 
-export const Route = createRootRoute({
+interface MyRouterContext {
+  // The ReturnType of your useAuth hook or the value of your AuthContext
+  uid?: string;
+}
+
+export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: RootComponent,
 });
 

@@ -22,6 +22,11 @@ const routeTree = rootRoute.addChildren([
   // editorRoute,
 ]);
 
-const router = createRouter({ routeTree });
+const router = createRouter({
+  routeTree,
+  context: {
+    uid: undefined,
+  },
+});
 
 export default router;

@@ -5,16 +5,17 @@ import MyProfilePage from '@/pages/Me/Profile';
 import { Route as rootRoute } from '@/routes/__root';
 import Header from '@/sections/Header';
 
-const isAuthed = true;
-
 const meRoute = createRoute({
   getParentRoute: () => rootRoute,
-
   path: '/me',
-  beforeLoad: async ({ location }) => {
-    if (!isAuthed) {
+  beforeLoad: async ({ location, context }) => {
+    console.log(`context.uid : ${context.uid}`);
+    if (!context.uid) {
       throw redirect({
         to: '/auth/login',
+        search: {
+          redirect: location.href,
+        },
       });
     }
   },
