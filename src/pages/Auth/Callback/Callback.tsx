@@ -1,13 +1,10 @@
-import { useEffect } from 'react';
-
-import { Box, Button, ButtonBase, Paper, Typography } from '@mui/material';
+import { Button, Paper, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 
 import { useQuery } from '@tanstack/react-query';
-import { useParams, useSearch } from '@tanstack/react-router';
+import { useNavigate, useParams, useSearch } from '@tanstack/react-router';
 
-import { getMyProfile } from '@/api/authed/profile';
-import { FlexBox, FullSizeCenteredFlexBox, Image } from '@/components/styled';
+import { FlexBox, FlexPaper, FullSizeCenteredFlexBox, Image } from '@/components/styled';
 import useUserProfile from '@/hooks/useUserProfile';
 import api from '@/pages/Auth/api';
 
@@ -27,107 +24,155 @@ export default function CallBack() {
   // callback하고 받는 데이터에 user profile 담에서 보내기
   // 여기서 redux에 사용자 정보 저장하기
 
+  const navigate = useNavigate();
+
+  const goBackToHomePage = () => {
+    navigate({
+      to: '/',
+      replace: true,
+    });
+  };
+
   const { data, isLoading, isSuccess, isError } = useQuery({
     queryKey: ['oauth callback', code!],
     queryFn: async () => await api.callbackSSO(SSO_Provider, { code }),
     retry: false,
     enabled: !!code,
   });
-
-  // const { data: profileData, isSuccess: profileDataSucces } = useQuery({
-  //   queryKey: ['get profile'],
-  //   queryFn: async () => await getMyProfile(),
-  //   retry: false,
-  //   enabled: !!isSuccess,
-  // });
-
-  // console.log(`data : ${JSON.stringify(data)}`);
-  // console.log(`searchParams code : ${code}`);
+  const mcserver3 = 'https://cdn.mc-server.kr/static/mc-server-logo-black-450x200.png';
 
   if (isLoading) {
     return (
-      <FullSizeCenteredFlexBox sx={{ alignItems: 'center', justifyContent: 'center' }}>
-        <Paper sx={{ width: 400, height: 600 }}>
-          <FlexBox
+      <Container sx={{ height: '100vh' }} maxWidth={'md'}>
+        <FullSizeCenteredFlexBox sx={{}}>
+          <FlexPaper
             sx={{
-              width: '100%',
+              width: 400,
+              height: 600,
+              flexDirection: 'column',
               alignItems: 'center',
-              justifyContent: 'center',
+              rowGap: 1,
             }}
           >
-            <Typography>Loading...</Typography>
-          </FlexBox>
-        </Paper>
-      </FullSizeCenteredFlexBox>
-    );
-  }
-
-  // // 할 것 - 백엔드에서 Token 또는 인증 성공시 탭 닫기 (원래 이전에 있던 창으로 돌아가기)
-  if (isSuccess && data) {
-    // console.log(`isSuccess`);
-    // data.nickname
-    // console.log(`data : ${JSON.stringify(data)}`);
-    setNickname(data.nickname, data.expires);
-    setProfileImage(data.profileImage, data.expires);
-    setUID(data.uid, data.expires);
-    closeThisTab();
-
-    return (
-      <Container sx={{ height: '100%' }}>
-        <FullSizeCenteredFlexBox sx={{ alignItems: 'center', justifyContent: 'center' }}>
-          <Paper sx={{ width: 400, height: 600 }}>
+            <FlexBox
+              sx={{
+                height: '30%',
+                width: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
+                paddingY: 2,
+                flexDirection: 'column',
+                rowGap: 1,
+              }}
+            >
+              <Image src={mcserver3} sx={{ height: 75, width: 'auto' }} />
+            </FlexBox>
             <FlexBox
               sx={{
                 width: '100%',
+                height: '50%',
+                flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
             >
-              <Typography>Fetching data...</Typography>
+              <Typography variant="h6">로그인하는 중...</Typography>
             </FlexBox>
-          </Paper>
+          </FlexPaper>
         </FullSizeCenteredFlexBox>
       </Container>
     );
   }
 
-  // if (isSuccess && profileDataSucces) {
-  //   console.log(`profileData: ${JSON.stringify(profileData)}`);
-  //   // dispatch(setUserProfile(profileData!));
-  //   // setNickname()
+  // // 할 것 - 백엔드에서 Token 또는 인증 성공시 탭 닫기 (원래 이전에 있던 창으로 돌아가기)
+  if (isSuccess && data) {
+    setNickname(data.nickname, data.expires);
+    setProfileImage(data.profileImage, data.expires);
+    setUID(data.uid, data.expires);
+    goBackToHomePage();
 
-  //   return (
-  //     <Container sx={{ height: '100%' }}>
-  //       <FullSizeCenteredFlexBox sx={{ alignItems: 'center', justifyContent: 'center' }}>
-  //         <Paper sx={{ width: 400, height: 600 }}>
-  //           <FlexBox
-  //             sx={{
-  //               width: '100%',
-  //               alignItems: 'center',
-  //               justifyContent: 'center',
-  //             }}
-  //           >
-  //             <Typography>Good!</Typography>
-  //           </FlexBox>
-  //         </Paper>
-  //       </FullSizeCenteredFlexBox>
-  //     </Container>
-  //   );
-  // }
+    return (
+      <Container sx={{ height: '100vh' }} maxWidth={'md'}>
+        <FullSizeCenteredFlexBox sx={{}}>
+          <FlexPaper
+            sx={{
+              width: 400,
+              height: 600,
+              flexDirection: 'column',
+              alignItems: 'center',
+              rowGap: 1,
+            }}
+          >
+            <FlexBox
+              sx={{
+                height: '30%',
+                width: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
+                paddingY: 2,
+                flexDirection: 'column',
+                rowGap: 1,
+              }}
+            >
+              <Image src={mcserver3} sx={{ height: 75, width: 'auto' }} />
+            </FlexBox>
+            <FlexBox
+              sx={{
+                width: '100%',
+                height: '50%',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Typography variant="h6">로그인 성공!</Typography>
+            </FlexBox>
+          </FlexPaper>
+        </FullSizeCenteredFlexBox>
+      </Container>
+    );
+  }
+
   return (
-    <Container sx={{ height: '100%' }}>
-      <FullSizeCenteredFlexBox sx={{ alignItems: 'center', justifyContent: 'center' }}>
-        <Paper sx={{ width: 400, height: 600 }}>
+    <Container sx={{ height: '100vh' }} maxWidth={'md'}>
+      <FullSizeCenteredFlexBox sx={{}}>
+        <FlexPaper
+          sx={{
+            width: 400,
+            height: 600,
+            flexDirection: 'column',
+            alignItems: 'center',
+            rowGap: 1,
+          }}
+        >
+          <FlexBox
+            sx={{
+              height: '30%',
+              width: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+              paddingY: 2,
+              flexDirection: 'column',
+              rowGap: 1,
+            }}
+          >
+            <Image src={mcserver3} sx={{ height: 75, width: 'auto' }} />
+          </FlexBox>
           <FlexBox
             sx={{
               width: '100%',
+              height: '50%',
+              flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
             }}
           >
-            <Typography>Problem with login</Typography>
+            <Typography variant="h6">로그인 과정에서 문제가 발생했습니다</Typography>
+            <Button variant="outlined" onClick={goBackToHomePage}>
+              홈페이지로 돌아가기
+            </Button>
           </FlexBox>
-        </Paper>
+        </FlexPaper>
       </FullSizeCenteredFlexBox>
     </Container>
   );

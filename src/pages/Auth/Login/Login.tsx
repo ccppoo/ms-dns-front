@@ -1,7 +1,7 @@
-import { Box, Button, ButtonBase, Paper, Typography } from '@mui/material';
+import { Button, Divider, Paper, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 
-import { FlexBox, FullSizeCenteredFlexBox, Image } from '@/components/styled';
+import { FlexBox, FlexPaper, FullSizeCenteredFlexBox, Image } from '@/components/styled';
 import api from '@/pages/Auth/api';
 
 const openInNewTab = (url: string): void => {
@@ -9,72 +9,142 @@ const openInNewTab = (url: string): void => {
   if (newWindow) newWindow.opener = null;
 };
 
-function SSOLoginButton({ sso }: { sso: string }) {
-  const onClickLogin = async () => {
-    const url = await api.getLoginSSO(sso);
-    console.log(`url : ${url.data}`);
-    openInNewTab(url.data);
-    return;
-  };
+function DiscordLoginButton() {
+  const discord = 'https://cdn.mc-server.kr/static/discord-mark-white.png';
+
+  const iconSize = 50;
+  const borderRadius = 2;
+  const color = '#5865F2';
+  return (
+    <Paper
+      sx={{
+        display: 'flex',
+        borderRadius: borderRadius,
+        padding: 0.5,
+        width: 300,
+        justifyContent: 'center',
+        alignItems: 'center',
+        columnGap: 1,
+        backgroundColor: color,
+      }}
+      elevation={3}
+    >
+      <FlexBox sx={{ minWidth: 65, justifyContent: 'center', alignItems: 'center' }}>
+        <Image
+          src={discord}
+          sx={{
+            height: iconSize,
+            width: 'auto',
+            borderRadius: borderRadius,
+            padding: 1,
+          }}
+        />
+      </FlexBox>
+      <FlexBox sx={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+        <Typography fontSize={24} color="white">
+          DISCORD
+        </Typography>
+      </FlexBox>
+    </Paper>
+  );
+}
+
+function GoogleLoginButton() {
+  const google = 'https://cdn.mc-server.kr/static/google.png';
 
   const iconSize = 50;
   const borderRadius = 2;
   return (
-    <Button onClick={onClickLogin}>
-      <Paper
-        sx={{
-          display: 'flex',
-          borderRadius: borderRadius,
-          padding: 1,
-          width: 350,
-          justifyContent: 'center',
-          alignItems: 'center',
-          columnGap: 1,
-        }}
-      >
+    <Paper
+      sx={{
+        display: 'flex',
+        borderRadius: borderRadius,
+        padding: 0.5,
+        width: 300,
+        justifyContent: 'center',
+        alignItems: 'center',
+        columnGap: 1,
+      }}
+      elevation={3}
+    >
+      <FlexBox sx={{ minWidth: 65, justifyContent: 'center', alignItems: 'center' }}>
         <Image
-          // src={xboxIcon}
+          src={google}
           sx={{
-            width: iconSize,
             height: iconSize,
+            width: 'auto',
             borderRadius: borderRadius,
+            padding: 1,
           }}
         />
-        <FlexBox sx={{ width: '100%', justifyContent: 'center' }}>
-          <Typography fontSize={24}>Login as {sso.toUpperCase()}</Typography>
-        </FlexBox>
-      </Paper>
-    </Button>
+      </FlexBox>
+      <FlexBox sx={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+        <Typography fontSize={24} textTransform={'none'}>
+          Google
+        </Typography>
+      </FlexBox>
+    </Paper>
   );
 }
 
+function SSOLoginButton({ sso, children }: { sso: string; children: JSX.Element }) {
+  const onClickLogin = async () => {
+    const url = await api.getLoginSSO(sso);
+    window.location.href = url.data;
+    return;
+  };
+
+  return <Button onClick={onClickLogin}>{children}</Button>;
+}
+
 export default function Login() {
+  const mcserver = 'https://cdn.mc-server.kr/static/mc-server-logo-200x200.png';
+  const mcserver2 = 'https://cdn.mc-server.kr/static/mc-server-logo-450x200.png';
+  const mcserver3 = 'https://cdn.mc-server.kr/static/mc-server-logo-black-450x200.png';
+
   return (
-    <Container sx={{ height: '100%' }} maxWidth={'md'}>
-      <FullSizeCenteredFlexBox sx={{ alignItems: 'center', justifyContent: 'center' }}>
-        <Paper sx={{ width: 400, height: 600 }}>
+    <Container sx={{ height: '100vh' }} maxWidth={'md'}>
+      <FullSizeCenteredFlexBox sx={{}}>
+        <FlexPaper
+          sx={{ width: 400, height: 600, flexDirection: 'column', alignItems: 'center', rowGap: 1 }}
+        >
           <FlexBox
             sx={{
+              height: '30%',
               width: '100%',
               alignItems: 'center',
               justifyContent: 'center',
+              paddingY: 2,
+              flexDirection: 'column',
+              rowGap: 1,
             }}
           >
-            <Typography>로그인</Typography>
+            <Image src={mcserver3} sx={{ height: 75, width: 'auto' }} />
+            <Typography variant="h6">로그인</Typography>
           </FlexBox>
           <FlexBox
             sx={{
               width: '100%',
-              height: '100%',
+              height: '50%',
               flexDirection: 'column',
               alignItems: 'center',
-              justifyContent: 'center',
+              justifyContent: 'end',
             }}
           >
-            <SSOLoginButton sso="google" />
-            <SSOLoginButton sso="discord" />
+            <SSOLoginButton sso="google">
+              <GoogleLoginButton />
+            </SSOLoginButton>
+            <SSOLoginButton sso="discord">
+              <DiscordLoginButton />
+            </SSOLoginButton>
           </FlexBox>
-        </Paper>
+
+          <FlexBox
+            sx={{ width: '100%', height: '20%', flexDirection: 'column', alignItems: 'center' }}
+          >
+            <Divider orientation="horizontal" sx={{ width: '80%' }} />
+          </FlexBox>
+        </FlexPaper>
       </FullSizeCenteredFlexBox>
     </Container>
   );
