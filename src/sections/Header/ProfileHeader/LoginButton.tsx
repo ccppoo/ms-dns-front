@@ -6,8 +6,6 @@ import { Link as RouterLink } from '@tanstack/react-router';
 
 import { FlexBox } from '@/components/styled';
 
-import './border.css';
-
 export const RouterLinkWrapper = styled(RouterLink)`
   text-decoration: none;
   color: inherit;

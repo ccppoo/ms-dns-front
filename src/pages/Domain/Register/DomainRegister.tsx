@@ -42,7 +42,7 @@ export default function DomainRegister() {
       // port: 25565,
     };
     return (
-      <Container sx={{ height: '100%' }} maxWidth={'lg'}>
+      <Container sx={{ height: '100%' }} maxWidth={'md'}>
         <DomainRegisterFormProvider data={defaultData}>
           <FlexBox sx={{ flexDirection: 'column', rowGap: 2, paddingY: 3 }}>
             <DomainSearchBar availableDomains={availableDomains.domains} />

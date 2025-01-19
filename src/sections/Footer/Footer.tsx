@@ -1,17 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-import { Facebook, Instagram, Twitter } from '@mui/icons-material';
 import { Mail, Map, Phone } from '@mui/icons-material';
-import {
-  Box,
-  Container,
-  IconButton,
-  Link,
-  Switch,
-  Tooltip,
-  Typography,
-  useTheme,
-} from '@mui/material';
+import { Box, Container, IconButton, Link, Typography, useTheme } from '@mui/material';
 import type { BoxProps, IconButtonProps, LinkProps } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { styled } from '@mui/system';

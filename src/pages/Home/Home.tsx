@@ -6,32 +6,9 @@ import { Link } from '@tanstack/react-router';
 import { FlexBox } from '@/components/styled';
 import { Image } from '@/components/styled';
 
-const TEMP_IMAGE = 'https://cdn.mc-server.kr/static/mc-server-logo-200x200.png';
+import SearchDomain from './SearchDomain';
 
-function SearchDomain() {
-  return (
-    <FlexBox
-      sx={{
-        height: 200,
-        backgroundColor: 'greenyellow',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <FlexBox
-        sx={{
-          backgroundColor: 'white',
-          width: '60%',
-          height: 50,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Typography>도메인 검색</Typography>
-      </FlexBox>
-    </FlexBox>
-  );
-}
+const TEMP_IMAGE = 'https://cdn.mc-server.kr/static/mc-server-logo-200x200.png';
 
 function ServerBanner() {
   const serverName = '7percent MC server';

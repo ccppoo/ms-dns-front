@@ -10,8 +10,6 @@ import AppErrorBoundaryFallback from '@/error-handling/fallbacks/App';
 import pageRoutes from '@/routes';
 import Notifications from '@/sections/Notifications';
 
-import useUserProfile from './hooks/useUserProfile';
-
 function App() {
   const [cookies] = useCookies(['uid']);
   const { uid } = cookies;
@@ -19,8 +17,6 @@ function App() {
     <Fragment>
       <CssBaseline />
       <Notifications />
-      {/* <HotKeys /> */}
-      {/* <SW /> */}
       <RouterProvider router={pageRoutes} context={{ uid }} />
     </Fragment>
   );
