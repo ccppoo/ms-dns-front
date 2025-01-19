@@ -447,7 +447,7 @@ export default function MyDomain() {
   // console.log(`data : ${JSON.stringify(data)}`);
 
   return (
-    <Container sx={{ height: '100%' }} maxWidth={'lg'}>
+    <Container sx={{ height: '100%' }} maxWidth={'md'}>
       <FlexBox sx={{ flexDirection: 'column', rowGap: 2, paddingY: 3 }}>
         <FlexBox sx={{ flexDirection: 'column' }}>
           <FlexBox>

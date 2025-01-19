@@ -1,12 +1,6 @@
-import {
-  Outlet,
-  createRootRoute,
-  createRootRouteWithContext,
-  createRoute,
-} from '@tanstack/react-router';
+import { Outlet, createRootRouteWithContext, createRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 
-import DevHeader from '@/sections/DevHeader';
 import Footer from '@/sections/Footer/Footer';
 import Header from '@/sections/Header';
 
@@ -33,7 +27,6 @@ const headerRoute = createRoute({
 function RootComponent() {
   return (
     <>
-      <DevHeader />
       <div style={{ minHeight: '100vh' }}>
         <Outlet />
       </div>

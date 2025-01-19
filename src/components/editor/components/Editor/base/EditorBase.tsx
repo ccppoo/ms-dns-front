@@ -1,15 +1,13 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import { Box, Button, Paper } from '@mui/material';
+import { Box } from '@mui/material';
 
 import EditorJS, { API, BlockMutationEvent } from '@editorjs/editorjs';
-import type { BlockMovedEvent, EditorConfig } from '@editorjs/editorjs';
+import type { EditorConfig } from '@editorjs/editorjs';
 
 // @ts-ignore
 // import DragDrop from 'editorjs-drag-drop';
-import * as editorjs from '@/FormData/editorjs';
 import type { BoardImageUploadType, UploadByFileType } from '@/api/image/postImageUpload';
-import { FlexBox } from '@/components/styled';
 
 import getEditorConfig from '../config';
 import '../editor.css';

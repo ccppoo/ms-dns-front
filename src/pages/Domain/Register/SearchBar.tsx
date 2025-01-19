@@ -1,22 +1,17 @@
-import { useEffect, useState } from 'react';
-import { FormProvider, useForm, useFormContext } from 'react-hook-form';
-import type { FieldPath, FieldValues, PathValue } from 'react-hook-form';
+import { useState } from 'react';
+import { useFormContext } from 'react-hook-form';
+import type { FieldPath } from 'react-hook-form';
 
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { TextField, Typography } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
-import Container from '@mui/material/Container';
 import InputAdornment from '@mui/material/InputAdornment';
 import MenuItem from '@mui/material/MenuItem';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-import { useQuery } from '@tanstack/react-query';
 import { z } from 'zod';
 
-import { FlexBox, FlexPaper, FullSizeCenteredFlexBox } from '@/components/styled';
-import { Image } from '@/components/styled';
+import { FlexBox, FlexPaper } from '@/components/styled';
 
 import api from '../api';
 import type { RegisterDomain } from '../models';

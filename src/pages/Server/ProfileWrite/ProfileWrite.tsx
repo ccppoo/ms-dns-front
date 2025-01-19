@@ -1,19 +1,9 @@
-import { useEffect, useRef } from 'react';
-
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import { Button, ButtonBase, Chip, Divider, Paper, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from '@tanstack/react-router';
-import { Link } from '@tanstack/react-router';
 
 import ServerProfileEditor from '@/components/editor/ServerPostEditor';
-import { FlexBox, FlexPaper } from '@/components/styled';
-import { ExternalLink, ExternalLinkNewTab, Image } from '@/components/styled';
-import { icon, sample } from '@/static';
-
-const TEMP_IMAGE = 'https://cdn.mc-server.kr/static/mc-server-logo-200x200.png';
+import { FlexBox } from '@/components/styled';
 
 export default function ServerProfileWrite() {
   // const serverID = useParams({

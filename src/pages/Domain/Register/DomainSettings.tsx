@@ -1,15 +1,9 @@
-import { useEffect } from 'react';
-import { FormProvider, useForm, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import type { FieldPath, FieldValues, PathValue } from 'react-hook-form';
 
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { TextField, Typography } from '@mui/material';
-import Container from '@mui/material/Container';
-import InputAdornment from '@mui/material/InputAdornment';
-import OutlinedInput from '@mui/material/OutlinedInput';
 
-import { FlexBox, FlexPaper, FullSizeCenteredFlexBox } from '@/components/styled';
-import { Image } from '@/components/styled';
+import { FlexBox, FlexPaper } from '@/components/styled';
 
 import type { RegisterDomain } from '../models';
 

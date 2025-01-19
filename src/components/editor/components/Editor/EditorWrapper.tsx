@@ -1,18 +1,12 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useFieldArray, useFormContext } from 'react-hook-form';
-import type { FieldArrayPath, FieldPath, PathValue } from 'react-hook-form';
-
-import { Box, Button, Paper } from '@mui/material';
+import { useFormContext } from 'react-hook-form';
+import type { FieldPath, PathValue } from 'react-hook-form';
 
 import { API, BlockMutationEvent } from '@editorjs/editorjs';
 
 import { uploadImage } from '@/api/image/postImageUpload';
-import { FlexBox } from '@/components/styled';
 import useUserProfile from '@/hooks/useUserProfile';
 
-import { outputSchema } from '../../models';
-import type { OutputBlockDataType, OutputDataSchemaType, OutputSchemaType } from '../../models';
-import boardImageAPI from './api';
+import type { OutputDataSchemaType } from '../../models';
 import EditorBase from './base/EditorBase';
 import dispatchChangeEvent from './config/eventHandlers';
 import type { onChangeEditorJS } from './types';

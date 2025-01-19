@@ -1,21 +1,10 @@
-import { ReactElement, createContext, useContext, useEffect, useMemo, useState } from 'react';
-
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import { TextField, Typography } from '@mui/material';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
-import InputAdornment from '@mui/material/InputAdornment';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import Step from '@mui/material/Step';
-import StepButton from '@mui/material/StepButton';
-import Stepper from '@mui/material/Stepper';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { FlexBox, FlexPaper, FullSizeCenteredFlexBox } from '@/components/styled';
-import { Image } from '@/components/styled';
+import { FlexBox } from '@/components/styled';
 
 import api from '../api';
 import type { RegisterDomainInput } from '../models';

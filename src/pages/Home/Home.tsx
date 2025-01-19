@@ -1,11 +1,9 @@
-import { useEffect } from 'react';
-
 import { Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 
 import { Link } from '@tanstack/react-router';
 
-import { FlexBox, FullSizeCenteredFlexBox } from '@/components/styled';
+import { FlexBox } from '@/components/styled';
 import { Image } from '@/components/styled';
 
 const TEMP_IMAGE = 'https://cdn.mc-server.kr/static/mc-server-logo-200x200.png';

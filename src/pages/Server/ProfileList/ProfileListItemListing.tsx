@@ -1,17 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
-
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import { Box, Button, ButtonBase, Chip, Divider, Paper, Typography } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
-import Container from '@mui/material/Container';
-import Pagination from '@mui/material/Pagination';
+import { Box, Chip, Typography } from '@mui/material';
 
 import { useQuery } from '@tanstack/react-query';
-import { Link, useParams, useSearch } from '@tanstack/react-router';
+import { Link } from '@tanstack/react-router';
 
 import { FlexBox, FlexPaper, Image } from '@/components/styled';
-import { icon, sample } from '@/static';
 
 import api from '../api';
 import type { ServerProfileListing } from '../models';
