@@ -1,19 +1,6 @@
-import { MouseEvent, useEffect, useState } from 'react';
-
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import Avatar from '@mui/material/Avatar';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import ButtonBase from '@mui/material/ButtonBase';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Paper from '@mui/material/Paper';
-import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
-import { height, width } from '@mui/system';
 
 import { Link as RouterLink } from '@tanstack/react-router';
 

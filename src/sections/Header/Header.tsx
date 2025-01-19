@@ -5,11 +5,8 @@ import Toolbar from '@mui/material/Toolbar';
 
 import { FlexBox } from '@/components/styled';
 
-// import useTheme from '@/store/theme';
-import MenuNavigation from './MenuNavigation';
 import ProfileHeader from './ProfileHeader';
-import GameSeriesHeader from './components/GameSeries';
-import LanguageHeader from './components/Language';
+import MenuNavigation from './components/MenuNavigation';
 import ThemeHeader from './components/Theme';
 import TitleLogoHeader from './components/TitleLogo';
 
@@ -28,12 +25,12 @@ function Header() {
           }}
           style={{ padding: 0 }}
         >
-          <FlexBox sx={{ columnGap: 1 }}>
+          <FlexBox sx={{ columnGap: 2 }}>
             <TitleLogoHeader />
+            <MenuNavigation />
           </FlexBox>
 
           <FlexBox sx={{ alignItems: 'center', columnGap: 1 }}>
-            <LanguageHeader />
             <ThemeHeader />
             <ProfileHeader />
           </FlexBox>

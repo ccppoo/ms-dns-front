@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
+import { Button, Divider } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import ButtonBase from '@mui/material/ButtonBase';
@@ -10,7 +11,7 @@ import { styled } from '@mui/material/styles';
 import { Link as RouterLink } from '@tanstack/react-router';
 
 import { logout } from '@/api/authed/logout';
-import { FlexBox, Image } from '@/components/styled';
+import { FlexBox, FlexPaper, Image } from '@/components/styled';
 import useUserProfile from '@/hooks/useUserProfile';
 
 import './border.css';
@@ -21,8 +22,12 @@ export const RouterLinkWrapper = styled(RouterLink)`
   position: relative;
 `;
 
-function PopoverLogout({ closeMenu }: { closeMenu: () => void }) {
+function PopoverTop({ closeMenu }: { closeMenu: () => void }) {
   const [_, { removeUserProfile }] = useUserProfile();
+
+  const mcserver = 'https://cdn.mc-server.kr/static/mc-server-logo-200x200.png';
+  const mcserver2 = 'https://cdn.mc-server.kr/static/mc-server-logo-450x200.png';
+  const mcserver3 = 'https://cdn.mc-server.kr/static/mc-server-logo-black-450x200.png';
 
   const handleLogout = async () => {
     console.log(`logout!!`);
@@ -33,12 +38,13 @@ function PopoverLogout({ closeMenu }: { closeMenu: () => void }) {
   };
 
   return (
-    <Box
+    <FlexBox
       sx={{
-        display: 'grid',
         height: 45,
-        gridTemplateColumns: '3fr 2fr 3fr',
         cursor: 'default',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingX: 1,
       }}
     >
       <FlexBox
@@ -46,29 +52,25 @@ function PopoverLogout({ closeMenu }: { closeMenu: () => void }) {
           height: '100%',
           justifyContent: 'center',
           alignItems: 'center',
+          padding: 1,
         }}
       >
-        로고
+        <Image src={mcserver3} sx={{ height: 30, width: 'auto' }} />
       </FlexBox>
-      <Box></Box>
       <FlexBox sx={{ padding: 0.1 }}>
-        <FlexBox
-          className="gradient"
-          sx={{
-            width: '100%',
-            height: '100%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
+        <Button
+          color="error"
+          variant="contained"
           onClick={() => {
             closeMenu();
             handleLogout();
           }}
+          size="small"
         >
-          <Typography textAlign="center">로그아웃</Typography>
-        </FlexBox>
+          로그아웃
+        </Button>
       </FlexBox>
-    </Box>
+    </FlexBox>
   );
 }
 
@@ -104,9 +106,13 @@ function PopoverProfilePortal({ closeMenu }: { closeMenu: () => void }) {
         <Typography variant="subtitle1" fontWeight={500}>
           {userProfile.nickname as string}
         </Typography>
-        <RouterLinkWrapper to={'/me/profile'}>
-          <Typography>내 프로필</Typography>
-        </RouterLinkWrapper>
+        <FlexBox>
+          <FlexPaper sx={{ padding: 0.3 }}>
+            <RouterLinkWrapper to={'/me/profile'}>
+              <Typography>내 프로필</Typography>
+            </RouterLinkWrapper>
+          </FlexPaper>
+        </FlexBox>
       </FlexBox>
     </Box>
   );
@@ -114,9 +120,6 @@ function PopoverProfilePortal({ closeMenu }: { closeMenu: () => void }) {
 
 export default function UserProfile() {
   const [userProfile, {}] = useUserProfile();
-
-  // const userName = profile.gamerTag;
-  // const userIcon = profile.profileImage;
 
   const avatarSize = 32;
   const size = { width: avatarSize, height: avatarSize };
@@ -167,7 +170,7 @@ export default function UserProfile() {
       </FlexBox>
       <Popover
         id="menu-appbar"
-        sx={{ mt: '40px' }}
+        sx={{ mt: '35px' }}
         anchorEl={anchorElUser}
         anchorOrigin={{
           vertical: 'top',
@@ -189,7 +192,8 @@ export default function UserProfile() {
             flexDirection: 'column',
           }}
         >
-          <PopoverLogout closeMenu={handleCloseUserMenu} />
+          <PopoverTop closeMenu={handleCloseUserMenu} />
+          <Divider flexItem />
           <PopoverProfilePortal closeMenu={handleCloseUserMenu} />
         </FlexBox>
       </Popover>
