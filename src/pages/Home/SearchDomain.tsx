@@ -52,7 +52,7 @@ export default function SearchDomain() {
                     <SearchOutlinedIcon />
                   </InputAdornment>
                 ),
-                endAdornment: <InputAdornment position="end">mc-server.kr</InputAdornment>,
+                endAdornment: <InputAdornment position="end">.mc-server.kr</InputAdornment>,
               },
             }}
             variant="outlined"

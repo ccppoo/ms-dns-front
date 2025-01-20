@@ -1,6 +1,6 @@
 import API from '@/api';
 
-import type { AvailableDomains, RegisterDomain } from './models';
+import type { AvailableDomains, RegisterDomain, ServerProfileListing } from './models';
 
 async function getPostEditMode({ queryKey }: { queryKey: string[] }) {
   const resp = await API.get(`/healthcheck`);
@@ -23,6 +23,16 @@ async function getAvailableDomains({
   queryKey: string[];
 }): Promise<AvailableDomains> {
   const resp = await API.get<AvailableDomains>(`/domain/available`);
+  return resp.data;
+}
+
+async function getHomeServerProfiles({
+  queryKey,
+}: {
+  queryKey: [string, string];
+}): Promise<ServerProfileListing[]> {
+  const [_, userID] = queryKey;
+  const resp = await API.get<ServerProfileListing[]>(`/server/profile/list?order=time_desc`);
   return resp.data;
 }
 
@@ -68,6 +78,7 @@ export default {
     getPostReadMode,
     getPostCreateMode,
     getAvailableDomains,
+    getHomeServerProfiles,
   },
   query: {
     getDomainStatus,

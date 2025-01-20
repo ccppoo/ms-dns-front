@@ -7,6 +7,8 @@ import { FlexBox } from '@/components/styled';
 import { Image } from '@/components/styled';
 
 import SearchDomain from './SearchDomain';
+import ServerList from './ServerList';
+import ServerTags from './ServerTags';
 
 const TEMP_IMAGE = 'https://cdn.mc-server.kr/static/mc-server-logo-200x200.png';
 
@@ -99,63 +101,6 @@ function ServerFilterShortcut() {
   );
 }
 
-function ServerCategoryShortcut() {
-  const category = ['RPG', '마인팜', '경제', '바닐라', '건축', '전쟁', 'PvP', '미니게임'];
-
-  return (
-    <FlexBox
-      sx={{
-        height: 80,
-        backgroundColor: '#99ccff',
-        justifyContent: 'center',
-        alignItems: 'center',
-        columnGap: 2,
-      }}
-    >
-      {category.map((cat, idx) => (
-        <FlexBox
-          sx={{
-            backgroundColor: 'white',
-            width: '10%',
-            height: 30,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-          key={idx}
-        >
-          <Typography>{cat}</Typography>
-        </FlexBox>
-      ))}
-    </FlexBox>
-  );
-}
-
-function ServerList() {
-  return (
-    <FlexBox
-      sx={{
-        height: 200,
-        backgroundColor: '#99ff99',
-        justifyContent: 'center',
-        // alignItems: 'center',
-        paddingY: 1,
-      }}
-    >
-      <FlexBox
-        sx={{
-          backgroundColor: 'white',
-          width: '60%',
-          height: 30,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Typography>서버 리스트</Typography>
-      </FlexBox>
-    </FlexBox>
-  );
-}
-
 export default function Home() {
   return (
     <Container sx={{ height: '100%' }} maxWidth={'md'}>
@@ -167,10 +112,10 @@ export default function Home() {
         }}
       >
         <SearchDomain />
-        <ServerTopList />
-        <ServerFilterShortcut />
-        <ServerCategoryShortcut />
         <ServerList />
+        <ServerFilterShortcut />
+        <ServerTags />
+        <ServerTopList />
       </FlexBox>
     </Container>
   );
