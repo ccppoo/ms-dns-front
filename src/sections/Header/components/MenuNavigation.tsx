@@ -52,8 +52,8 @@ export default function TitleLogoHeader() {
       path: '/server/list',
     },
     {
-      name: '도메인 ',
-      path: '/domain',
+      name: '도메인 검색',
+      path: '/domain/search',
     },
 
     {
