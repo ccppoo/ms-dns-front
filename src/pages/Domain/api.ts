@@ -26,6 +26,18 @@ async function getAvailableDomains({
   return resp.data;
 }
 
+async function getDomainAvailable({
+  queryKey,
+}: {
+  queryKey: string[];
+}): Promise<DomainAvailableAsk> {
+  const [, domain, subdomain] = queryKey;
+  const resp = await API.get<DomainAvailableAsk>(
+    `/domain/check?domain=${domain}&subdomain=${subdomain}`,
+  );
+  return resp.data;
+}
+
 type DomainStatus = {
   used: number;
   allowed: number;
@@ -68,6 +80,7 @@ export default {
     getPostReadMode,
     getPostCreateMode,
     getAvailableDomains,
+    getDomainAvailable,
   },
   query: {
     getDomainStatus,
