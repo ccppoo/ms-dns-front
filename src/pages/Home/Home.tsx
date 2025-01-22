@@ -113,7 +113,7 @@ export default function Home() {
       >
         <SearchDomain />
         <ServerList />
-        <ServerFilterShortcut />
+        {/* <ServerFilterShortcut /> */}
         <ServerTags />
         <ServerTopList />
       </FlexBox>

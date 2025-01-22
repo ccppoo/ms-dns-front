@@ -13,7 +13,6 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Tooltip from '@mui/material/Tooltip';
 
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from '@tanstack/react-router';
 
 import { refetchQuery } from '@/api';
 import { FlexBox, FlexPaper, Image } from '@/components/styled';
