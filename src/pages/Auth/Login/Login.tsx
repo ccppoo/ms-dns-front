@@ -1,6 +1,9 @@
 import { Button, Divider, Paper, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 
+import { useSearch } from '@tanstack/react-router';
+import { useLocalStorage } from '@uidotdev/usehooks';
+
 import { FlexBox, FlexPaper, FullSizeCenteredFlexBox, Image } from '@/components/styled';
 import api from '@/pages/Auth/api';
 
@@ -102,6 +105,15 @@ export default function Login() {
   const mcserver2 = 'https://cdn.mc-server.kr/static/mc-server-logo-450x200.png';
   const mcserver3 = 'https://cdn.mc-server.kr/static/mc-server-logo-black-450x200.png';
 
+  const [loginRedirect, setLoginRedirect] = useLocalStorage<string | null>('loginRedirect', null);
+
+  const redirectPath = useSearch({
+    from: '/auth/login',
+    select: (param) => param.redirect,
+  });
+  if (redirectPath) {
+    setLoginRedirect(redirectPath);
+  }
   return (
     <Container sx={{ height: '100vh' }} maxWidth={'md'}>
       <FullSizeCenteredFlexBox sx={{}}>

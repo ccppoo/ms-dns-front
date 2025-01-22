@@ -1,16 +1,15 @@
+import { useEffect, useState } from 'react';
+
 import { Button, Paper, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate, useParams, useSearch } from '@tanstack/react-router';
+import { useLocalStorage } from '@uidotdev/usehooks';
 
 import { FlexBox, FlexPaper, FullSizeCenteredFlexBox, Image } from '@/components/styled';
 import useUserProfile from '@/hooks/useUserProfile';
 import api from '@/pages/Auth/api';
-
-const closeThisTab = (): void => {
-  window.close();
-};
 
 export default function CallBack() {
   const SSO_Provider = useParams({
@@ -20,9 +19,9 @@ export default function CallBack() {
   const { code } = useSearch({
     strict: false,
   });
-  const [_, { setNickname, setProfileImage, setUID }] = useUserProfile();
-  // callback하고 받는 데이터에 user profile 담에서 보내기
-  // 여기서 redux에 사용자 정보 저장하기
+  const [loginRedirect, setLoginRedirect] = useLocalStorage<string | null>('loginRedirect', null);
+
+  const [, { setNickname, setProfileImage, setUID }] = useUserProfile();
 
   const navigate = useNavigate();
 
@@ -39,6 +38,20 @@ export default function CallBack() {
     retry: false,
     enabled: !!code,
   });
+
+  useEffect(() => {
+    if (isSuccess) {
+      setNickname(data.nickname, data.expires);
+      setProfileImage(data.profileImage, data.expires);
+      setUID(data.uid, data.expires);
+      const timeoutId = setTimeout(() => {
+        navigate({ to: loginRedirect || '/' }); // Replace '/home' with the desired route
+      }, 1500);
+
+      return () => clearTimeout(timeoutId); // Cleanup timeout
+    }
+  }, [navigate, data, isSuccess]);
+
   const mcserver3 = 'https://cdn.mc-server.kr/static/mc-server-logo-black-450x200.png';
 
   if (isLoading) {
@@ -84,13 +97,7 @@ export default function CallBack() {
     );
   }
 
-  // // 할 것 - 백엔드에서 Token 또는 인증 성공시 탭 닫기 (원래 이전에 있던 창으로 돌아가기)
-  if (isSuccess && data) {
-    setNickname(data.nickname, data.expires);
-    setProfileImage(data.profileImage, data.expires);
-    setUID(data.uid, data.expires);
-    goBackToHomePage();
-
+  if (isSuccess) {
     return (
       <Container sx={{ height: '100vh' }} maxWidth={'md'}>
         <FullSizeCenteredFlexBox sx={{}}>
