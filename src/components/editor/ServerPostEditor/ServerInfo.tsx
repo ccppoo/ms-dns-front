@@ -16,6 +16,7 @@ import TextField from '@mui/material/TextField';
 
 import { join } from 'path';
 
+import { uploadMCServerIcon } from '@/api/image/mcServerIconUpload';
 import { uploadImage } from '@/api/image/postImageUpload';
 import { FlexBox, FlexPaper, Image, VisuallyHiddenInput } from '@/components/styled';
 import { rangeArray } from '@/utils/itertools';
@@ -152,25 +153,37 @@ function ServerLogo() {
 
   const default_icon = 'https://cdn.mc-server.kr/static/mc-server-logo-200x200.png';
   const server_logo = methods.watch('server_info.server_logo');
-  // const is_default = imagePreview == default_icon;
+  const [imageInfoMsg, setImageInfoMsg] = React.useState<string>('');
 
   const handleUploadClick = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setImageInfoMsg('');
     e.preventDefault();
     e.persist();
     if (!e.target.files) return;
     const selectedFile = e.target.files[0];
-    const { success, file: file_ } = await uploadImage(selectedFile);
+    // setImageFileBuffer(selectedFile);
+    // const temp = URL.createObjectURL(selectedFile);
+    // methods.setValue('server_info.server_logo', temp);
+
+    console.log(`이미지 업로드 중..`);
+    const { success, file: file_ } = await uploadMCServerIcon(selectedFile);
     if (success != 1) {
+      // console.log(`에러!`);
+      setImageInfoMsg('이미지 사이즈 형식이 옯바르지 않습니다.');
       return;
     }
     const { url } = file_;
-    // const image_to_upload = URL.createObjectURL(selectedFile);
     methods.setValue('server_info.server_logo', url);
+    return;
+
+    return;
   };
 
   const onClickRemoveImage = () => {
     methods.setValue('server_info.server_logo', undefined);
   };
+
+  console.log(`server_logo : ${server_logo}`);
 
   return (
     <FlexBox sx={{}}>
@@ -196,7 +209,10 @@ function ServerLogo() {
       </FlexBox>
       <Divider flexItem orientation="vertical" />
       <FlexBox sx={{ flexDirection: 'column', width: '100%', paddingY: 1 }}>
-        <FlexBox sx={{ height: '100%' }}>설명란</FlexBox>
+        <FlexBox sx={{ height: '100%', flexDirection: 'column' }}>
+          <Typography>아이콘은 PNG 형식이여야하며, 64x64 사이즈이여야 합니다.</Typography>
+          {imageInfoMsg && <Typography color="red">{imageInfoMsg}</Typography>}
+        </FlexBox>
         <FlexBox sx={{ width: '100%', justifyContent: 'end', columnGap: 1 }}>
           <Button
             color="error"
@@ -243,8 +259,8 @@ function ServerLogo() {
                   name={name}
                   onBlur={onBlur}
                   type="file"
-                  multiple
-                  accept=".jpg, .jpeg, .png, .webp, .svg"
+                  multiple={false}
+                  accept=".png"
                   onChange={(e) => {
                     handleUploadClick(e);
                     methods.trigger('server_info.server_logo');
