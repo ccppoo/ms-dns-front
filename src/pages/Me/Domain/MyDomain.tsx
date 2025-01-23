@@ -349,10 +349,10 @@ function SubdomainItem({ userSubdomain }: { userSubdomain: UserSubdomainInfo }) 
     console.log(`isChanged  :${isChanged}`);
     console.log(`data : ${JSON.stringify(allValues)}`);
     // NOTE: if not changed, do nothing return
-    // if (!isChanged) {
-    //   setEditMode(false);
-    //   return;
-    // }
+    if (!isChanged) {
+      setEditMode(false);
+      return;
+    }
     const { status, data } = await api.query.editMyDomain({ userSubdomainInfo: formData });
     console.log(`status : ${status}`);
     if (status != 200) {
@@ -441,6 +441,7 @@ export default function MyDomain() {
     queryKey: ['getMyDomain', 'my domains'],
     queryFn: apiii.queryFn.getMyDomains,
     enabled: !!userProfile.uid,
+    retry: 1,
   });
 
   // console.log(`data : ${JSON.stringify(data)}`);

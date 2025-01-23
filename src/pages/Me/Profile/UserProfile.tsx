@@ -134,7 +134,6 @@ function ServerIcons() {
         <ServerIcon />
         <ServerIcon />
         <ServerIcon />
-        <ServerIcon />
       </FlexPaper>
     </FlexBox>
   );

@@ -34,6 +34,7 @@ function NavigationButton({ name, path }: { name: string; path: string }) {
       }}
       disabled={isCurrentPath}
       component={Link}
+      resetScroll={true}
       to={path}
     >
       <Typography variant="body1">{name}</Typography>
@@ -61,6 +62,10 @@ export default function TitleLogoHeader() {
       path: '/domain/register',
     },
 
+    {
+      name: '내 도메인',
+      path: '/me/domain',
+    },
     {
       name: 'dev',
       path: '/dev',

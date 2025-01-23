@@ -114,8 +114,8 @@ export default function Home() {
         <SearchDomain />
         <ServerList />
         {/* <ServerFilterShortcut /> */}
-        <ServerTags />
-        <ServerTopList />
+        {/* <ServerTags />
+        <ServerTopList /> */}
       </FlexBox>
     </Container>
   );

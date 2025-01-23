@@ -80,7 +80,7 @@ export default function DomainSearchBar({ availableDomains }: { availableDomains
   const checkSubDomainAvailable = async () => {
     setDomainCheckLoading(true);
     const data = await api.query.checkDomainAvailable({
-      host: methods.getValues('domain'),
+      domain: methods.getValues('domain'),
       subdomain: methods.getValues(formPathSubdomain) as string,
     });
     setDomainCheckStatus(data);
