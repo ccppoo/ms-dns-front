@@ -65,8 +65,8 @@ export default function ServerPostEditor({
       ? 'WRITE MODE'
       : 'WTF';
 
-  console.log(`EDITOR_MODE : ${EDITOR_MODE}`);
-  const MAX_WIDTH = 750;
+  // console.log(`EDITOR_MODE : ${EDITOR_MODE}`);
+  const MAX_WIDTH = 852;
 
   return (
     <FormProvider {...methods}>

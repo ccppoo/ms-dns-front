@@ -7,6 +7,7 @@ import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { Button, Divider, IconButton, Typography } from '@mui/material';
+import { Grid2 } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import Chip from '@mui/material/Chip';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -369,66 +370,72 @@ function ServerCommunityAdd() {
           </Select>
         </FlexBox>
         {/* <Divider flexItem orientation="vertical" /> */}
-        <FlexBox
+        <Grid2
           sx={{
             alignItems: 'center',
             justifyContent: 'center',
             width: '100%',
-            flexDirection: 'column',
+            // flexDirection: 'column',
             rowGap: 1,
           }}
+          columnSpacing={1}
+          container
         >
-          <TextField
-            value={communityName}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              !!errorText && setErrorText('');
-              event.preventDefault();
-              event.stopPropagation();
-              setCommunityName(event.target.value);
-            }}
-            onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
-              if (event.key.toLowerCase() == 'enter') {
+          <Grid2 size={{ sm: 12, md: 3 }}>
+            <TextField
+              value={communityName}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                !!errorText && setErrorText('');
                 event.preventDefault();
                 event.stopPropagation();
-                // onEnterServerCommunity();
-              }
-            }}
-            slotProps={{
-              htmlInput: {
-                placeholder: '이름 입력하세요',
-              },
-            }}
-            helperText={errorText}
-            error={!!errorText}
-            fullWidth
-            size="small"
-          />
-          <TextField
-            value={communityURLInput}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              !!errorText && setErrorText('');
-              event.preventDefault();
-              event.stopPropagation();
-              setCommunityLinkInput(event.target.value);
-            }}
-            onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
-              if (event.key.toLowerCase() == 'enter') {
+                setCommunityName(event.target.value);
+              }}
+              onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
+                if (event.key.toLowerCase() == 'enter') {
+                  event.preventDefault();
+                  event.stopPropagation();
+                  // onEnterServerCommunity();
+                }
+              }}
+              slotProps={{
+                htmlInput: {
+                  placeholder: '이름 입력하세요',
+                },
+              }}
+              helperText={errorText}
+              error={!!errorText}
+              fullWidth
+              size="small"
+            />
+          </Grid2>
+          <Grid2 size={{ sm: 12, md: 9 }}>
+            <TextField
+              value={communityURLInput}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                !!errorText && setErrorText('');
                 event.preventDefault();
                 event.stopPropagation();
-                onEnterServerCommunity();
-              }
-            }}
-            slotProps={{
-              htmlInput: {
-                placeholder: '링크를 입력하세요',
-              },
-            }}
-            helperText={errorText}
-            error={!!errorText}
-            fullWidth
-            size="small"
-          />
-        </FlexBox>
+                setCommunityLinkInput(event.target.value);
+              }}
+              onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
+                if (event.key.toLowerCase() == 'enter') {
+                  event.preventDefault();
+                  event.stopPropagation();
+                  onEnterServerCommunity();
+                }
+              }}
+              slotProps={{
+                htmlInput: {
+                  placeholder: '링크를 입력하세요',
+                },
+              }}
+              helperText={errorText}
+              error={!!errorText}
+              fullWidth
+              size="small"
+            />
+          </Grid2>
+        </Grid2>
         <FlexBox sx={{ width: 'fit-content' }}>
           <Button variant="contained" onClick={onClickAddServerCommunity}>
             추가

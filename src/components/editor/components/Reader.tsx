@@ -7,7 +7,7 @@ import { Reader } from './Editor';
 
 // 데이터는 상위 컴포넌트에서 직접 보냄냄
 export default function EditorReader<T extends OutputDataSchemaType>({ data }: { data: T }) {
-  const MAX_WIDTH = 750;
+  const MAX_WIDTH = 852;
   return (
     <FlexBox sx={{ flexDirection: 'column', alignItems: 'center', paddingY: 3, rowGap: 3 }}>
       <FlexBox
