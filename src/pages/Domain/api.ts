@@ -59,10 +59,10 @@ async function getDomainStatus({ host, subdomain }: { host: string; subdomain: s
   return resp.data;
 }
 
-async function checkDomainAvailable({ host, subdomain }: { host: string; subdomain: string }) {
+async function checkDomainAvailable({ domain, subdomain }: { domain: string; subdomain: string }) {
   const resp = await API.get<DomainAvailableAsk>(`/domain/check`, {
     params: {
-      host,
+      domain,
       subdomain,
     },
   });

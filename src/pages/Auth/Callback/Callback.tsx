@@ -45,10 +45,10 @@ export default function CallBack() {
       setProfileImage(data.profileImage, data.expires);
       setUID(data.uid, data.expires);
       const timeoutId = setTimeout(() => {
-        navigate({ to: loginRedirect || '/' }); // Replace '/home' with the desired route
+        navigate({ to: loginRedirect || '/' });
       }, 1500);
 
-      return () => clearTimeout(timeoutId); // Cleanup timeout
+      return () => clearTimeout(timeoutId);
     }
   }, [navigate, data, isSuccess]);
 
