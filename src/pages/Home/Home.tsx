@@ -6,6 +6,7 @@ import { Link } from '@tanstack/react-router';
 import { FlexBox } from '@/components/styled';
 import { Image } from '@/components/styled';
 
+import Announcement from './Announcement';
 import SearchDomain from './SearchDomain';
 import ServerList from './ServerList';
 import ServerTags from './ServerTags';
@@ -111,6 +112,7 @@ export default function Home() {
           flexDirection: 'column',
         }}
       >
+        <Announcement />
         <SearchDomain />
         <ServerList />
         {/* <ServerFilterShortcut /> */}

@@ -49,6 +49,10 @@ type Menu = {
 export default function TitleLogoHeader() {
   const menus: Menu[] = [
     {
+      name: '공지사항',
+      path: '/announcement/list',
+    },
+    {
       name: '서버 목록',
       path: '/server/list',
     },
