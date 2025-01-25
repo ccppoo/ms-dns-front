@@ -1,10 +1,11 @@
 import { Outlet, createRoute } from '@tanstack/react-router';
 
-import ServerListPage from '@/pages/Server/ProfileList';
-import ServerProfileRead from '@/pages/Server/ProfileRead';
-import ServerProfileWrite from '@/pages/Server/ProfileWrite';
 import { Route as rootRoute } from '@/routes/__root';
 import Header from '@/sections/Header';
+
+import AnnouncementEdit from './AnnouncementEdit';
+import AnnouncementListPage from './AnnouncementList';
+import AnnouncementRead from './AnnouncementRead';
 
 const announcementRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -19,22 +20,22 @@ const announcementRoute = createRoute({
 
 const announcementReadRoute = createRoute({
   getParentRoute: () => announcementRoute,
-  path: '/read',
-  component: ServerProfileRead,
+  path: '/read/$postID',
+  component: AnnouncementRead,
   // TODO: validateSearch:
 });
 
 const announcementListRoute = createRoute({
   getParentRoute: () => announcementRoute,
   path: '/list',
-  component: ServerListPage,
+  component: AnnouncementListPage,
 });
 
 // NOTE: 글 작성, 수정 포함
 const announcementEditRoute = createRoute({
   getParentRoute: () => announcementRoute,
   path: '/edit',
-  component: ServerProfileWrite,
+  component: AnnouncementEdit,
 });
 
 announcementRoute.addChildren([

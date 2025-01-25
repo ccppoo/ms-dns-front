@@ -1,13 +1,9 @@
 import { z } from 'zod';
 
-import { minecraftInfo, serverInfo } from '@/components/editor/ServerPostEditor/models';
-
-const serverProfileListing = z.object({
+const announcementListing = z.object({
   id: z.string(),
   title: z.string(),
   creator: z.string(),
-  server_info: serverInfo,
-  minecraft_info: minecraftInfo,
 });
 
 const userProfile = z.object({
@@ -19,4 +15,4 @@ const userProfile = z.object({
 
 export type UserProfile = z.infer<typeof userProfile>;
 
-export type ServerProfileListing = z.infer<typeof serverProfileListing>;
+export type AnnouncementListing = z.infer<typeof announcementListing>;

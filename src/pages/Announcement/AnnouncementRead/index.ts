@@ -1,3 +1,3 @@
-import ServerProfileRead from './ProfileRead';
+import AnnouncementRead from './AnnouncementRead';
 
-export default ServerProfileRead;
+export default AnnouncementRead;

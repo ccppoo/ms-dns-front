@@ -17,13 +17,13 @@ async function getPostCreateMode({ queryKey }: { queryKey: string[] }) {
   return resp.data;
 }
 
-async function editBoardPost() {
-  const resp = await API.get(`/healthcheck`);
+async function editBoardPost<T>() {
+  const resp = await API.put(`/announcement/e`);
   return resp.data;
 }
 
 async function createBoardPost<T>({ data }: { data: T }) {
-  const resp = await API.post(`/server/profile`, data);
+  const resp = await API.post(`/announcement/e`, data);
   return resp;
 }
 

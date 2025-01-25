@@ -411,27 +411,26 @@ function ServerProfileStatus() {
   );
 }
 
-export default function ProfileRead() {
+export default function AnnouncementRead() {
   // const serverID = useParams({
   //   from: '/server/profile/read',
   //   select: (params) => params.serverID,
   //   strict: true,
   // });
 
-  const { id } = useSearch({
-    // from: '/server/profile/read',
-    strict: false,
+  const { postID } = useParams({
+    from: '/announcement/read/$postID',
   });
 
-  console.log(`id : ${id}`);
+  console.log(`postID : ${postID}`);
 
   const { data: postData } = useQuery({
-    queryKey: [id],
-    queryFn: api.queryFn.getServerProfile,
-    enabled: !!id,
+    queryKey: ['announcement', postID],
+    queryFn: api.queryFn.getAnnouncementPost,
+    enabled: !!postID,
   });
 
-  if (!id) {
+  if (!postID) {
     return (
       <Container sx={{ height: '100%' }} maxWidth={'md'}>
         <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>
@@ -449,24 +448,13 @@ export default function ProfileRead() {
   }
 
   if (postData) {
-    const { server_info, server_community, minecraft_info, title } = postData;
+    const { title } = postData;
     return (
       <Container sx={{ height: '100%' }} maxWidth={'md'}>
         <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>
-          {/* 제목 */}
-          {/* {data.title} */}
-          {/* 마크 버전, 런처 */}
-          <ServerSystemDetail version={minecraft_info.version} launcher={minecraft_info.launcher} />
-          {/* {data.server_info} */}
-          {/* 서버 운영 시간, 태그 */}
-          <ServerProfileHeader title={title} serverInfo={server_info} />
+          {/* <ServerProfileHeader title={title} serverInfo={server_info} /> */}
+          <Typography>{title}</Typography>
 
-          {/* {data.minecraft_info} */}
-          {/* 서버 연락, 카페, 등 */}
-          <ServerExternalLinks community={server_community} />
-
-          {/* {data.server_community} */}
-          {/* 본문 */}
           <EditorReader data={postData} />
         </FlexBox>
       </Container>
@@ -476,7 +464,7 @@ export default function ProfileRead() {
   return (
     <Container sx={{ height: '100%' }} maxWidth={'md'}>
       <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>
-        <CircularProgress />;
+        <CircularProgress />
       </FlexBox>
     </Container>
   );

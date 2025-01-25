@@ -1,3 +1,3 @@
-import ServerProfileList from './ProfileList';
+import AnnouncementList from './AnnouncementList';
 
-export default ServerProfileList;
+export default AnnouncementList;

@@ -1,16 +1,17 @@
 import Container from '@mui/material/Container';
 
 import { useQuery } from '@tanstack/react-query';
+import { useSearch } from '@tanstack/react-router';
 
-import ServerProfileEditor from '@/components/editor/ServerPostEditor';
+import AnnouncementEditor from '@/components/editor/AnnouncementEditor';
 import { FlexBox } from '@/components/styled';
 
-export default function ServerProfileWrite() {
-  // const serverID = useParams({
-  //   from: '/new/write',
-  //   select: (params) => params.serverID,
-  //   strict: true,
-  // });
+export default function AnnouncementEdit() {
+  const postID = useSearch({
+    from: '/announcement/edit',
+    select: (params) => params.id,
+    strict: true,
+  });
 
   // console.log(`serverID  : ${serverID}`);
 
@@ -18,13 +19,13 @@ export default function ServerProfileWrite() {
   const { data, isSuccess, isFetching } = useQuery({
     queryKey: ['create post', 'server profile'],
     // queryFn: api.queryFn.getPostEditMode,
-    // enabled: isPostEditMode,
+    enabled: !!postID,
   });
 
   return (
     <Container sx={{ height: '100%' }} maxWidth={'md'}>
       <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>
-        <ServerProfileEditor readOnly={false} />
+        <AnnouncementEditor readOnly={!!postID} />
       </FlexBox>
     </Container>
   );

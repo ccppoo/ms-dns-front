@@ -12,27 +12,19 @@ import { Link, useSearch } from '@tanstack/react-router';
 import { FlexBox, FlexPaper, Image } from '@/components/styled';
 
 import api from '../api';
-import type { ServerProfileListing } from '../models';
+import type { AnnouncementListing } from '../models';
 
-function ServerProfileListItem({
-  serverProfileListing,
+function AnnouncementListItem({
+  announcementListing,
 }: {
-  serverProfileListing: ServerProfileListing;
+  announcementListing: AnnouncementListing;
 }) {
-  const {
-    creator: creatorID,
-    title,
-    id: postID,
-    server_info,
-    minecraft_info,
-  } = serverProfileListing;
+  const { creator: creatorID, title, id: postID } = announcementListing;
 
   const { data } = useQuery({
     queryKey: [creatorID],
     queryFn: api.queryFn.getUserProfile,
   });
-
-  const serverLogo = server_info.server_logo;
 
   if (data) {
     return (
@@ -40,7 +32,7 @@ function ServerProfileListItem({
         <FlexPaper sx={{ padding: 1, columnGap: 1, width: '100%' }}>
           <Box
             component={Link}
-            to={`/server/profile/read?id=${postID}`}
+            to={`/announcement/read/${postID}`}
             sx={{ display: 'flex', columnGap: 2, width: '100%', textDecoration: 'none' }}
             style={{ color: 'black' }}
           >
@@ -55,7 +47,7 @@ function ServerProfileListItem({
               elevation={2}
             >
               <Image
-                src={serverLogo}
+                // src={serverLogo}
                 sx={{
                   objectFit: 'contain',
                   width: '100%',
@@ -72,81 +64,15 @@ function ServerProfileListItem({
               }}
             >
               <Typography variant="h5">{title}</Typography>
-              <FlexBox sx={{ flexWrap: 'wrap', columnGap: 1 }}>
-                {server_info.tags.map((tag, idx) => (
-                  <Chip label={tag} key={`serverInfo-tag-${idx}`} variant="outlined" size="small" />
-                ))}
-              </FlexBox>
+              <FlexBox sx={{ flexWrap: 'wrap', columnGap: 1 }}>asdasd</FlexBox>
             </FlexBox>
           </Box>
-        </FlexPaper>
-        <FlexPaper sx={{ rowGap: 1, paddingX: 1, paddingY: 0.3, backgroundColor: '#e0e0e0' }}>
-          {/* 버전 */}
-          <FlexBox sx={{ width: '100%', columnGap: 1, rowGap: 0.1 }}>
-            <FlexBox sx={{ alignItems: 'center', width: 30, flexShrink: '0' }}>
-              <Typography variant="subtitle2">버전</Typography>
-            </FlexBox>
-            <FlexBox
-              sx={{
-                overflowX: 'hidden',
-                flexWrap: 'wrap',
-                alignItems: 'center',
-                rowGap: 0.3,
-                columnGap: 0.5,
-              }}
-            >
-              {minecraft_info.version.map((vrson, idx) => (
-                <Chip
-                  label={vrson}
-                  key={`mc-version-${idx}`}
-                  variant="filled"
-                  size="small"
-                  sx={{ backgroundColor: '#f7f7f7' }}
-                />
-              ))}
-            </FlexBox>
-          </FlexBox>
-          {/* 런처 */}
-          <FlexBox sx={{ width: '100%', columnGap: 1, rowGap: 0.1 }}>
-            <FlexBox sx={{ alignItems: 'center', width: 30, flexShrink: '0' }}>
-              <Typography variant="subtitle2">런처</Typography>
-            </FlexBox>
-            <FlexBox
-              sx={{ overflowX: 'hidden', alignItems: 'center', rorowGap: 0.3, columnGap: 0.5 }}
-            >
-              {minecraft_info.launcher.map((launcher, idx) => (
-                <Chip
-                  label={launcher}
-                  key={`mc-launcher-${idx}`}
-                  variant="outlined"
-                  size="small"
-                  sx={{ backgroundColor: '#f7f7f7' }}
-                />
-              ))}
-            </FlexBox>
-          </FlexBox>
         </FlexPaper>
       </FlexBox>
     );
   }
 
   return;
-}
-
-interface IServerProfileLists {
-  list: ServerProfileListing[];
-}
-
-function ServerProfileLists(props: IServerProfileLists) {
-  const { list } = props;
-
-  return (
-    <>
-      {list.map((srvProfile) => (
-        <ServerProfileListItem serverProfileListing={srvProfile} key={srvProfile.id} />
-      ))}
-    </>
-  );
 }
 
 function ServerProfileWriteButton() {
@@ -162,7 +88,7 @@ function ServerProfileWriteButton() {
       }}
       style={{ color: 'black' }}
       component={Link}
-      to={'/server/new/write'}
+      to={'/announcement/edit'}
     >
       <EditOutlinedIcon />
       <Typography>새로 쓰기</Typography>
@@ -185,45 +111,49 @@ export default function ServerProfileList() {
   const [listingPage, setListingPage] = useState<number>(page || 1);
 
   const { data } = useQuery({
-    queryKey: ['server', 'list', listingPage],
-    queryFn: api.queryFn.getServerProfileList,
+    queryKey: ['announcement', 'list', listingPage],
+    queryFn: api.queryFn.getAnnouncementPostList,
   });
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setListingPage(value);
   };
 
-  if (data) {
-    console.log(`data : ${JSON.stringify(data)}`);
-    return (
-      <Container sx={{ height: '100%' }} maxWidth={'md'}>
-        <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>
-          <Typography>서버 목록</Typography>
-          <FlexBox sx={{ justifyContent: 'end' }}>
-            <ServerProfileWriteButton />
-          </FlexBox>
-          <FlexBox sx={{ flexDirection: 'column', rowGap: 1, minHeight: 300 }}>
-            {!!data ? <ServerProfileLists list={data} /> : <CircularProgress />}
-          </FlexBox>
-
-          <FlexBox
-            sx={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              paddingTop: 3,
-              rowGap: 1,
-              flexDirection: 'column',
-            }}
-          >
-            <Divider variant="middle" />
-            <Pagination count={3} page={listingPage} onChange={handleChange} size="medium" />
-          </FlexBox>
-
-          <FlexBox sx={{ justifyContent: 'end' }}>
-            <ServerProfileWriteButton />
-          </FlexBox>
+  // console.log(`data : ${JSON.stringify(data)}`);
+  return (
+    <Container sx={{ height: '100%' }} maxWidth={'md'}>
+      <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>
+        <Typography>서버 목록</Typography>
+        <FlexBox sx={{ justifyContent: 'end' }}>
+          <ServerProfileWriteButton />
         </FlexBox>
-      </Container>
-    );
-  }
+        <FlexBox sx={{ flexDirection: 'column', rowGap: 1, minHeight: 300 }}>
+          {!!data ? (
+            data.list.map((item) => (
+              <AnnouncementListItem announcementListing={item} key={item.id} />
+            ))
+          ) : (
+            <CircularProgress />
+          )}
+        </FlexBox>
+
+        <FlexBox
+          sx={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            paddingTop: 3,
+            rowGap: 1,
+            flexDirection: 'column',
+          }}
+        >
+          <Divider variant="middle" />
+          <Pagination count={3} page={listingPage} onChange={handleChange} size="medium" />
+        </FlexBox>
+
+        <FlexBox sx={{ justifyContent: 'end' }}>
+          <ServerProfileWriteButton />
+        </FlexBox>
+      </FlexBox>
+    </Container>
+  );
 }

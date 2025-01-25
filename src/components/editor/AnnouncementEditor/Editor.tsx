@@ -46,7 +46,7 @@ export default function AnnouncementEditor({
       if (resp.status == 200) {
         methods.reset(); // 글 현재 쓰고 있는거 다 지우고
         const { postID } = resp.data;
-        navigate({ to: `/server/profile/read?id=${postID}` });
+        navigate({ to: `/announcement/read/${postID}` });
       }
     }
     return;
@@ -84,7 +84,7 @@ export default function AnnouncementEditor({
             </FlexBox>
             {/* 본문 */}
             <FlexBox sx={{ flexDirection: 'column', width: '100%', rowGap: 2 }}>
-              <Typography>서버 소개</Typography>
+              {/* <Typography>본문</Typography> */}
               <Paper
                 sx={{
                   display: 'flex',

@@ -1,3 +1,3 @@
-import ServerProfileWrite from './ProfileWrite';
+import AnnouncementEdit from './AnnouncementEdit';
 
-export default ServerProfileWrite;
+export default AnnouncementEdit;
