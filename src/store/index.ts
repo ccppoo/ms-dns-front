@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import type { Action, ThunkAction } from '@reduxjs/toolkit';
 
+import { redirectStateSlice } from './redirect';
 import { userProfileSlice } from './userProfile/userProfile';
 
 export const store = configureStore({
   reducer: {
     userProfile: userProfileSlice.reducer,
+    redirect: redirectStateSlice.reducer,
   },
 });
 

@@ -17,7 +17,7 @@ import useUserProfile from '@/hooks/useUserProfile';
 import api from './api';
 import type { ServerProfileListing } from './models';
 
-function ServerProfileListItem({
+function AnnouncementListItem({
   serverProfileListing,
 }: {
   serverProfileListing: ServerProfileListing;
@@ -110,15 +110,11 @@ function ServerProfileListItem({
 }
 
 export default function Announcement() {
-  // const [{ uid: userID }] = useUserProfile();
-  // NOTE: 최대 5개까지
+  // NOTE: 최대 2개
   const { data } = useQuery({
     queryKey: ['server', ''],
     queryFn: api.queryFn.getHomeServerProfiles,
-    // enabled: !!userID,
   });
-
-  // console.log(`userID : ${userID}`);
 
   if (!data) {
     return (
