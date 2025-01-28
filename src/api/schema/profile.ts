@@ -5,6 +5,7 @@ const userProfile = z.object({
   profileImage: z.string(),
   createdAt: z.date(),
   uid: z.string(),
+  role: z.string(),
 });
 
 const userProfileExpire = userProfile.extend({

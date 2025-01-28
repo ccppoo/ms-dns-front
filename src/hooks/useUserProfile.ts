@@ -10,11 +10,17 @@ type ProfileActions = {
   setNickname: (nickname: string, expires_at: Date) => void;
   setProfileImage: (profileImage: string, expires_at: Date) => void;
   setUID: (uid: string, expires_at: Date) => void;
+  setRole: (role: string, expires_at: Date) => void;
   removeUserProfile: () => void;
 };
 
 export default function useUserProfile(): [Profile, ProfileActions] {
-  const [cookies, setCookie, removeCookie] = useCookies(['nickname', 'profileImage', 'uid']);
+  const [cookies, setCookie, removeCookie] = useCookies([
+    'nickname',
+    'profileImage',
+    'uid',
+    'role',
+  ]);
 
   const setNickname = (nickname: string, expires_at: Date) => {
     setCookie('nickname', nickname, { expires: expires_at });
@@ -26,6 +32,10 @@ export default function useUserProfile(): [Profile, ProfileActions] {
 
   const setUID = (uid: string, expires_at: Date) => {
     setCookie('uid', uid, { expires: expires_at });
+  };
+
+  const setRole = (role: string, expires_at: Date) => {
+    setCookie('role', role, { expires: expires_at });
   };
 
   const removeUserProfile = () => {
@@ -43,6 +53,7 @@ export default function useUserProfile(): [Profile, ProfileActions] {
       setNickname,
       setProfileImage,
       setUID,
+      setRole,
       removeUserProfile,
     },
   ];

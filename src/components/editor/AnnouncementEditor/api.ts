@@ -17,8 +17,8 @@ async function getPostCreateMode({ queryKey }: { queryKey: string[] }) {
   return resp.data;
 }
 
-async function editBoardPost<T>() {
-  const resp = await API.put(`/announcement/e`);
+async function editBoardPost<T>({ data, postID }: { data: T; postID: number }) {
+  const resp = await API.put(`/announcement/e/${postID}`, data);
   return resp.data;
 }
 

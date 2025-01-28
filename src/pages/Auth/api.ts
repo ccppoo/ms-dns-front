@@ -14,6 +14,7 @@ async function callbackSSO(SSO_Provider: string, params: any) {
     nickname: resp.data.nickname,
     profileImage: resp.data.profileImage,
     uid: resp.data.uid,
+    role: resp.data.role,
     expires: new Date(resp.data.expires),
     createdAt: new Date(resp.data.createdAt),
   }!;

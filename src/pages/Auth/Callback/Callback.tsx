@@ -21,7 +21,7 @@ export default function CallBack() {
   });
   const [loginRedirect, setLoginRedirect] = useLocalStorage<string | null>('loginRedirect', null);
 
-  const [, { setNickname, setProfileImage, setUID }] = useUserProfile();
+  const [, { setNickname, setProfileImage, setUID, setRole }] = useUserProfile();
 
   const navigate = useNavigate();
 
@@ -44,6 +44,7 @@ export default function CallBack() {
       setNickname(data.nickname, data.expires);
       setProfileImage(data.profileImage, data.expires);
       setUID(data.uid, data.expires);
+      setRole(data.role, data.expires);
       const timeoutId = setTimeout(() => {
         navigate({ to: loginRedirect || '/' });
       }, 1500);

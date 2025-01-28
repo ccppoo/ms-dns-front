@@ -34,12 +34,19 @@ export default function AnnouncementEditor({
   const postID = methods.getValues('id' as FieldPath<AnnouncementPostSchema>);
   const navigate = useNavigate({});
   const isEditMode = !!postID;
-
   const submit = async (formData: AnnouncementPostSchema) => {
     const allValues = methods.getValues();
     console.log(`data : ${JSON.stringify(allValues)}`);
     if (isEditMode) {
-      await api.query.editBoardPost();
+      const resp = await api.query.editBoardPost<AnnouncementPostSchema>({
+        data: formData,
+        postID: postID,
+      });
+      if (resp.status == 200) {
+        methods.reset(); // 글 현재 쓰고 있는거 다 지우고
+        const { postID } = resp.data;
+        navigate({ to: `/announcement/read/${postID}` });
+      }
     }
     if (!isEditMode) {
       const resp = await api.query.createBoardPost<AnnouncementPostSchema>({ data: formData });

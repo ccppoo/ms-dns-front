@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import { Button, ButtonBase, Chip, Divider, Paper, Typography } from '@mui/material';
+import { Box, Button, ButtonBase, Chip, Divider, Paper, Typography } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
 
@@ -411,6 +411,23 @@ function ServerProfileStatus() {
   );
 }
 
+interface IEditButton {
+  postID: string;
+}
+function EditButton(props: IEditButton) {
+  const { postID } = props;
+  return (
+    <Paper
+      component={Link}
+      to={`/announcement/edit?id=${postID}`}
+      sx={{ display: 'flex', columnGap: 2, textDecoration: 'none', padding: 1 }}
+      style={{ color: 'black' }}
+    >
+      <Typography>수정하기</Typography>
+    </Paper>
+  );
+}
+
 export default function AnnouncementRead() {
   // const serverID = useParams({
   //   from: '/server/profile/read',
@@ -454,8 +471,10 @@ export default function AnnouncementRead() {
         <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>
           {/* <ServerProfileHeader title={title} serverInfo={server_info} /> */}
           <Typography>{title}</Typography>
-
           <EditorReader data={postData} />
+          <FlexBox sx={{ justifyContent: 'end', width: '100%' }}>
+            <EditButton postID={postID} />
+          </FlexBox>
         </FlexBox>
       </Container>
     );
