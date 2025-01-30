@@ -16,9 +16,9 @@ type PostListQueryKey = [QueryName, PostTopic, PaginationOptions];
 
 function stringifyPaginationOptions(options: PaginationOptions): string {
   let queryParams = '';
-  queryParams = !!options.page ? queryParams : `${queryParams}&page=${options.page}`;
-  queryParams = !!options.order ? queryParams : `${queryParams}&order=${options.order}`;
-  queryParams = !!options.limit ? queryParams : `${queryParams}&limit=${options.limit}`;
+  queryParams = !options.page ? queryParams : `${queryParams}&page=${options.page}`;
+  queryParams = !options.order ? queryParams : `${queryParams}&order=${options.order}`;
+  queryParams = !options.limit ? queryParams : `${queryParams}&limit=${options.limit}`;
   return queryParams;
 }
 
@@ -28,7 +28,7 @@ async function getPostList<PostListType>(params: {
   const { queryKey } = params;
   const [_, postTopic, paginationOptions] = queryKey;
   const queryParams = stringifyPaginationOptions(paginationOptions);
-  const resp = await API.get<PostListType>(`/post/${postTopic}/list?page${queryParams}`);
+  const resp = await API.get<PostListType>(`/post/${postTopic}/list?${queryParams}`);
 
   return resp.data;
 }

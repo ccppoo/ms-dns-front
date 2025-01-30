@@ -110,7 +110,6 @@ export default function ServerProfileList() {
     ...(!!order && { order }),
     ...(!!limit && { limit }),
   });
-
   const { data } = useQuery({
     queryKey: ['announcement list', paginationOptions],
     queryFn: api.queryFn.getAnnouncementPostList,
