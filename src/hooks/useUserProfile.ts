@@ -4,6 +4,7 @@ type Profile = {
   nickname: string | undefined;
   profileImage: string | undefined;
   uid: string | undefined;
+  role: string | undefined;
 };
 
 type ProfileActions = {
@@ -48,6 +49,7 @@ export default function useUserProfile(): [Profile, ProfileActions] {
       nickname: cookies.nickname,
       profileImage: cookies.profileImage,
       uid: cookies.uid,
+      role: cookies.role,
     },
     {
       setNickname,

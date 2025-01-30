@@ -19,7 +19,7 @@ export default function ServerProfileEdit() {
 
   // 양식, 공지사항, 등 내용 있을 경우 api로 불러오는 것
   const { data, isSuccess, isFetching } = useQuery({
-    queryKey: ['create post', 'server profile'],
+    queryKey: ['create post', postID],
     queryFn: api.queryFn.getServerProfilePost,
     enabled: !!postID,
   });

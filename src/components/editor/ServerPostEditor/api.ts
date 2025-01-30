@@ -19,16 +19,6 @@ async function getPostCreateMode({ queryKey }: { queryKey: string[] }) {
   return resp.data;
 }
 
-async function editBoardPost() {
-  const resp = await API.get(`/healthcheck`);
-  return resp.data;
-}
-
-async function createBoardPost<T>({ data }: { data: T }) {
-  const resp = await API.post(`/server/profile`, data);
-  return resp;
-}
-
 interface IServerProfileCreate extends Omit<IPostCreate<ServerPostSchema>, 'topic'> {}
 interface IServerProfileEdit extends Omit<IPostEdit<ServerPostSchema>, 'topic'> {}
 

@@ -8,13 +8,12 @@ import Container from '@mui/material/Container';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useSearch } from '@tanstack/react-router';
 import { Link } from '@tanstack/react-router';
-import { z } from 'zod';
 
 import type { ServerInfo } from '@/components/editor/ServerPostEditor/models';
-// import ServerProfileEditor from '@/components/editor/ServerPostEditor';
 import EditorReader from '@/components/editor/components/Reader';
+import PostManagements from '@/components/post/PostManagements';
 import { FlexBox, FlexPaper } from '@/components/styled';
-import { ExternalLink, ExternalLinkNewTab, Image } from '@/components/styled';
+import { ExternalLinkNewTab, Image } from '@/components/styled';
 import { icon, sample } from '@/static';
 
 import api from '../api';
@@ -24,14 +23,7 @@ const TEMP_IMAGE = 'https://cdn.mc-server.kr/static/mc-server-logo-200x200.png';
 const SERVER_NAME = '7percent';
 const SERVER_URL = '7percent.mc-server.kr';
 
-const SERVER_SHORT_DESCRIPTION =
-  '【정품서버✔️】 【1.12.2~최신】 당신을 위한 최고의 서버❤️ RPG, 랜무, 마인팜, 미니게임 등 다양한 콘텐츠가 준비되어 있어요! ✨ 동시접속자 1286명 달성 ?서버 렉 ❌ 쾌적한 플레이 환경 ? (마인팜/미니게임은 개발중! 오픈임박!!)';
-
 const SERVER_TAG = ['PvP', '마인팜', '야생', 'RPG', '건축'];
-
-const PLAYER_MAX = 20;
-const PLAYER_COUNT = 3;
-const SERVER_RUNNING_TIME = '24시간';
 
 function CopyToClipBoard({ text, value }: { text: string; value: string }) {
   const copyToClipBoard = async () => {
@@ -450,6 +442,7 @@ export default function ProfileRead() {
         <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>
           {/* 제목 */}
           {/* {data.title} */}
+          <PostManagements postID={postID} topic="server" creator={postData.creator!} />
           {/* 마크 버전, 런처 */}
           <ServerSystemDetail version={minecraft_info.version} launcher={minecraft_info.launcher} />
           {/* {data.server_info} */}
@@ -463,6 +456,7 @@ export default function ProfileRead() {
           {/* {data.server_community} */}
           {/* 본문 */}
           <EditorReader data={postData} />
+          <PostManagements postID={postID} topic="server" creator={postData.creator!} />
         </FlexBox>
       </Container>
     );

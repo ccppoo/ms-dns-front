@@ -1,7 +1,10 @@
+import { AxiosResponse } from 'axios';
+
 import API from '@/api';
 
 import type {
   IPostCreate,
+  IPostDelete,
   IPostEdit,
   PaginationOptions,
   PostID,
@@ -39,6 +42,21 @@ async function getPost<PostType>(params: { queryKey: PostReadQueryKey }): Promis
   return resp.data;
 }
 
+type PostDeleteResponse = {
+  topic: string;
+  message: string;
+};
+
+async function deleteBoardPost(params: IPostDelete): Promise<AxiosResponse<PostDeleteResponse>> {
+  const { topic, postID } = params;
+
+  const resp = await API.delete<PostDeleteResponse>(`/post/${topic}/${postID}`, {
+    validateStatus: () => true, // handle every !200
+  });
+
+  return resp;
+}
+
 async function editBoardPost<T>(params: IPostEdit<T>) {
   const { topic, data, postID } = params;
 
@@ -61,5 +79,6 @@ export default {
   query: {
     editBoardPost,
     createBoardPost,
+    deleteBoardPost,
   },
 };

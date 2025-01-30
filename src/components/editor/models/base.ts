@@ -5,5 +5,6 @@ export const documentBase = z.object({
 });
 
 export const postBase = z.object({
-  _id: z.optional(z.string()),
+  id: z.optional(z.string()), // postID
+  creator: z.optional(z.string()), // creator uid
 });

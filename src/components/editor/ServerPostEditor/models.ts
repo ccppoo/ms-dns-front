@@ -56,7 +56,8 @@ const DEFAULT_INITIAL_DATA = {
 };
 
 export const serverPostSchemaDefault: ServerPostSchema = {
-  _id: undefined,
+  id: undefined,
+  creator: undefined,
   data: DEFAULT_INITIAL_DATA,
   uploaded_at: undefined,
   updated_at: undefined,
