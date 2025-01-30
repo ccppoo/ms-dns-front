@@ -8,23 +8,16 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { Button, Divider, IconButton, Typography } from '@mui/material';
 import { Grid2 } from '@mui/material';
-import Checkbox from '@mui/material/Checkbox';
 import Chip from '@mui/material/Chip';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import MenuItem from '@mui/material/MenuItem';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import Slider from '@mui/material/Slider';
 import TextField from '@mui/material/TextField';
 
 import { ExternalLinkNewTab, FlexBox, FlexPaper, Image } from '@/components/styled';
 // NOTE: 게시글 외에도 OutputData 하고 추가로 관리할 데이터들
 // 1. 수정하는 경우 -> 이미지 삭제시 최종 POST 할 때 삭제할 이미지 첨부하기
 import { icon, sample } from '@/static';
-import { rangeArray } from '@/utils/itertools';
 
-import type { BoardPostTitle, OutputSchemaType } from '../models';
 import type { ServerPostSchema } from './models';
 
 interface ServerVersionIntf {

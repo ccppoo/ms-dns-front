@@ -1,14 +1,11 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import type { DefaultValues, FieldPath, FieldValues, PathValue } from 'react-hook-form';
+import type { FieldPath } from 'react-hook-form';
 
 import { Box, Button, Paper, Typography } from '@mui/material';
 
-import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 
-import { uploadImage } from '@/api/image/postImageUpload';
-import { FlexBox, FullSizeCenteredFlexBox } from '@/components/styled';
-import useUserProfile from '@/hooks/useUserProfile';
+import { FlexBox } from '@/components/styled';
 
 import EditorWrapper from '../components/Editor';
 import Title from '../components/Title';
@@ -33,25 +30,25 @@ export default function ServerPostEditor({
     defaultValues: data || serverPostSchemaDefault,
   });
 
-  const [userProfile] = useUserProfile();
   const postID = methods.getValues('id' as FieldPath<ServerPostSchema>);
   const navigate = useNavigate({});
   const isEditMode = !!postID;
-  // console.log(`methods.getValues('id') : ${methods.getValues('id')}`);
 
   const submit = async (formData: ServerPostSchema) => {
     const allValues = methods.getValues();
-    // const allValues = methods.
     console.log(`data : ${JSON.stringify(allValues)}`);
     if (isEditMode) {
-      await api.query.editBoardPost();
+      await api.query.editServerProfilePost({
+        data: formData,
+        postID: postID,
+      });
     }
     if (!isEditMode) {
-      const resp = await api.query.createBoardPost<ServerPostSchema>({ data: formData });
+      const resp = await api.query.createServerProfilePost({ data: formData });
       if (resp.status == 200) {
         methods.reset(); // 글 현재 쓰고 있는거 다 지우고
         const { postID } = resp.data;
-        navigate({ to: `/server/profile/read?id=${postID}` });
+        navigate({ to: `/server/read/${postID}` });
       }
     }
     return;

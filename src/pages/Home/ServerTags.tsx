@@ -36,7 +36,7 @@ function ServerProfileListItem({
       <FlexPaper sx={{ padding: 1, columnGap: 1, width: '80%' }}>
         <Box
           component={Link}
-          to={`/server/profile/read?id=${postID}`}
+          to={`/server/read/${postID}`}
           sx={{ display: 'flex', columnGap: 2, width: '100%', textDecoration: 'none' }}
           style={{ color: 'black' }}
         >

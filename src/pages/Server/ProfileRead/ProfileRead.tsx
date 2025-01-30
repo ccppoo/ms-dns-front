@@ -412,26 +412,21 @@ function ServerProfileStatus() {
 }
 
 export default function ProfileRead() {
-  // const serverID = useParams({
-  //   from: '/server/profile/read',
-  //   select: (params) => params.serverID,
-  //   strict: true,
-  // });
-
-  const { id } = useSearch({
-    // from: '/server/profile/read',
-    strict: false,
+  const postID = useParams({
+    from: '/server/read/$postID',
+    select: (params) => params.postID,
+    strict: true,
   });
 
-  console.log(`id : ${id}`);
+  console.log(`postID : ${postID}`);
 
   const { data: postData } = useQuery({
-    queryKey: [id],
-    queryFn: api.queryFn.getServerProfile,
-    enabled: !!id,
+    queryKey: ['server profile', postID],
+    queryFn: api.queryFn.getServerProfilePost,
+    enabled: !!postID,
   });
 
-  if (!id) {
+  if (!postID) {
     return (
       <Container sx={{ height: '100%' }} maxWidth={'md'}>
         <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>
@@ -476,7 +471,7 @@ export default function ProfileRead() {
   return (
     <Container sx={{ height: '100%' }} maxWidth={'md'}>
       <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>
-        <CircularProgress />;
+        <CircularProgress />
       </FlexBox>
     </Container>
   );

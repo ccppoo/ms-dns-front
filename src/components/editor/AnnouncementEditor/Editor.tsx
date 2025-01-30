@@ -1,14 +1,12 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import type { DefaultValues, FieldPath, FieldValues, PathValue } from 'react-hook-form';
+import type { FieldPath } from 'react-hook-form';
 
 import { Box, Button, Paper, Typography } from '@mui/material';
 
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 
-import { uploadImage } from '@/api/image/postImageUpload';
-import { FlexBox, FullSizeCenteredFlexBox } from '@/components/styled';
-import useUserProfile from '@/hooks/useUserProfile';
+import { FlexBox } from '@/components/styled';
 
 import EditorWrapper from '../components/Editor';
 import Title from '../components/Title';
@@ -30,15 +28,15 @@ export default function AnnouncementEditor({
     defaultValues: data || announcementPostSchemaDefault,
   });
 
-  const [userProfile] = useUserProfile();
   const postID = methods.getValues('id' as FieldPath<AnnouncementPostSchema>);
   const navigate = useNavigate({});
   const isEditMode = !!postID;
+
   const submit = async (formData: AnnouncementPostSchema) => {
     const allValues = methods.getValues();
     console.log(`data : ${JSON.stringify(allValues)}`);
     if (isEditMode) {
-      const resp = await api.query.editBoardPost<AnnouncementPostSchema>({
+      const resp = await api.query.editAnnouncementPost({
         data: formData,
         postID: postID,
       });
@@ -49,7 +47,7 @@ export default function AnnouncementEditor({
       }
     }
     if (!isEditMode) {
-      const resp = await api.query.createBoardPost<AnnouncementPostSchema>({ data: formData });
+      const resp = await api.query.createAnnouncementPost({ data: formData });
       if (resp.status == 200) {
         methods.reset(); // 글 현재 쓰고 있는거 다 지우고
         const { postID } = resp.data;

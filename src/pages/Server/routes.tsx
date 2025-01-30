@@ -1,8 +1,8 @@
 import { Outlet, createRoute } from '@tanstack/react-router';
 
+import ServerProfileEdit from '@/pages/Server/ProfileEdit';
 import ServerListPage from '@/pages/Server/ProfileList';
 import ServerProfileRead from '@/pages/Server/ProfileRead';
-import ServerProfileWrite from '@/pages/Server/ProfileWrite';
 import { Route as rootRoute } from '@/routes/__root';
 import Header from '@/sections/Header';
 
@@ -19,7 +19,7 @@ const serverRoute = createRoute({
 
 const serverProfileRoute = createRoute({
   getParentRoute: () => serverRoute,
-  path: '/profile/read',
+  path: '/read/$postID',
   component: ServerProfileRead,
   // TODO: validateSearch:
 });
@@ -32,8 +32,8 @@ const serverListRoute = createRoute({
 
 const serverProfileWriteRoute = createRoute({
   getParentRoute: () => serverRoute,
-  path: '/new/write',
-  component: ServerProfileWrite,
+  path: '/edit',
+  component: ServerProfileEdit,
 });
 
 serverRoute.addChildren([serverProfileRoute, serverListRoute, serverProfileWriteRoute]);

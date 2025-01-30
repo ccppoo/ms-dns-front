@@ -9,6 +9,8 @@ import Pagination from '@mui/material/Pagination';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useSearch } from '@tanstack/react-router';
 
+import type { PaginationOptions } from '@/api/post/types';
+import { defaultPaginationOptions } from '@/api/post/values';
 import { FlexBox, FlexPaper, Image } from '@/components/styled';
 
 import api from '../api';
@@ -97,26 +99,27 @@ function ServerProfileWriteButton() {
 }
 
 export default function ServerProfileList() {
-  // const serverID = useParams({
-  //   from: '/server/list',
-  //   select: (params) => params.serverID,
-  //   strict: true,
-  // });
-
   const listingParams = useSearch({
     from: '/announcement/list',
   });
 
-  const { page } = listingParams;
-  const [listingPage, setListingPage] = useState<number>(page || 1);
+  const { page, order, limit } = listingParams;
+  const [paginationOptions, setPaginationOptions] = useState<PaginationOptions>({
+    ...defaultPaginationOptions,
+    ...(!!page && { page }),
+    ...(!!order && { order }),
+    ...(!!limit && { limit }),
+  });
 
   const { data } = useQuery({
-    queryKey: ['announcement', 'list', listingPage],
+    queryKey: ['announcement list', paginationOptions],
     queryFn: api.queryFn.getAnnouncementPostList,
   });
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setListingPage(value);
+    setPaginationOptions((prev) => {
+      return { ...prev, page: value };
+    });
   };
 
   // console.log(`data : ${JSON.stringify(data)}`);
@@ -147,7 +150,12 @@ export default function ServerProfileList() {
           }}
         >
           <Divider variant="middle" />
-          <Pagination count={3} page={listingPage} onChange={handleChange} size="medium" />
+          <Pagination
+            count={3}
+            page={paginationOptions.page}
+            onChange={handleChange}
+            size="medium"
+          />
         </FlexBox>
 
         <FlexBox sx={{ justifyContent: 'end' }}>

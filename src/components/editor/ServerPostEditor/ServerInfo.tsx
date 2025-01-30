@@ -1,27 +1,19 @@
 import * as React from 'react';
 import { useFormContext } from 'react-hook-form';
-import type { FieldPath, PathValue } from 'react-hook-form';
 import { Controller, FormProvider, useFieldArray, useForm } from 'react-hook-form';
 
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import FileUploadOutlined from '@mui/icons-material/FileUploadOutlined';
 import { Box, Button, Divider, Typography } from '@mui/material';
-import Checkbox from '@mui/material/Checkbox';
 import Chip from '@mui/material/Chip';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import Slider from '@mui/material/Slider';
 import TextField from '@mui/material/TextField';
 
-import { join } from 'path';
-
 import { uploadMCServerIcon } from '@/api/image/mcServerIconUpload';
-import { uploadImage } from '@/api/image/postImageUpload';
 import { FlexBox, FlexPaper, Image, VisuallyHiddenInput } from '@/components/styled';
-import { rangeArray } from '@/utils/itertools';
 
-import type { BoardPostTitle, OutputSchemaType } from '../models';
 import type { ServerPostSchema } from './models';
 
 // NOTE: 게시글 외에도 OutputData 하고 추가로 관리할 데이터들
@@ -174,8 +166,6 @@ function ServerLogo() {
     }
     const { url } = file_;
     methods.setValue('server_info.server_logo', url);
-    return;
-
     return;
   };
 

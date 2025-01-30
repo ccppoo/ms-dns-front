@@ -9,6 +9,8 @@ import Pagination from '@mui/material/Pagination';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useSearch } from '@tanstack/react-router';
 
+import type { PaginationOptions } from '@/api/post/types';
+import { defaultPaginationOptions } from '@/api/post/values';
 import { FlexBox, FlexPaper, Image } from '@/components/styled';
 
 import api from '../api';
@@ -40,7 +42,7 @@ function ServerProfileListItem({
         <FlexPaper sx={{ padding: 1, columnGap: 1, width: '100%' }}>
           <Box
             component={Link}
-            to={`/server/profile/read?id=${postID}`}
+            to={`/server/read/${postID}`}
             sx={{ display: 'flex', columnGap: 2, width: '100%', textDecoration: 'none' }}
             style={{ color: 'black' }}
           >
@@ -181,16 +183,23 @@ export default function ServerProfileList() {
     from: '/server/list',
   });
 
-  const { page } = listingParams;
-  const [listingPage, setListingPage] = useState<number>(page || 1);
+  const { page, order, limit } = listingParams;
+  const [paginationOptions, setPaginationOptions] = useState<PaginationOptions>({
+    ...defaultPaginationOptions,
+    ...(!!page && { page }),
+    ...(!!order && { order }),
+    ...(!!limit && { limit }),
+  });
 
   const { data } = useQuery({
-    queryKey: ['server', 'list', listingPage],
-    queryFn: api.queryFn.getServerProfileList,
+    queryKey: ['server list', paginationOptions],
+    queryFn: api.queryFn.getServerProfilePostList,
   });
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setListingPage(value);
+    setPaginationOptions((prev) => {
+      return { ...prev, page: value };
+    });
   };
 
   if (data) {
@@ -216,7 +225,12 @@ export default function ServerProfileList() {
             }}
           >
             <Divider variant="middle" />
-            <Pagination count={3} page={listingPage} onChange={handleChange} size="medium" />
+            <Pagination
+              count={3}
+              page={paginationOptions.page}
+              onChange={handleChange}
+              size="medium"
+            />
           </FlexBox>
 
           <FlexBox sx={{ justifyContent: 'end' }}>

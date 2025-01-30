@@ -3,24 +3,24 @@ import Container from '@mui/material/Container';
 import { useQuery } from '@tanstack/react-query';
 import { useSearch } from '@tanstack/react-router';
 
-import AnnouncementEditor from '@/components/editor/AnnouncementEditor';
+import ServerProfileEditor from '@/components/editor/ServerPostEditor';
 import { FlexBox } from '@/components/styled';
 
 import api from '../api';
 
-export default function AnnouncementEdit() {
+export default function ServerProfileEdit() {
   const postID = useSearch({
-    from: '/announcement/edit',
+    from: '/server/edit',
     select: (params) => params.id,
     strict: true,
   });
 
-  // console.log(`serverID  : ${serverID}`);
+  // console.log(`postID  : ${postID}`);
 
   // 양식, 공지사항, 등 내용 있을 경우 api로 불러오는 것
   const { data, isSuccess, isFetching } = useQuery({
-    queryKey: ['get post', postID],
-    queryFn: api.queryFn.getAnnouncementPost,
+    queryKey: ['create post', 'server profile'],
+    queryFn: api.queryFn.getServerProfilePost,
     enabled: !!postID,
   });
 
@@ -29,7 +29,7 @@ export default function AnnouncementEdit() {
       return (
         <Container sx={{ height: '100%' }} maxWidth={'md'}>
           <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>
-            <AnnouncementEditor readOnly={false} data={data} />
+            <ServerProfileEditor readOnly={false} data={data} />
           </FlexBox>
         </Container>
       );
@@ -38,7 +38,7 @@ export default function AnnouncementEdit() {
   return (
     <Container sx={{ height: '100%' }} maxWidth={'md'}>
       <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>
-        <AnnouncementEditor readOnly={false} />
+        <ServerProfileEditor readOnly={false} />
       </FlexBox>
     </Container>
   );

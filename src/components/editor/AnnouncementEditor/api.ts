@@ -1,40 +1,42 @@
 import API from '@/api';
+import api from '@/api/post';
+import type { IPost, IPostCreate, IPostEdit } from '@/api/post/types';
 
-import type {} from './models';
+import type { AnnouncementPostSchema } from './models';
 
 async function getPostEditMode({ queryKey }: { queryKey: string[] }) {
   const resp = await API.get(`/healthcheck`);
   return resp.data;
 }
 
-async function getPostReadMode({ queryKey }: { queryKey: string[] }) {
-  const resp = await API.get(`/post/server/read`);
-  return resp.data;
+interface IAnnouncementCreate extends Omit<IPostCreate<AnnouncementPostSchema>, 'topic'> {}
+interface IAnnouncementEdit extends Omit<IPostEdit<AnnouncementPostSchema>, 'topic'> {}
+
+async function editAnnouncementPost(params: IAnnouncementEdit) {
+  const { data, postID } = params;
+
+  return await api.query.editBoardPost<AnnouncementPostSchema>({
+    topic: 'announcement',
+    data: data,
+    postID: postID,
+  });
 }
 
-async function getPostCreateMode({ queryKey }: { queryKey: string[] }) {
-  const resp = await API.get(`/healthcheck`);
-  return resp.data;
-}
+async function createAnnouncementPost(params: IAnnouncementCreate) {
+  const { data } = params;
 
-async function editBoardPost<T>({ data, postID }: { data: T; postID: number }) {
-  const resp = await API.put(`/announcement/e/${postID}`, data);
-  return resp.data;
-}
-
-async function createBoardPost<T>({ data }: { data: T }) {
-  const resp = await API.post(`/announcement/e`, data);
-  return resp;
+  return await api.query.createBoardPost<AnnouncementPostSchema>({
+    topic: 'announcement',
+    data: data,
+  });
 }
 
 export default {
   queryFn: {
     getPostEditMode,
-    getPostReadMode,
-    getPostCreateMode,
   },
   query: {
-    editBoardPost,
-    createBoardPost,
+    editAnnouncementPost,
+    createAnnouncementPost,
   },
 };
