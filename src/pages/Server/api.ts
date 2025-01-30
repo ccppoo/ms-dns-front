@@ -1,6 +1,8 @@
 import { AxiosResponse } from 'axios';
 
 import API from '@/api';
+import api from '@/api/post';
+import type { PaginationOptions } from '@/api/post/types';
 import type {
   ServerPostSchema,
   ServerPostSchemaRead,
@@ -8,23 +10,30 @@ import type {
 
 import type { ServerProfileListing, UserProfile } from './models';
 
-async function getServerProfileList({
+async function getServerProfilePostList({
   queryKey,
 }: {
-  queryKey: [string, string, number];
+  queryKey: [string, PaginationOptions];
 }): Promise<ServerProfileListing[]> {
-  const resp = await API.get<ServerProfileListing[]>(`/server/profile/list`);
-  return resp.data;
+  const [, paginationOptions] = queryKey;
+  const data = await api.queryFn.getPostList<ServerProfileListing[]>({
+    queryKey: ['server post list', 'server', paginationOptions],
+  });
+  return data;
 }
 
-async function getServerProfile({
+async function getServerProfilePost({
   queryKey,
 }: {
-  queryKey: [string];
+  queryKey: [string, string];
 }): Promise<ServerPostSchemaRead> {
-  const [serverProfileID] = queryKey;
-  const resp = await API.get<ServerPostSchemaRead>(`/server/profile/r/${serverProfileID}`);
-  return resp.data;
+  const [_, serverProfileID] = queryKey;
+  const data = await api.queryFn.getPost<ServerPostSchemaRead>({
+    queryKey: ['get server post', 'server', serverProfileID],
+  });
+  return data;
+  // const resp = await API.get<ServerPostSchemaRead>(`/server/profile/r/${serverProfileID}`);
+  // return resp.data;
 }
 
 async function getUserProfile({ queryKey }: { queryKey: [string] }): Promise<UserProfile> {
@@ -33,16 +42,11 @@ async function getUserProfile({ queryKey }: { queryKey: [string] }): Promise<Use
   return resp.data;
 }
 
-// async function getServerProfile({ queryKey }: { queryKey: string[] }): Promise<UserSubdomains> {
-//   const resp = await API.get<UserSubdomains>(`/me/domain`);
-//   return resp.data;
-// }
-
 export default {
   queryFn: {
-    getServerProfileList,
+    getServerProfilePostList,
     getUserProfile,
-    getServerProfile,
+    getServerProfilePost,
   },
   query: {},
 };

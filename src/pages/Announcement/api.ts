@@ -1,6 +1,8 @@
 import { AxiosResponse } from 'axios';
 
 import API from '@/api';
+import api from '@/api/post';
+import type { PaginationOptions } from '@/api/post/types';
 import type {
   AnnouncementPostSchema,
   AnnouncementPostSchemaRead,
@@ -11,20 +13,25 @@ import type { AnnouncementListing, UserProfile } from './models';
 async function getAnnouncementPostList({
   queryKey,
 }: {
-  queryKey: [string, string, number];
+  queryKey: [string, PaginationOptions];
 }): Promise<{ list: AnnouncementListing[] }> {
-  const resp = await API.get<{ list: AnnouncementListing[] }>(`/announcement/list`);
-  return resp.data;
+  const [, paginationOptions] = queryKey;
+  const data = await api.queryFn.getPostList<{ list: AnnouncementListing[] }>({
+    queryKey: ['announcement post list', 'announcement', paginationOptions],
+  });
+  return data;
 }
 
 async function getAnnouncementPost({
   queryKey,
 }: {
-  queryKey: [string, string];
+  queryKey: [string, number];
 }): Promise<AnnouncementPostSchemaRead> {
   const [_, postID] = queryKey;
-  const resp = await API.get<AnnouncementPostSchemaRead>(`/announcement/r/${postID}`);
-  return resp.data;
+  const data = await api.queryFn.getPost<AnnouncementPostSchemaRead>({
+    queryKey: ['get annoucement post', 'announcement', postID],
+  });
+  return data;
 }
 
 async function getUserProfile({ queryKey }: { queryKey: [string] }): Promise<UserProfile> {
