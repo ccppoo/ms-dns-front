@@ -10,13 +10,4 @@ const serverProfileListing = z.object({
   minecraft_info: minecraftInfo,
 });
 
-const userProfile = z.object({
-  code: z.string(),
-  scope: z.string(),
-  authuser: z.string(),
-  prompt: z.string(),
-});
-
-export type UserProfile = z.infer<typeof userProfile>;
-
 export type ServerProfileListing = z.infer<typeof serverProfileListing>;

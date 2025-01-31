@@ -3,8 +3,8 @@ import Container from '@mui/material/Container';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from '@tanstack/react-router';
 
+import userApi from '@/api/user';
 import { FlexBox } from '@/components/styled';
-import api from '@/pages/User/api';
 
 export default function UserProfile() {
   const userID = useParams({
@@ -16,8 +16,8 @@ export default function UserProfile() {
   console.log(`userID : ${userID}`);
 
   const { data } = useQuery({
-    queryKey: [userID],
-    queryFn: api.queryFn.getUserProfile,
+    queryKey: ['user profile', userID],
+    queryFn: userApi.queryFn.getUserProfile,
   });
 
   return (

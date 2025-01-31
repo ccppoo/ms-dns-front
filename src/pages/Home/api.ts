@@ -32,7 +32,7 @@ async function getHomeServerProfiles({
   queryKey: [string, string];
 }): Promise<ServerProfileListing[]> {
   const [_, userID] = queryKey;
-  const resp = await API.get<ServerProfileListing[]>(`/server/profile/list?order=time_desc`);
+  const resp = await API.get<ServerProfileListing[]>(`/post/server/list?order=time_desc`);
   return resp.data;
 }
 
