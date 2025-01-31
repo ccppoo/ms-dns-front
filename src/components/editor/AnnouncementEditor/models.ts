@@ -8,8 +8,14 @@ const announcementPostSchema = postBase
   .merge(boardPostTitle)
   .merge(boardPostMetadata);
 
+const announcementPostSchemaRead = announcementPostSchema.merge(
+  z.object({
+    created_at: z.optional(z.string()), // 작성일
+    updated_at: z.optional(z.string()), // 수정일
+  }),
+);
 export type AnnouncementPostSchema = z.input<typeof announcementPostSchema>;
-export type AnnouncementPostSchemaRead = z.infer<typeof announcementPostSchema>;
+export type AnnouncementPostSchemaRead = z.infer<typeof announcementPostSchemaRead>;
 
 const DEFAULT_INITIAL_DATA = {
   blocks: [
@@ -24,9 +30,9 @@ const DEFAULT_INITIAL_DATA = {
 };
 
 export const announcementPostSchemaDefault: AnnouncementPostSchema = {
-  _id: undefined,
+  id: undefined,
   data: DEFAULT_INITIAL_DATA,
-  uploaded_at: undefined,
+  created_at: undefined,
   updated_at: undefined,
   title: '',
 };

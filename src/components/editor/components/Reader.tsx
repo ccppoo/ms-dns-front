@@ -9,7 +9,7 @@ import { Reader } from './Editor';
 export default function EditorReader<T extends OutputDataSchemaType>({ data }: { data: T }) {
   const MAX_WIDTH = 852;
   return (
-    <FlexBox sx={{ flexDirection: 'column', alignItems: 'center', paddingY: 3, rowGap: 3 }}>
+    <FlexBox sx={{ flexDirection: 'column', alignItems: 'center', rowGap: 3 }}>
       <FlexBox
         sx={{
           flexDirection: 'column',
