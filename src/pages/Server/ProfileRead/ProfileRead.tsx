@@ -12,6 +12,7 @@ import { Link } from '@tanstack/react-router';
 import type { ServerInfo } from '@/components/editor/ServerPostEditor/models';
 import EditorReader from '@/components/editor/components/Reader';
 import PostManagements from '@/components/post/PostManagements';
+import PostreadActions from '@/components/post/PostReadActions';
 import { FlexBox, FlexPaper } from '@/components/styled';
 import { ExternalLinkNewTab, Image } from '@/components/styled';
 import { icon, sample } from '@/static';
@@ -440,22 +441,12 @@ export default function ProfileRead() {
     return (
       <Container sx={{ height: '100%' }} maxWidth={'md'}>
         <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>
-          {/* 제목 */}
-          {/* {data.title} */}
           <PostManagements postID={postID} topic="server" creator={postData.creator!} />
-          {/* 마크 버전, 런처 */}
-          <ServerSystemDetail version={minecraft_info.version} launcher={minecraft_info.launcher} />
-          {/* {data.server_info} */}
-          {/* 서버 운영 시간, 태그 */}
           <ServerProfileHeader title={title} serverInfo={server_info} />
-
-          {/* {data.minecraft_info} */}
-          {/* 서버 연락, 카페, 등 */}
+          <ServerSystemDetail version={minecraft_info.version} launcher={minecraft_info.launcher} />
           <ServerExternalLinks community={server_community} />
-
-          {/* {data.server_community} */}
-          {/* 본문 */}
           <EditorReader data={postData} />
+          <PostreadActions topic="server" />
           <PostManagements postID={postID} topic="server" creator={postData.creator!} />
         </FlexBox>
       </Container>

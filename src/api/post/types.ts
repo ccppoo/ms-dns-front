@@ -3,7 +3,7 @@ type PostTopic = 'announcement' | 'server';
 type PostID = number | string;
 
 type PaginationOptions = {
-  page?: number;
+  page: number;
   order?: string;
   limit?: number;
 };

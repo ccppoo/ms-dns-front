@@ -1,6 +1,3 @@
-import { AxiosResponse } from 'axios';
-
-import API from '@/api';
 import api from '@/api/post';
 import type { PaginationOptions } from '@/api/post/types';
 import type {
@@ -8,7 +5,7 @@ import type {
   AnnouncementPostSchemaRead,
 } from '@/components/editor/AnnouncementEditor/models';
 
-import type { AnnouncementListing, UserProfile } from './models';
+import type { AnnouncementListing } from './models';
 
 async function getAnnouncementPostList({
   queryKey,
@@ -34,17 +31,10 @@ async function getAnnouncementPost({
   return data;
 }
 
-async function getUserProfile({ queryKey }: { queryKey: [string] }): Promise<UserProfile> {
-  const [userID] = queryKey;
-  const resp = await API.get<UserProfile>(`/user/${userID}/profile`);
-  return resp.data;
-}
-
 export default {
   queryFn: {
     getAnnouncementPost,
     getAnnouncementPostList,
-    getUserProfile,
   },
   query: {},
 };

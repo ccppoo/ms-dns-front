@@ -2,8 +2,10 @@ import { useState } from 'react';
 
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Box, Chip, Divider, Paper, Typography } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid2';
 import Pagination from '@mui/material/Pagination';
 
 import { useQuery } from '@tanstack/react-query';
@@ -11,90 +13,98 @@ import { Link, useSearch } from '@tanstack/react-router';
 
 import type { PaginationOptions } from '@/api/post/types';
 import { defaultPaginationOptions } from '@/api/post/values';
+import userApi from '@/api/user';
+import PostListActions from '@/components/post/PostListActions';
 import { FlexBox, FlexPaper, Image } from '@/components/styled';
 
 import api from '../api';
 import type { AnnouncementListing } from '../models';
 
-function AnnouncementListItem({
-  announcementListing,
-}: {
-  announcementListing: AnnouncementListing;
-}) {
-  const { creator: creatorID, title, id: postID } = announcementListing;
+interface IListItemCreator {
+  creatorID: string;
+}
+function ListItemCreator(props: IListItemCreator) {
+  const { creatorID } = props;
 
-  const { data } = useQuery({
-    queryKey: [creatorID],
-    queryFn: api.queryFn.getUserProfile,
+  const { data, isSuccess } = useQuery({
+    queryKey: ['user profile', creatorID],
+    queryFn: userApi.queryFn.getUserProfile,
   });
 
-  if (data) {
-    return (
-      <FlexBox sx={{ width: '100%', flexDirection: 'column', rowGap: 0.5 }}>
-        <FlexPaper sx={{ padding: 1, columnGap: 1, width: '100%' }}>
-          <Box
-            component={Link}
-            to={`/announcement/read/${postID}`}
-            sx={{ display: 'flex', columnGap: 2, width: '100%', textDecoration: 'none' }}
-            style={{ color: 'black' }}
-          >
-            <FlexPaper
-              sx={{
-                width: 75,
-                height: 75,
-                flexShrink: 0,
-                padding: 0.5,
-                justifyContent: 'center',
-              }}
-              elevation={2}
-            >
-              <Image
-                // src={serverLogo}
-                sx={{
-                  objectFit: 'contain',
-                  width: '100%',
-                  height: '100%',
-                }}
-              />
-            </FlexPaper>
+  return (
+    <FlexBox
+      sx={{
+        width: '100%',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingX: 1,
+      }}
+    >
+      <Divider orientation="vertical" />
+      <FlexBox sx={{ alignItems: 'center', columnGap: 0.1 }}>
+        {isSuccess && data && (
+          <>
+            <Avatar src={data.profileImage} sx={{ width: 30, height: 30 }} />
+            <Typography style={{ fontSize: '0.9rem' }}>{data.nickname}</Typography>
+          </>
+        )}
+      </FlexBox>
+      <Divider orientation="vertical" />
+    </FlexBox>
+  );
+}
+
+function AnnouncementListItem({
+  announcementListing,
+  page,
+}: {
+  announcementListing: AnnouncementListing;
+  page: number;
+}) {
+  const { creator: creatorID, title, id: postID, created_at } = announcementListing;
+
+  const writeDate = new Date(created_at).toLocaleDateString();
+  return (
+    <FlexPaper sx={{ padding: 1, columnGap: 1, width: '100%' }}>
+      <Box
+        component={Link}
+        to={`/announcement/read/${postID}?page=${page}`}
+        sx={{ columnGap: 2, width: '100%', flexGrow: 1, textDecoration: 'none' }}
+        style={{ color: 'black' }}
+      >
+        <Grid container spacing={1}>
+          <Grid size={{ md: 7, sm: 12 }}>
             <FlexBox
               sx={{
                 width: '100%',
-                paddingTop: 1,
-                flexDirection: 'column',
-                justifyContent: 'space-between',
+                height: '100%',
+                alignItems: 'center',
+                paddingX: 1,
               }}
             >
-              <Typography variant="h5">{title}</Typography>
-              <FlexBox sx={{ flexWrap: 'wrap', columnGap: 1 }}>asdasd</FlexBox>
+              <Typography variant="body1">{title}</Typography>
             </FlexBox>
-          </Box>
-        </FlexPaper>
-      </FlexBox>
-    );
-  }
-
-  return;
-}
-
-function ServerProfileWriteButton() {
-  return (
-    <Paper
-      sx={{
-        display: 'flex',
-        columnGap: 0.5,
-        paddingX: 0.5,
-        paddingY: 0.2,
-        textDecoration: 'none',
-        flexGrow: 0,
-      }}
-      style={{ color: 'black' }}
-      component={Link}
-      to={'/announcement/edit'}
-    >
-      <EditOutlinedIcon />
-      <Typography>새로 쓰기</Typography>
-    </Paper>
+          </Grid>
+          <Grid size={{ md: 3.2, sm: 8 }}>
+            <ListItemCreator creatorID={creatorID} />
+          </Grid>
+          <Grid size={{ md: 1.8, sm: 4 }}>
+            <FlexBox
+              sx={{
+                width: '100%',
+                height: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
+                paddingX: 1,
+              }}
+            >
+              <Typography style={{ fontSize: '0.9rem' }}>{writeDate}</Typography>
+            </FlexBox>
+          </Grid>
+        </Grid>
+      </Box>
+    </FlexPaper>
   );
 }
 
@@ -125,14 +135,16 @@ export default function ServerProfileList() {
   return (
     <Container sx={{ height: '100%' }} maxWidth={'md'}>
       <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>
-        <Typography>서버 목록</Typography>
-        <FlexBox sx={{ justifyContent: 'end' }}>
-          <ServerProfileWriteButton />
-        </FlexBox>
-        <FlexBox sx={{ flexDirection: 'column', rowGap: 1, minHeight: 300 }}>
+        <Typography>공지사항</Typography>
+        <PostListActions topic="announcement" adminOnly />
+        <FlexBox sx={{ flexDirection: 'column', rowGap: 1, minHeight: 500 }}>
           {!!data ? (
             data.list.map((item) => (
-              <AnnouncementListItem announcementListing={item} key={item.id} />
+              <AnnouncementListItem
+                announcementListing={item}
+                key={item.id}
+                page={paginationOptions.page}
+              />
             ))
           ) : (
             <CircularProgress />
@@ -157,9 +169,7 @@ export default function ServerProfileList() {
           />
         </FlexBox>
 
-        <FlexBox sx={{ justifyContent: 'end' }}>
-          <ServerProfileWriteButton />
-        </FlexBox>
+        <PostListActions topic="announcement" adminOnly />
       </FlexBox>
     </Container>
   );
