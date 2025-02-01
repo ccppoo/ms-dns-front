@@ -19,10 +19,10 @@ import type { ServerProfileListing } from '../models';
 
 interface IServerProfileListItem {
   serverProfileListing: ServerProfileListing;
-  page: number;
+  page?: number;
 }
 
-function ServerProfileListItem(props: IServerProfileListItem) {
+export function ServerProfileListItem(props: IServerProfileListItem) {
   const { page, serverProfileListing } = props;
   const {
     creator: creatorID,
@@ -33,12 +33,14 @@ function ServerProfileListItem(props: IServerProfileListItem) {
   } = serverProfileListing;
 
   const serverLogo = server_info.server_logo;
+  const _goto = `/server/read/${postID}`;
+  const goto = !!page ? `${_goto}?page=${page}` : _goto;
   return (
     <FlexBox sx={{ width: '100%', flexDirection: 'column', rowGap: 0.5 }}>
       <FlexPaper sx={{ padding: 1, columnGap: 1, width: '100%' }}>
         <Box
           component={Link}
-          to={`/server/read/${postID}?page=${page}`}
+          to={goto}
           sx={{ display: 'flex', columnGap: 2, width: '100%', textDecoration: 'none' }}
           style={{ color: 'black' }}
         >
@@ -142,7 +144,7 @@ export default function ServerProfileList() {
   });
 
   const { data } = useQuery({
-    queryKey: ['server list', paginationOptions],
+    queryKey: ['server list', paginationOptions, {}],
     queryFn: api.queryFn.getServerProfilePostList,
   });
 

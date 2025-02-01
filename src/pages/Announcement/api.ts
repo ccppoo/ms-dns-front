@@ -1,5 +1,5 @@
 import api from '@/api/post';
-import type { PaginationOptions } from '@/api/post/types';
+import type { PaginationOptions, PostSearchOptions } from '@/api/post/types';
 import type {
   AnnouncementPostSchema,
   AnnouncementPostSchemaRead,
@@ -10,11 +10,11 @@ import type { AnnouncementListing } from './models';
 async function getAnnouncementPostList({
   queryKey,
 }: {
-  queryKey: [string, PaginationOptions];
+  queryKey: [string, PaginationOptions, PostSearchOptions];
 }): Promise<{ list: AnnouncementListing[] }> {
-  const [, paginationOptions] = queryKey;
+  const [, paginationOptions, searchOptions] = queryKey;
   const data = await api.queryFn.getPostList<{ list: AnnouncementListing[] }>({
-    queryKey: ['announcement post list', 'announcement', paginationOptions],
+    queryKey: ['announcement post list', 'announcement', paginationOptions, searchOptions],
   });
   return data;
 }

@@ -1,5 +1,5 @@
 import api from '@/api/post';
-import type { PaginationOptions } from '@/api/post/types';
+import type { PaginationOptions, PostSearchOptions } from '@/api/post/types';
 import type {
   ServerPostSchema,
   ServerPostSchemaRead,
@@ -10,11 +10,11 @@ import type { ServerProfileListing } from './models';
 async function getServerProfilePostList({
   queryKey,
 }: {
-  queryKey: [string, PaginationOptions];
+  queryKey: [string, PaginationOptions, PostSearchOptions];
 }): Promise<ServerProfileListing[]> {
-  const [, paginationOptions] = queryKey;
+  const [, paginationOptions, searchOptions] = queryKey;
   const data = await api.queryFn.getPostList<ServerProfileListing[]>({
-    queryKey: ['server post list', 'server', paginationOptions],
+    queryKey: ['server post list', 'server', paginationOptions, searchOptions],
   });
   return data;
 }

@@ -8,11 +8,12 @@ import type {
   IPostEdit,
   PaginationOptions,
   PostID,
+  PostSearchOptions,
   PostTopic,
   QueryName,
 } from './types';
 
-type PostListQueryKey = [QueryName, PostTopic, PaginationOptions];
+type PostListQueryKey = [QueryName, PostTopic, PaginationOptions, PostSearchOptions];
 
 function stringifyPaginationOptions(options: PaginationOptions): string {
   let queryParams = '';
@@ -22,12 +23,23 @@ function stringifyPaginationOptions(options: PaginationOptions): string {
   return queryParams;
 }
 
+function stringifySearchOptions(options: PostSearchOptions): string {
+  let queryParams = '';
+  queryParams = !options.creator ? queryParams : `${queryParams}&creator=${options.creator}`;
+
+  return queryParams;
+}
+
 async function getPostList<PostListType>(params: {
   queryKey: PostListQueryKey;
 }): Promise<PostListType> {
   const { queryKey } = params;
-  const [_, postTopic, paginationOptions] = queryKey;
-  const queryParams = stringifyPaginationOptions(paginationOptions);
+  const [_, postTopic, paginationOptions, searchOptions] = queryKey;
+  const q1 = stringifyPaginationOptions(paginationOptions);
+  const q2 = stringifySearchOptions(searchOptions);
+  const queryParams = [q1.length > 0 ? q1 : null, q2.length > 0 ? q2 : null]
+    .filter((val) => !!val)
+    .join('&');
   const resp = await API.get<PostListType>(`/post/${postTopic}/list?${queryParams}`);
 
   return resp.data;

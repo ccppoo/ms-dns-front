@@ -12,7 +12,8 @@ import { Link } from '@tanstack/react-router';
 import { FlexBox, FlexPaper, Image, VisuallyHiddenInput } from '@/components/styled';
 import useUserProfile from '@/hooks/useUserProfile';
 import api from '@/pages/Me/api';
-import { ServerProfileLists } from '@/pages/Server/ProfileList/ProfileListItemListing';
+import { ServerProfileListItem } from '@/pages/Server/ProfileList/ProfileList';
+import serverPostApi from '@/pages/Server/api';
 
 import type {
   UserDomain,
@@ -197,32 +198,26 @@ function MyRegisteredDomains() {
 function MyServerProfiles() {
   const [{ uid: userID }] = useUserProfile();
   const { data } = useQuery({
-    queryKey: ['server', userID!],
-    queryFn: api.queryFn.getMyServerProfiles,
+    queryKey: ['server', {}, { creator: userID }],
+    queryFn: serverPostApi.queryFn.getServerProfilePostList,
     enabled: !!userID,
   });
 
   // console.log(`userID : ${userID}`);
 
-  if (!data) {
-    return (
-      <FlexBox sx={{ paddingY: 0, flexDirection: 'column', rowGap: 2 }}>
+  // console.log(`data : ${JSON.stringify(data)}`);
+  return (
+    <FlexBox sx={{ paddingY: 0, flexDirection: 'column', rowGap: 2 }}>
+      <FlexBox>
+        <Typography variant="h6">작성한 서버 프로필</Typography>
+      </FlexBox>
+      {!!data ? (
+        data.map((item) => <ServerProfileListItem serverProfileListing={item} key={item.id} />)
+      ) : (
         <CircularProgress />
-      </FlexBox>
-    );
-  }
-
-  if (!!data) {
-    console.log(`data : ${JSON.stringify(data)}`);
-    return (
-      <FlexBox sx={{ paddingY: 0, flexDirection: 'column', rowGap: 2 }}>
-        <FlexBox>
-          <Typography variant="h6">작성한 서버 프로필</Typography>
-        </FlexBox>
-        <ServerProfileLists list={data} />
-      </FlexBox>
-    );
-  }
+      )}
+    </FlexBox>
+  );
 }
 
 export default function MyProfile() {

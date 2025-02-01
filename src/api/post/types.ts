@@ -3,12 +3,16 @@ type PostTopic = 'announcement' | 'server';
 type PostID = number | string;
 
 type PaginationOptions = {
-  page: number;
+  page?: number;
   order?: string;
   limit?: number;
 };
 
-export type { QueryName, PostTopic, PostID, PaginationOptions };
+type PostSearchOptions = {
+  creator?: string;
+};
+
+export type { QueryName, PostTopic, PostID, PaginationOptions, PostSearchOptions };
 
 interface IPost<T> {
   data: T;

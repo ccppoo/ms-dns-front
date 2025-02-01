@@ -13,7 +13,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 
-import { FlexBox } from '@/components/styled';
+import { FlexBox, FlexPaper } from '@/components/styled';
 
 import api from './api';
 
@@ -49,7 +49,7 @@ export default function SearchDomain() {
 
   if (isSuccess && availableDomains) {
     return (
-      <FlexBox
+      <FlexPaper
         sx={{
           height: 300,
           justifyContent: 'center',
@@ -96,7 +96,7 @@ export default function SearchDomain() {
             <SendIcon />
           </IconButton>
         </FlexBox>
-      </FlexBox>
+      </FlexPaper>
     );
   }
 }

@@ -55,7 +55,7 @@ function ListItemCreator(props: IListItemCreator) {
   );
 }
 
-function AnnouncementListItem({
+export function AnnouncementListItem({
   announcementListing,
   page,
 }: {
@@ -121,7 +121,7 @@ export default function ServerProfileList() {
     ...(!!limit && { limit }),
   });
   const { data } = useQuery({
-    queryKey: ['announcement list', paginationOptions],
+    queryKey: ['announcement list', paginationOptions, {}],
     queryFn: api.queryFn.getAnnouncementPostList,
   });
 
@@ -143,7 +143,7 @@ export default function ServerProfileList() {
               <AnnouncementListItem
                 announcementListing={item}
                 key={item.id}
-                page={paginationOptions.page}
+                page={paginationOptions.page!}
               />
             ))
           ) : (
