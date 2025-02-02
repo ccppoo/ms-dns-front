@@ -34,8 +34,8 @@ const imageItem = z.object({
 });
 
 export const boardPostMetadata = z.object({
-  created_at: z.optional(z.date()), // 작성일
-  updated_at: z.optional(z.date()), // 수정일
+  created_at: z.optional(z.union([z.date(), z.string()])), // 작성일
+  updated_at: z.optional(z.union([z.date(), z.string()])), // 수정일
 });
 
 export const boardPostTitle = z.object({

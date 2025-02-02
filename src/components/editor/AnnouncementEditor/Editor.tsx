@@ -25,16 +25,17 @@ export default function AnnouncementEditor({
   readOnly?: boolean;
 }) {
   const methods = useForm<AnnouncementPostSchema>({
-    defaultValues: data || announcementPostSchemaDefault,
+    values: data,
+    defaultValues: announcementPostSchemaDefault,
   });
-
+  // console.log(`data : ${JSON.stringify(data)}`);
   const postID = methods.getValues('id' as FieldPath<AnnouncementPostSchema>);
   const navigate = useNavigate({});
   const isEditMode = !!postID;
 
   const submit = async (formData: AnnouncementPostSchema) => {
-    const allValues = methods.getValues();
-    console.log(`data : ${JSON.stringify(allValues)}`);
+    // const allValues = methods.getValues();
+    // console.log(`data : ${JSON.stringify(allValues)}`);
     if (isEditMode) {
       const resp = await api.query.editAnnouncementPost({
         data: formData,

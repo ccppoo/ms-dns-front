@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import type { FieldPath, PathValue } from 'react-hook-form';
 
@@ -22,14 +23,16 @@ const API_IMAGE_UPLOAD_HOST = 'https://example.com';
 export default function EditorWrapper<T extends OutputDataSchemaType>(props: EditorContainerIntf) {
   const { readOnly } = props;
   const [userProfile] = useUserProfile();
-  const { setValue, getValues, control } = useFormContext<T>();
+  const methods = useFormContext<T>();
   type FormDataType = PathValue<T, FieldPath<T>>;
   const outputDataFormPath = 'data' as FieldPath<T>; // 글 쓴 내용 저장되는 form-path
 
-  const data = getValues(outputDataFormPath);
+  const data = methods.getValues(outputDataFormPath);
+  console.log(`data : ${JSON.stringify(data)}`);
+  // console.log(`getValues : ${JSON.stringify(getValues(outputDataFormPath))}`);
 
   const saveOnChange = (value: FormDataType) => {
-    setValue(outputDataFormPath, value);
+    methods.setValue(outputDataFormPath, value);
   };
 
   const onChange: onChangeEditorJS = async (api: API, event: EditorJSOnChangeEvent) => {

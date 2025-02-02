@@ -15,7 +15,7 @@ export default function ServerProfileEdit() {
     strict: true,
   });
 
-  // console.log(`postID  : ${postID}`);
+  console.log(`postID  : ${postID}`);
 
   // 양식, 공지사항, 등 내용 있을 경우 api로 불러오는 것
   const { data, isSuccess, isFetching } = useQuery({

@@ -27,16 +27,19 @@ export default function ServerPostEditor({
   readOnly?: boolean;
 }) {
   const methods = useForm<ServerPostSchema>({
-    defaultValues: data || serverPostSchemaDefault,
+    values: data,
+
+    defaultValues: serverPostSchemaDefault,
   });
 
   const postID = methods.getValues('id' as FieldPath<ServerPostSchema>);
   const navigate = useNavigate({});
   const isEditMode = !!postID;
+  // console.log(`data : ${JSON.stringify(data)}`);
 
   const submit = async (formData: ServerPostSchema) => {
-    const allValues = methods.getValues();
-    console.log(`data : ${JSON.stringify(allValues)}`);
+    // const allValues = methods.getValues();
+    // console.log(`data : ${JSON.stringify(allValues)}`);
     if (isEditMode) {
       await api.query.editServerProfilePost({
         data: formData,

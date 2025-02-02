@@ -21,16 +21,11 @@ import api from '../api';
 
 const TEMP_IMAGE = 'https://cdn.mc-server.kr/static/mc-server-logo-200x200.png';
 
-const SERVER_NAME = '7percent';
-const SERVER_URL = '7percent.mc-server.kr';
-
-const SERVER_TAG = ['PvP', '마인팜', '야생', 'RPG', '건축'];
-
 function CopyToClipBoard({ text, value }: { text: string; value: string }) {
   const copyToClipBoard = async () => {
     try {
-      await window.navigator.clipboard.writeText(SERVER_URL);
-      alert('Copied to clipboard!');
+      await window.navigator.clipboard.writeText(value);
+      alert(`복사되었습니다 : ${value}`);
     } catch (err) {
       console.error('Unable to copy to clipboard.', err);
       alert('Copy to clipboard failed.');
@@ -47,22 +42,22 @@ function CopyToClipBoard({ text, value }: { text: string; value: string }) {
         <Typography>{text}</Typography>
       </FlexBox>
     </Button>
-    // <Typography variant="caption">클릭해서 복사하기</Typography>
   );
 }
 
 interface IServerProfileHeader {
-  title?: string;
-  serverInfo?: ServerInfo;
+  title: string;
+  serverInfo: ServerInfo;
 }
 
 function ServerProfileHeader(props: IServerProfileHeader) {
   const { title, serverInfo } = props;
 
-  const serverName = title || SERVER_NAME;
-  const serverTags = serverInfo?.tags || SERVER_TAG;
+  const serverName = title;
+  const serverTags = serverInfo?.tags;
   const server24Hour = !!serverInfo?.service24hr;
-  const serverAddress = serverInfo?.server_address || SERVER_URL;
+  const serverAddress = serverInfo?.server_address;
+  const serverLogo = serverInfo.server_logo;
 
   return (
     <FlexPaper sx={{ padding: 1, width: '100%', flexDirection: 'column' }}>
@@ -98,7 +93,7 @@ function ServerProfileHeader(props: IServerProfileHeader) {
               justifyContent: 'center',
             }}
           >
-            <Image src={TEMP_IMAGE} sx={{ height: 100, width: 100 }} />
+            <Image src={serverLogo || TEMP_IMAGE} sx={{ height: 100, width: 100 }} />
           </FlexBox>
         </FlexBox>
         <FlexBox sx={{ flexDirection: 'column', rowGap: 1 }}>
@@ -106,12 +101,7 @@ function ServerProfileHeader(props: IServerProfileHeader) {
             <Typography>서버 주소 </Typography>
             <CopyToClipBoard text={serverAddress} value={serverAddress} />
           </FlexBox>
-          {/* <FlexBox sx={{ alignItems: 'center', columnGap: 1 }}>
-            <Typography>접속자</Typography>
-            <Typography>
-              {PLAYER_COUNT} / {PLAYER_MAX}
-            </Typography>
-          </FlexBox> */}
+
           <FlexBox sx={{ alignItems: 'center', columnGap: 1 }}>
             <Typography>24시간 운영</Typography>
             {!!server24Hour ? <Typography>O</Typography> : <Typography>X</Typography>}
@@ -357,53 +347,6 @@ function ServerProfileIndex() {
   );
 }
 
-function ServerProfileIntro() {
-  return (
-    <FlexBox sx={{ width: '100%', flexDirection: 'column' }} id="intro">
-      <Typography variant="h6">소개</Typography>
-      <FlexPaper sx={{ flexDirection: 'column', paddingY: 2, paddingX: 1 }}>
-        <Typography variant="h4">【정품서버✔️】 【1.12.2~최신】</Typography>
-        <Typography>
-          당신을 위한 최고의 서버❤️ RPG, 랜무, 마인팜, 미니게임 등 다양한 콘텐츠가 준비되어 있어요!
-        </Typography>
-        <Typography variant="h4">【RPG 하면 렌독, 렌독 하면 RPG!】</Typography>
-
-        <Typography>
-          렌독 RPG서버는 15년도부터 5년째 운영중인 장수서버로, 최고동접 1286명이라는 압도적인 기록을
-          가지고 있는 근본있는 서버입니다.
-        </Typography>
-        <Typography>단순히 파티클 몇개 띡띡 날리는 그런 서버가 아닙니다.</Typography>
-
-        <Typography>
-          차원이 다른 스킬 퀄리티를 확인해보세요 수십명의 유저끼리 함께 보스를 사냥하는 보스레이드
-          시스템도 준비되어있습니다.
-        </Typography>
-
-        <Typography variant="h4">【끊을 수 없는 중독성! 랜덤무기전쟁!】</Typography>
-
-        <Typography>언제까지 똑같고 지루한 전투만할거야?</Typography>
-
-        <Typography>매판 새로운 전투가 펼쳐진다!</Typography>
-
-        <Typography>각양각색 다양한 수백종류의 무기들! 모든 무기를 모아보세요.</Typography>
-        <Typography>다양한 스킬들로 나만의 콤보를 만들어보자!</Typography>
-      </FlexPaper>
-    </FlexBox>
-  );
-}
-
-function ServerProfileStatus() {
-  return (
-    <FlexBox sx={{ flexDirection: 'column' }} id="status">
-      <Typography variant="h6">서버 상태</Typography>
-
-      <FlexPaper sx={{ justifyContent: 'center' }}>
-        <Image src={sample.chartSample} sx={{ width: '80%' }} />
-      </FlexPaper>
-    </FlexBox>
-  );
-}
-
 export default function ProfileRead() {
   const postID = useParams({
     from: '/server/read/$postID',
@@ -418,23 +361,6 @@ export default function ProfileRead() {
     queryFn: api.queryFn.getServerProfilePost,
     enabled: !!postID,
   });
-
-  if (!postID) {
-    return (
-      <Container sx={{ height: '100%' }} maxWidth={'md'}>
-        <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>
-          <ServerSystemDetail />
-          <ServerProfileHeader />
-          <ServerExternalLinks />
-          <ServerProfileIndex />
-          <ServerProfileIntro />
-
-          <ServerProfileStatus />
-          <FlexBox>배너, 공유 등</FlexBox>
-        </FlexBox>
-      </Container>
-    );
-  }
 
   if (postData) {
     const { server_info, server_community, minecraft_info, title } = postData;

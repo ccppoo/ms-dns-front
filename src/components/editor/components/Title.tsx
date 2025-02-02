@@ -24,6 +24,7 @@ export default function Title<T extends BoardPostTitle>(props: TitleIntf) {
 
   const helperText = formState.errors.title?.message ? 'Please input creator username' : undefined;
 
+  // console.log(`getValues : ${JSON.stringify(getValues())}`);
   const titleValue = getValues(formPath);
   const setTitleValue = (value: string) => setValue(formPath, value as FormDataType);
 
@@ -37,6 +38,9 @@ export default function Title<T extends BoardPostTitle>(props: TitleIntf) {
             required: '제목을 입력하세요',
           }),
         }}
+        // {...register(formPath, {
+        //   required: '제목을 입력하세요',
+        // })}
         placeholder="제목을 입력하세요"
         error={!!formState.errors.title}
         helperText={helperText}

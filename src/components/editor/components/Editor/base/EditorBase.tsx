@@ -66,11 +66,15 @@ const EditorBase = (props: EditorBaseIntf): JSX.Element => {
         ...editorConfig,
         hideToolbar: false,
         readOnly: readOnly,
-
         // tunes: ['image'],
       });
       ejInstance.current = editor;
     }
+    // if (ejInstance.current) {
+    //   ejInstance.current.isReady.then(() => {
+    //     ejInstance.current?.render(data);
+    //   });
+    // }
     // 아래 호출하는 거는 deps가 바뀌어서 새로운 글을 불러올 때
     // 예를 들어서 Parent Component에서 (수정하는 경우) 새로운 글을 API로부터 불러 올 때
     // onReady : true -> false로 바뀌는 경우 기존에 있던 에디터 삭제하고 새로운 내용 불러옴
@@ -82,7 +86,7 @@ const EditorBase = (props: EditorBaseIntf): JSX.Element => {
         ejInstance.current = null;
       }
     };
-  }, []);
+  }, [editorReady]);
 
   return (
     <Box

@@ -40,8 +40,19 @@ const serverPostSchema = postBase
   .extend({ server_info: serverInfo })
   .extend({ server_community: serverCommunity });
 
+const serverPostSchemaRead = serverPostSchema.required({
+  id: true,
+  data: true,
+  creator: true,
+  title: true,
+  server_info: true,
+  server_community: true,
+  minecraft_info: true,
+  created_at: true,
+});
+
 export type ServerPostSchema = z.input<typeof serverPostSchema>;
-export type ServerPostSchemaRead = z.infer<typeof serverPostSchema>;
+export type ServerPostSchemaRead = z.infer<typeof serverPostSchemaRead>;
 
 const DEFAULT_INITIAL_DATA = {
   blocks: [
@@ -59,7 +70,7 @@ export const serverPostSchemaDefault: ServerPostSchema = {
   id: undefined,
   creator: undefined,
   data: DEFAULT_INITIAL_DATA,
-  uploaded_at: undefined,
+  created_at: undefined,
   updated_at: undefined,
   title: '',
   minecraft_info: {
