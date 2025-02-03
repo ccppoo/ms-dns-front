@@ -154,25 +154,23 @@ export default function ServerProfileList() {
     });
   };
 
-  if (data) {
-    console.log(`data : ${JSON.stringify(data)}`);
+  if (!!data) {
+    const listingItems = data.list;
+    const maxPage = data.pages;
+    const itemLimit = data.limit;
     return (
       <Container sx={{ height: '100%' }} maxWidth={'md'}>
         <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>
           <Typography>서버 목록</Typography>
           <PostListActions topic="server" />
           <FlexBox sx={{ flexDirection: 'column', rowGap: 1, minHeight: 500 }}>
-            {!!data ? (
-              data.map((item) => (
-                <ServerProfileListItem
-                  serverProfileListing={item}
-                  key={item.id}
-                  page={paginationOptions.page}
-                />
-              ))
-            ) : (
-              <CircularProgress />
-            )}
+            {listingItems.map((item) => (
+              <ServerProfileListItem
+                serverProfileListing={item}
+                key={item.id}
+                page={paginationOptions.page}
+              />
+            ))}
           </FlexBox>
 
           <FlexBox
@@ -186,7 +184,7 @@ export default function ServerProfileList() {
           >
             <Divider variant="middle" />
             <Pagination
-              count={3}
+              count={maxPage}
               page={paginationOptions.page}
               onChange={handleChange}
               size="medium"
@@ -198,4 +196,14 @@ export default function ServerProfileList() {
       </Container>
     );
   }
+  return (
+    <Container sx={{ height: '100%' }} maxWidth={'md'}>
+      <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>
+        <Typography>서버 목록</Typography>
+        <FlexBox sx={{ flexDirection: 'column', rowGap: 1, minHeight: 500 }}>
+          <CircularProgress />
+        </FlexBox>
+      </FlexBox>
+    </Container>
+  );
 }

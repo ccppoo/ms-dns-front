@@ -8,6 +8,7 @@ import type {
   IPostEdit,
   PaginationOptions,
   PostID,
+  PostListReturn,
   PostSearchOptions,
   PostTopic,
   QueryName,
@@ -32,7 +33,7 @@ function stringifySearchOptions(options: PostSearchOptions): string {
 
 async function getPostList<PostListType>(params: {
   queryKey: PostListQueryKey;
-}): Promise<PostListType> {
+}): Promise<PostListReturn<PostListType>> {
   const { queryKey } = params;
   const [_, postTopic, paginationOptions, searchOptions] = queryKey;
   const q1 = stringifyPaginationOptions(paginationOptions);
@@ -40,7 +41,9 @@ async function getPostList<PostListType>(params: {
   const queryParams = [q1.length > 0 ? q1 : null, q2.length > 0 ? q2 : null]
     .filter((val) => !!val)
     .join('&');
-  const resp = await API.get<PostListType>(`/post/${postTopic}/list?${queryParams}`);
+  const resp = await API.get<PostListReturn<PostListType>>(
+    `/post/${postTopic}/list?${queryParams}`,
+  );
 
   return resp.data;
 }

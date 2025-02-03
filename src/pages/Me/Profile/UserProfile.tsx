@@ -14,6 +14,7 @@ import { FlexBox, FlexPaper, Image, VisuallyHiddenInput } from '@/components/sty
 import useUserProfile from '@/hooks/useUserProfile';
 import api from '@/pages/Me/api';
 import { ServerProfileListItem } from '@/pages/Server/ProfileList/ProfileList';
+import serverListApi from '@/pages/Server/api';
 import serverPostApi from '@/pages/Server/api';
 
 import type {
@@ -243,27 +244,35 @@ function MyRegisteredDomains() {
 
 function MyServerProfiles() {
   const [{ uid: userID }] = useUserProfile();
+
   const { data } = useQuery({
-    queryKey: ['server', {}, { creator: userID }],
-    queryFn: serverPostApi.queryFn.getServerProfilePostList,
+    queryKey: ['server list', { page: 1, limit: 5 }, { creator: userID }],
+    queryFn: serverListApi.queryFn.getServerProfilePostList,
     enabled: !!userID,
   });
 
   // console.log(`userID : ${userID}`);
 
   // console.log(`data : ${JSON.stringify(data)}`);
+  if (!!data) {
+    const listingItems = data.list;
+
+    return (
+      <FlexBox sx={{ paddingY: 0, flexDirection: 'column', rowGap: 2 }}>
+        <FlexBox>
+          <Typography variant="h5">작성한 서버 프로필</Typography>
+        </FlexBox>
+        <FlexBox sx={{ minHeight: 300 }}>
+          {listingItems.map((item) => (
+            <ServerProfileListItem serverProfileListing={item} key={item.id} />
+          ))}
+        </FlexBox>
+      </FlexBox>
+    );
+  }
   return (
     <FlexBox sx={{ paddingY: 0, flexDirection: 'column', rowGap: 2 }}>
-      <FlexBox>
-        <Typography variant="h5">작성한 서버 프로필</Typography>
-      </FlexBox>
-      <FlexBox sx={{ minHeight: 300 }}>
-        {!!data ? (
-          data.map((item) => <ServerProfileListItem serverProfileListing={item} key={item.id} />)
-        ) : (
-          <CircularProgress />
-        )}
-      </FlexBox>
+      <CircularProgress />
     </FlexBox>
   );
 }

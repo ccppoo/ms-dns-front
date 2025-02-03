@@ -13,6 +13,7 @@ import { Link } from '@tanstack/react-router';
 
 import { FlexBox, FlexPaper, Image } from '@/components/styled';
 import useUserProfile from '@/hooks/useUserProfile';
+import serverListApi from '@/pages/Server/api';
 
 import api from './api';
 import type { ServerProfileListing } from './models';
@@ -110,33 +111,23 @@ function ServerProfileListItem({
 }
 
 export default function ServerList() {
-  // const [{ uid: userID }] = useUserProfile();
   // NOTE: 최대 5개까지
   const { data } = useQuery({
-    queryKey: ['server', ''],
-    queryFn: api.queryFn.getHomeServerProfiles,
-    // enabled: !!userID,
+    queryKey: ['server list', { page: 1, limit: 5 }, {}],
+    queryFn: serverListApi.queryFn.getServerProfilePostList,
   });
 
   // console.log(`userID : ${userID}`);
 
-  if (!data) {
-    return (
-      <FlexBox sx={{ paddingY: 0, flexDirection: 'column', rowGap: 2 }}>
-        <CircularProgress />
-      </FlexBox>
-    );
-  }
-
   if (!!data) {
-    console.log(`data : ${JSON.stringify(data)}`);
+    const listingItems = data.list;
     return (
       <FlexBox sx={{ paddingY: 0, flexDirection: 'column', rowGap: 2 }}>
         <FlexBox>
           <Typography variant="body1">최근 업로드 된 서버</Typography>
         </FlexBox>
         <FlexPaper sx={{ flexDirection: 'column', padding: 0.5, rowGap: 1 }}>
-          {data.map((srvProfile) => (
+          {listingItems.map((srvProfile) => (
             <ServerProfileListItem serverProfileListing={srvProfile} key={srvProfile.id} />
           ))}
           <FlexBox sx={{ justifyContent: 'end', paddingTop: 1 }}>
@@ -153,4 +144,9 @@ export default function ServerList() {
       </FlexBox>
     );
   }
+  return (
+    <FlexBox sx={{ paddingY: 0, flexDirection: 'column', rowGap: 2 }}>
+      <CircularProgress />
+    </FlexBox>
+  );
 }

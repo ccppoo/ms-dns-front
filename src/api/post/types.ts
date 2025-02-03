@@ -11,8 +11,13 @@ type PaginationOptions = {
 type PostSearchOptions = {
   creator?: string;
 };
+type PostListReturn<PostListType> = {
+  list: PostListType[];
+  pages: number;
+  limit: number;
+};
 
-export type { QueryName, PostTopic, PostID, PaginationOptions, PostSearchOptions };
+export type { QueryName, PostTopic, PostID, PaginationOptions, PostSearchOptions, PostListReturn };
 
 interface IPost<T> {
   data: T;

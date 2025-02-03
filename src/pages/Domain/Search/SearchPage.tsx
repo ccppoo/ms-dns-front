@@ -11,7 +11,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { useLocalStorage } from '@uidotdev/usehooks';
 
-import { FlexBox } from '@/components/styled';
+import { FlexBox, FlexPaper } from '@/components/styled';
 import useUserProfile from '@/hooks/useUserProfile';
 
 import api from '../api';
@@ -58,8 +58,8 @@ function DomainSearchResult() {
   const doSearch = !!domain && !!subdomain;
 
   const fullDomain = `${subdomain}.${domain}`;
-  console.log(`subdomain : ${typeof subdomain} domain : ${typeof domain}`);
-  console.log(`!!domain && !!subdomain : ${!!domain && !!subdomain}`);
+  // console.log(`subdomain : ${typeof subdomain} domain : ${typeof domain}`);
+  // console.log(`!!domain && !!subdomain : ${!!domain && !!subdomain}`);
   const {
     data: availableDomain,
     isSuccess,
@@ -163,7 +163,7 @@ export default function DomainRegister() {
     strict: true,
   });
 
-  console.log(`subdomain : ${subdomain}`);
+  // console.log(`subdomain : ${subdomain}`);
   const [searchDomain, setSearchDomain] = useState<string>(subdomain || '');
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchDomain(event.target.value);
@@ -180,13 +180,13 @@ export default function DomainRegister() {
   return (
     <Container sx={{ height: '100%' }} maxWidth={'md'}>
       <FlexBox sx={{ flexDirection: 'column', rowGap: 2, paddingTop: 3 }}>
-        <FlexBox
+        <FlexPaper
           sx={{
             width: '100%',
             height: 200,
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: 'white',
+            // backgroundColor: 'white',
           }}
         >
           <FlexBox sx={{ width: '70%', columnGap: 0.5 }}>
@@ -218,7 +218,7 @@ export default function DomainRegister() {
               <SendIcon />
             </IconButton>
           </FlexBox>
-        </FlexBox>
+        </FlexPaper>
         <DomainSearchResult />
       </FlexBox>
     </Container>

@@ -131,45 +131,55 @@ export default function ServerProfileList() {
     });
   };
 
-  // console.log(`data : ${JSON.stringify(data)}`);
-  return (
-    <Container sx={{ height: '100%' }} maxWidth={'md'}>
-      <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>
-        <Typography>공지사항</Typography>
-        <PostListActions topic="announcement" adminOnly />
-        <FlexBox sx={{ flexDirection: 'column', rowGap: 1, minHeight: 500 }}>
-          {!!data ? (
-            data.list.map((item) => (
+  if (!!data) {
+    const listingItems = data.list;
+    const maxPages = data.pages;
+    const itemLimit = data.limit;
+    return (
+      <Container sx={{ height: '100%' }} maxWidth={'md'}>
+        <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>
+          <Typography>공지사항</Typography>
+          <PostListActions topic="announcement" adminOnly />
+          <FlexBox sx={{ flexDirection: 'column', rowGap: 1, minHeight: 500 }}>
+            {listingItems.map((item) => (
               <AnnouncementListItem
                 announcementListing={item}
                 key={item.id}
                 page={paginationOptions.page!}
               />
-            ))
-          ) : (
-            <CircularProgress />
-          )}
-        </FlexBox>
+            ))}
+          </FlexBox>
 
-        <FlexBox
-          sx={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            paddingTop: 3,
-            rowGap: 1,
-            flexDirection: 'column',
-          }}
-        >
-          <Divider variant="middle" />
-          <Pagination
-            count={3}
-            page={paginationOptions.page}
-            onChange={handleChange}
-            size="medium"
-          />
-        </FlexBox>
+          <FlexBox
+            sx={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              paddingTop: 3,
+              rowGap: 1,
+              flexDirection: 'column',
+            }}
+          >
+            <Divider variant="middle" />
+            <Pagination
+              count={maxPages}
+              page={paginationOptions.page}
+              onChange={handleChange}
+              size="medium"
+            />
+          </FlexBox>
 
-        <PostListActions topic="announcement" adminOnly />
+          <PostListActions topic="announcement" adminOnly />
+        </FlexBox>
+      </Container>
+    );
+  }
+  return (
+    <Container sx={{ height: '100%' }} maxWidth={'md'}>
+      <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>
+        <Typography>공지사항</Typography>
+      </FlexBox>
+      <FlexBox>
+        <CircularProgress />
       </FlexBox>
     </Container>
   );

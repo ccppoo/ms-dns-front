@@ -5,7 +5,7 @@ import ControlPointOutlinedIcon from '@mui/icons-material/ControlPointOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
-import { Button, Divider, TextField, Typography } from '@mui/material';
+import { Button, Divider, Paper, TextField, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
@@ -13,6 +13,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Tooltip from '@mui/material/Tooltip';
 
 import { useQuery } from '@tanstack/react-query';
+import { Link } from '@tanstack/react-router';
 
 import { refetchQuery } from '@/api';
 import { FlexBox, FlexPaper, Image } from '@/components/styled';
@@ -28,6 +29,8 @@ import type {
 import { icon } from '@/static';
 
 import apiii from '../api';
+
+const MAX_PERSONAL_DOMAINS = 3;
 
 function DNSRecordValues({ values }: { values: string[] }) {
   return (
@@ -334,15 +337,7 @@ function SubdomainItem({ userSubdomain }: { userSubdomain: UserSubdomainInfo }) 
   const onClickEditSubdomainRecord = () => {
     setEditMode((prev) => !prev);
   };
-  // a = {
-  //   name: 'test2',
-  //   note: '',
-  //   subdomain: 'test2',
-  //   domain: 'mc-server.kr',
-  //   records: [{ recordType: 'A', name: 'test2.mc-server.kr', values: ['221.147.114.254'] }],
-  //   createdAt: '2024-12-30T06:19:18+00:00',
-  //   updatedAt: '2024-12-30T06:19:18+00:00',
-  // };
+
   const submit = async (formData: UserSubdomainInfo) => {
     const allValues = methods.getValues() as UserSubdomainInfo;
     const isChanged = methods.formState.isDirty;
@@ -433,6 +428,63 @@ function SubdomainItem({ userSubdomain }: { userSubdomain: UserSubdomainInfo }) 
     </FlexPaper>
   );
 }
+function EmptySubdomainItem() {
+  const message = '새로운 도메인을 등록할 수 있습니다!';
+
+  return (
+    <Paper
+      component={Link}
+      sx={{
+        paddingY: 1,
+        paddingX: 2,
+        height: 50,
+        alignItems: 'center',
+        backgroundColor: '#d7d9d7',
+        display: 'flex',
+      }}
+      to={'/domain/register'}
+      style={{ color: 'black', textDecoration: 'none' }}
+    >
+      <Typography>{message}</Typography>
+    </Paper>
+  );
+}
+interface ISubdomainItemList {
+  subdomains: UserSubdomainInfo[];
+}
+
+function SubdomainItemList(props: ISubdomainItemList) {
+  const { subdomains } = props;
+
+  // const subdomain_cnt = subdomains.length
+  // const [currentRegisteredDomain, setCurrentRegisteredDomain] = useState<number>(0);
+  const currentRegisteredDomain = subdomains.length;
+  const empty = MAX_PERSONAL_DOMAINS - subdomains.length;
+
+  return (
+    <FlexBox sx={{ flexDirection: 'column', rowGap: 1 }}>
+      <FlexBox>
+        <FlexBox sx={{ columnGap: 1 }}>
+          <Typography variant="subtitle1">현재 사용중인 도메인</Typography>
+          <Typography variant="subtitle1">
+            {currentRegisteredDomain}/{MAX_PERSONAL_DOMAINS}
+          </Typography>
+        </FlexBox>
+      </FlexBox>
+      <FlexBox sx={{ rowGap: 2, flexDirection: 'column' }}>
+        {subdomains.map((userSubdomain) => (
+          <SubdomainItem
+            userSubdomain={userSubdomain}
+            key={`user-sub-domain-${userSubdomain.name}`}
+          />
+        ))}
+        {[...Array(empty).keys()].map((_, idx) => (
+          <EmptySubdomainItem key={`empty-user-subdomain-${idx}`} />
+        ))}
+      </FlexBox>
+    </FlexBox>
+  );
+}
 
 export default function MyDomain() {
   const [userProfile] = useUserProfile();
@@ -450,22 +502,10 @@ export default function MyDomain() {
     <Container sx={{ height: '100%' }} maxWidth={'md'}>
       <FlexBox sx={{ flexDirection: 'column', rowGap: 2, paddingY: 3 }}>
         <FlexBox sx={{ flexDirection: 'column' }}>
-          <FlexBox>
-            <Typography variant="h4">내 도메인</Typography>
-          </FlexBox>
+          <Typography variant="h4">내 도메인</Typography>
         </FlexBox>
       </FlexBox>
-
-      {isSuccess && (
-        <FlexBox sx={{ rowGap: 2, flexDirection: 'column' }}>
-          {data?.subdomains.map((userSubdomain) => (
-            <SubdomainItem
-              userSubdomain={userSubdomain}
-              key={`user-sub-domain-${userSubdomain.name}`}
-            />
-          ))}
-        </FlexBox>
-      )}
+      {isSuccess && <SubdomainItemList subdomains={data.subdomains} />}
     </Container>
   );
 }
