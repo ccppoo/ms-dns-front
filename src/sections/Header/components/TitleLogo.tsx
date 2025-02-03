@@ -19,7 +19,7 @@ const ImageButton = styled(ButtonBase)(({ theme }) => ({
   },
   '&:hover, &.Mui-focusVisible': {
     zIndex: 1,
-    border: '1px black solid',
+    border: 'none',
     borderRadius: 3,
     '& .MuiImageBackdrop-root': {
       opacity: 0.15,
