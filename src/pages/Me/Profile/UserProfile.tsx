@@ -10,6 +10,8 @@ import Container from '@mui/material/Container';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from '@tanstack/react-router';
 
+import ServerIconList from '@/components/server_logo/ServerLogoList';
+import ServerIconPreview from '@/components/server_logo/ServerLogoPreview';
 import { FlexBox, FlexPaper, Image, VisuallyHiddenInput } from '@/components/styled';
 import useUserProfile from '@/hooks/useUserProfile';
 import api from '@/pages/Me/api';
@@ -42,108 +44,6 @@ function ProfileHead() {
           <Typography variant="h5">{profile.nickname}</Typography>
           <Typography variant="caption">{profile.uid}</Typography>
         </FlexBox>
-      </FlexPaper>
-    </FlexBox>
-  );
-}
-
-function ServerIcon() {
-  const default_icon = 'https://cdn.mc-server.kr/static/mc-server-logo-200x200.png';
-
-  const server_logo = undefined;
-  const handleUploadClick = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    e.persist();
-
-    if (!e.target.files) return;
-    const selectedFile = e.target.files[0];
-    const image_to_upload = URL.createObjectURL(selectedFile);
-    // methods.setValue('server_info.server_logo', image_to_upload);
-  };
-
-  const onClickRemoveImage = () => {
-    // methods.setValue('server_info.server_logo', undefined);
-  };
-
-  return (
-    <FlexBox
-      sx={{
-        width: '25%',
-        maxWidth: 175,
-
-        justifyContent: 'center',
-        flexDirection: 'column',
-        rowGap: 1,
-      }}
-    >
-      <FlexPaper
-        sx={{
-          maxWidth: 175,
-          aspectRatio: '1/1',
-          maxHeight: 175,
-          flexShrink: 0,
-          padding: 0.5,
-          justifyContent: 'center',
-        }}
-        elevation={3}
-      >
-        <Image
-          src={server_logo || default_icon}
-          sx={{
-            objectFit: 'contain',
-            width: '100%',
-            height: '100%',
-            opacity: !server_logo ? 0.5 : 1,
-          }}
-        />
-      </FlexPaper>
-      <FlexBox sx={{ justifyContent: 'space-between' }}>
-        <Button
-          color="error"
-          variant="contained"
-          size="small"
-          sx={{ paddingY: '2px', paddingX: '2px' }}
-          startIcon={<DeleteOutlineOutlinedIcon />}
-          disabled={!server_logo}
-          onClick={onClickRemoveImage}
-        >
-          삭제
-        </Button>
-        <Button
-          variant="outlined"
-          disabled={!!server_logo}
-          startIcon={<FileUploadOutlined />}
-          component={'label'}
-          size="small"
-        >
-          업로드
-          <VisuallyHiddenInput
-            // ref={ref}
-            // name={name}
-            // onBlur={onBlur}
-            type="file"
-            multiple
-            accept=".jpg, .jpeg, .png, .webp, .svg"
-            onChange={(e) => {
-              handleUploadClick(e);
-            }}
-          />
-        </Button>
-      </FlexBox>
-    </FlexBox>
-  );
-}
-
-function ServerIcons() {
-  return (
-    <FlexBox sx={{ flexDirection: 'column', rowGap: 1 }}>
-      <FlexBox>
-        <Typography variant="h5">서버 아이콘</Typography>
-      </FlexBox>
-      <FlexPaper sx={{ flexWrap: 'wrap', padding: 1, rowGap: 1, justifyContent: 'space-around' }}>
-        <ServerIcon />
-        <ServerIcon />
-        <ServerIcon />
       </FlexPaper>
     </FlexBox>
   );
@@ -284,12 +184,13 @@ export default function MyProfile() {
     queryKey: [],
     queryFn: api.queryFn.getMyProfile,
   });
+  const [{ uid }] = useUserProfile();
 
   return (
     <Container sx={{ height: '100%' }} maxWidth={'md'}>
       <FlexBox sx={{ flexDirection: 'column', paddingY: 2, rowGap: 4 }}>
         <ProfileHead />
-        <ServerIcons />
+        <ServerIconList editable uid={uid!} />
         <MyRegisteredDomains />
         <MyServerProfiles />
       </FlexBox>
