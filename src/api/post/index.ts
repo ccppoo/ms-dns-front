@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 
 import API from '@/api';
+import type { QueryName } from '@/api/types';
 
 import type {
   IPostCreate,
@@ -11,7 +12,6 @@ import type {
   PostListReturn,
   PostSearchOptions,
   PostTopic,
-  QueryName,
 } from './types';
 
 type PostListQueryKey = [QueryName, PostTopic, PaginationOptions, PostSearchOptions];

@@ -1,4 +1,3 @@
-type QueryName = string;
 type PostTopic = 'announcement' | 'server';
 type PostID = number | string;
 
@@ -17,7 +16,7 @@ type PostListReturn<PostListType> = {
   limit: number;
 };
 
-export type { QueryName, PostTopic, PostID, PaginationOptions, PostSearchOptions, PostListReturn };
+export type { PostTopic, PostID, PaginationOptions, PostSearchOptions, PostListReturn };
 
 interface IPost<T> {
   data: T;
