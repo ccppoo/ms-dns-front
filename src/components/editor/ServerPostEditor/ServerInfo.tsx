@@ -11,9 +11,14 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import TextField from '@mui/material/TextField';
 
-import { uploadMCServerIcon } from '@/api/image/mcServerIconUpload';
-import { FlexBox, FlexPaper, Image, VisuallyHiddenInput } from '@/components/styled';
+import { useQuery } from '@tanstack/react-query';
 
+import { uploadMCServerIcon } from '@/api/image/mcServerIconUpload';
+import logoApi from '@/api/logo';
+import { FlexBox, FlexPaper, Image, VisuallyHiddenInput } from '@/components/styled';
+import useUserProfile from '@/hooks/useUserProfile';
+
+import ServerLogoSelect from './components/ServerLogoSelect';
 import type { ServerPostSchema } from './models';
 
 // NOTE: 게시글 외에도 OutputData 하고 추가로 관리할 데이터들
@@ -147,6 +152,13 @@ function ServerLogo() {
   const server_logo = methods.watch('server_info.server_logo');
   const [imageInfoMsg, setImageInfoMsg] = React.useState<string>('');
 
+  const [{ uid }] = useUserProfile();
+  const { data } = useQuery({
+    queryFn: logoApi.queryFn.getUserServerLogoList,
+    queryKey: ['get logo for create server profile', uid!],
+    enabled: !!uid,
+  });
+
   const handleUploadClick = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setImageInfoMsg('');
     e.preventDefault();
@@ -200,7 +212,7 @@ function ServerLogo() {
       <Divider flexItem orientation="vertical" />
       <FlexBox sx={{ flexDirection: 'column', width: '100%', paddingY: 1 }}>
         <FlexBox sx={{ height: '100%', flexDirection: 'column' }}>
-          <Typography>아이콘은 PNG 형식이여야하며, 64x64 사이즈이여야 합니다.</Typography>
+          <Typography>로고는 PNG 형식이여야하며, 64x64 사이즈이여야 합니다.</Typography>
           {imageInfoMsg && <Typography color="red">{imageInfoMsg}</Typography>}
         </FlexBox>
         <FlexBox sx={{ width: '100%', justifyContent: 'end', columnGap: 1 }}>
@@ -224,7 +236,7 @@ function ServerLogo() {
             disabled={!server_logo}
             onClick={onClickRemoveImage}
           >
-            기본 아이콘
+            기본 로고
           </Button>
           <Controller
             name="server_info.server_logo"
@@ -243,7 +255,7 @@ function ServerLogo() {
                 component={'label'}
                 size="small"
               >
-                아이콘 업로드
+                로고 업로드
                 <VisuallyHiddenInput
                   ref={ref}
                   name={name}
@@ -326,9 +338,9 @@ export default function ServerInfo(props: ServerVersionIntf) {
   if (!readOnly) {
     return (
       <FlexBox sx={{ flexDirection: 'column', width: '100%', rowGap: 2 }}>
-        <Typography>서버 아이콘</Typography>
+        <Typography>서버 로고</Typography>
         <FlexPaper sx={{ paddingX: 1, flexDirection: 'column' }}>
-          <ServerLogo />
+          <ServerLogoSelect />
         </FlexPaper>
         <Typography>서버 주소</Typography>
 
@@ -357,7 +369,7 @@ export default function ServerInfo(props: ServerVersionIntf) {
 
   return (
     <FlexBox sx={{ flexDirection: 'column', width: '100%', rowGap: 2 }}>
-      <Typography>서버 아이콘</Typography>
+      <Typography>서버 로고</Typography>
       <FlexPaper sx={{ paddingX: 1, flexDirection: 'column' }}>
         <FlexBox
           sx={{
@@ -381,7 +393,7 @@ export default function ServerInfo(props: ServerVersionIntf) {
 
       <Typography>서버 운영 시간</Typography>
       <FlexPaper sx={{ paddingX: 1, flexDirection: 'column' }}>
-        {readServer24hr ? '24시간 운영' : '24시간 운영 x'}
+        {readServer24hr ? '24시간 운영' : '24시간 운영 X'}
       </FlexPaper>
 
       <Typography>서버 태그</Typography>

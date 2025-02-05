@@ -3,6 +3,9 @@
   right: calc(50px);
 }
 
+div.cdx-input.image-tool__caption {
+  display: none;
+}
 .codex-editor .ce-toolbar__actions {
   /* right: calc(100% + 8px * 1); */
   right: calc(8px * 1);

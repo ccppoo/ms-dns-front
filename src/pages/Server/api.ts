@@ -29,8 +29,6 @@ async function getServerProfilePost({
     queryKey: ['get server post', 'server', serverProfileID],
   });
   return data;
-  // const resp = await API.get<ServerPostSchemaRead>(`/server/profile/r/${serverProfileID}`);
-  // return resp.data;
 }
 
 export default {

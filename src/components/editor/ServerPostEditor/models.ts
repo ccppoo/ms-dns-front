@@ -13,7 +13,7 @@ export const minecraftInfo = z.object({
 
 export const serverInfo = z.object({
   tags: z.array(z.string()).default([]),
-  server_logo: z.optional(z.string()),
+  server_logo: z.optional(z.string()), // server logo ID not URL
   service24hr: z.boolean().default(true),
   service_term: z.string(),
   server_address: z.string(),

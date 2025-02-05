@@ -70,10 +70,6 @@ export default function TitleLogoHeader() {
       name: '내 도메인',
       path: '/me/domain',
     },
-    {
-      name: 'dev',
-      path: '/dev',
-    },
   ];
 
   return (

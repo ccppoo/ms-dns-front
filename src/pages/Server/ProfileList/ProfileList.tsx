@@ -12,6 +12,7 @@ import type { PaginationOptions } from '@/api/post/types';
 import { defaultPaginationOptions } from '@/api/post/values';
 import userApi from '@/api/user';
 import PostListActions from '@/components/post/PostListActions';
+import ServerLogoPreview from '@/components/server_logo/ServerLogoPreview';
 import { FlexBox, FlexPaper, Image } from '@/components/styled';
 
 import api from '../api';
@@ -44,25 +45,7 @@ export function ServerProfileListItem(props: IServerProfileListItem) {
           sx={{ display: 'flex', columnGap: 2, width: '100%', textDecoration: 'none' }}
           style={{ color: 'black' }}
         >
-          <FlexPaper
-            sx={{
-              width: 75,
-              height: 75,
-              flexShrink: 0,
-              padding: 0.5,
-              justifyContent: 'center',
-            }}
-            elevation={2}
-          >
-            <Image
-              src={serverLogo}
-              sx={{
-                objectFit: 'contain',
-                width: '100%',
-                height: '100%',
-              }}
-            />
-          </FlexPaper>
+          <ServerLogoPreview logo_id={serverLogo} notOpaqueOnDefault />
           <FlexBox
             sx={{
               width: '100%',

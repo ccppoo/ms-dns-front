@@ -11,6 +11,7 @@ import Container from '@mui/material/Container';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from '@tanstack/react-router';
 
+import ServerLogoPreview from '@/components/server_logo/ServerLogoPreview';
 import { FlexBox, FlexPaper, Image } from '@/components/styled';
 import useUserProfile from '@/hooks/useUserProfile';
 import serverListApi from '@/pages/Server/api';
@@ -41,25 +42,8 @@ function ServerProfileListItem({
           sx={{ display: 'flex', columnGap: 2, width: '100%', textDecoration: 'none' }}
           style={{ color: 'black' }}
         >
-          <FlexPaper
-            sx={{
-              width: 75,
-              height: 75,
-              flexShrink: 0,
-              padding: 0.5,
-              justifyContent: 'center',
-            }}
-            elevation={2}
-          >
-            <Image
-              src={serverLogo}
-              sx={{
-                objectFit: 'contain',
-                width: '100%',
-                height: '100%',
-              }}
-            />
-          </FlexPaper>
+          <ServerLogoPreview logo_id={serverLogo} notOpaqueOnDefault />
+
           <FlexBox
             sx={{
               width: '100%',

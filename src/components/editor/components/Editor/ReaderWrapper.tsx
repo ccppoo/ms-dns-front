@@ -2,6 +2,7 @@ import { API, BlockMutationEvent } from '@editorjs/editorjs';
 
 import type { OutputDataSchemaType } from '../../models';
 import EditorBase from './base/EditorBase';
+import './read_mode.css';
 import type { onChangeEditorJS } from './types';
 
 type EditorJSOnChangeEvent = BlockMutationEvent | BlockMutationEvent[];

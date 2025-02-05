@@ -284,25 +284,30 @@ function ServerExternalLinks(props: IServerExternalLinks) {
   const commus = community || links;
   // console.log(`community : ${JSON.stringify(community[0])}`);
   return (
-    <FlexPaper sx={{ padding: 1, width: '100%', columnGap: 2, rowGap: 1, flexWrap: 'wrap' }}>
-      {commus.map((linkItem, idx) => {
-        switch (linkItem.service) {
-          case 'discord': {
-            return <DiscordHrefButton name={linkItem.name} url={linkItem.url} />;
+    <FlexBox sx={{ flexDirection: 'column', rowGap: 1 }}>
+      <Typography>서버 커뮤니티</Typography>
+      <FlexPaper
+        sx={{ padding: 1, width: '100%', columnGap: 2, rowGap: 1, flexWrap: 'wrap', minHeight: 40 }}
+      >
+        {commus.map((linkItem, idx) => {
+          switch (linkItem.service) {
+            case 'discord': {
+              return <DiscordHrefButton name={linkItem.name} url={linkItem.url} />;
+            }
+            case 'naver_cafe': {
+              return <NaverCafeHrefButton name={linkItem.name} url={linkItem.url} />;
+            }
+            case 'bluemap': {
+              return <BlueMapHrefButton name={linkItem.name} url={linkItem.url} />;
+            }
+            case 'kakaoTalk': {
+              return <KakaoHrefButton name={linkItem.name} url={linkItem.url} />;
+            }
           }
-          case 'naver_cafe': {
-            return <NaverCafeHrefButton name={linkItem.name} url={linkItem.url} />;
-          }
-          case 'bluemap': {
-            return <BlueMapHrefButton name={linkItem.name} url={linkItem.url} />;
-          }
-          case 'kakaoTalk': {
-            return <KakaoHrefButton name={linkItem.name} url={linkItem.url} />;
-          }
-        }
-        return <OtherHrefButton name={linkItem.name} url={linkItem.url} />;
-      })}
-    </FlexPaper>
+          return <OtherHrefButton name={linkItem.name} url={linkItem.url} />;
+        })}
+      </FlexPaper>
+    </FlexBox>
   );
 }
 

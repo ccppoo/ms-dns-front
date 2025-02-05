@@ -98,10 +98,11 @@ function LogoDeleteAlert(props: ILogoDeleteAlert) {
 interface IServerLogoPreview {
   editable?: boolean;
   logo_id?: string;
+  notOpaqueOnDefault?: boolean;
 }
 
 export default function ServerLogoPreview(props: IServerLogoPreview) {
-  const { editable, logo_id } = props;
+  const { editable, logo_id, notOpaqueOnDefault } = props;
   const [{ uid }] = useUserProfile();
 
   const server_logo = undefined;
@@ -109,6 +110,8 @@ export default function ServerLogoPreview(props: IServerLogoPreview) {
   const [serverLogoDeleteAlertOpen, setServerLogoDeleteAlertOpen] = useState<boolean>(false);
   const [serverLogoAlertOpen, setServerLogoAlertOpen] = useState<boolean>(false);
   const [serverLogoAlertMSG, setServerLogoAlertMSG] = useState<string>('');
+
+  const IMAGE_WIDTH = 64;
 
   const { data } = useQuery({
     queryFn: serverLogoApi.queryFn.getUserServerLogo,
@@ -186,9 +189,8 @@ export default function ServerLogoPreview(props: IServerLogoPreview) {
   return (
     <FlexBox
       sx={{
-        width: '25%',
-        maxWidth: 175,
-
+        // width: '25%',
+        // maxWidth: 175,
         justifyContent: 'center',
         flexDirection: 'column',
         rowGap: 1,
@@ -197,9 +199,9 @@ export default function ServerLogoPreview(props: IServerLogoPreview) {
       {!!data ? (
         <FlexPaper
           sx={{
-            maxWidth: 96,
+            maxWidth: IMAGE_WIDTH,
             aspectRatio: '1/1',
-            maxHeight: 96,
+            maxHeight: IMAGE_WIDTH,
             flexShrink: 0,
             padding: 0.5,
             justifyContent: 'center',
@@ -212,7 +214,7 @@ export default function ServerLogoPreview(props: IServerLogoPreview) {
               objectFit: 'contain',
               width: '100%',
               height: '100%',
-              opacity: !!logo_id ? 1 : 0.5,
+              opacity: !!logo_id || !!notOpaqueOnDefault ? 1 : 0.5,
             }}
           />
         </FlexPaper>

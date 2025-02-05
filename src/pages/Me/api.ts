@@ -26,16 +26,6 @@ async function getMyDomains({ queryKey }: { queryKey: string[] }): Promise<UserS
   return { subdomains: subdomains };
 }
 
-async function getMyServerProfiles({
-  queryKey,
-}: {
-  queryKey: [string, string];
-}): Promise<ServerProfileListing[]> {
-  const [_, userID] = queryKey;
-  const resp = await API.get<ServerProfileListing[]>(`/server/profile/list?user=${userID}`);
-  return resp.data;
-}
-
 async function editMyDomain({
   userSubdomainInfo,
 }: {
@@ -49,7 +39,6 @@ export default {
   queryFn: {
     getMyProfile,
     getMyDomains,
-    getMyServerProfiles,
   },
   query: {
     editMyDomain,

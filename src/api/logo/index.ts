@@ -15,7 +15,7 @@ type RequestResponse = {
   msg: string;
 };
 
-type UserServerLogo = {
+export type UserServerLogo = {
   id: string;
   url: string;
 };
