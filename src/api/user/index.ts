@@ -1,9 +1,9 @@
 import API from '@/api';
+import type { UserProfile } from '@/schema/user';
 
-import type { UserProfile } from './types';
+import type { QueryName, UID } from '../types';
 
-type GetUserProfileQueryKey = [string, string];
-
+type GetUserProfileQueryKey = [QueryName, UID];
 interface IgetUserProfile {
   queryKey: GetUserProfileQueryKey;
 }

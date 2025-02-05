@@ -1,14 +1,13 @@
 import { useFormContext } from 'react-hook-form';
-import type { FieldPath, PathValue } from 'react-hook-form';
+import type { FieldPath } from 'react-hook-form';
 
 import { Divider, Typography } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
-import { FlexBox, FlexPaper, FullSizeCenteredFlexBox } from '@/components/styled';
+import { FlexBox, FlexPaper } from '@/components/styled';
+import type { ServerPostSchema } from '@/schema/post/server_profile';
 import { rangeArray } from '@/utils/itertools';
-
-import type { ServerPostSchema } from './models';
 
 // NOTE: 게시글 외에도 OutputData 하고 추가로 관리할 데이터들
 // 1. 수정하는 경우 -> 이미지 삭제시 최종 POST 할 때 삭제할 이미지 첨부하기

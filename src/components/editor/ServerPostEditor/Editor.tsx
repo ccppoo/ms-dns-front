@@ -5,16 +5,16 @@ import { Box, Button, Paper, Typography } from '@mui/material';
 
 import { useNavigate } from '@tanstack/react-router';
 
+import serverProfilePostEditorApi from '@/api/post/server_profile/post_editor';
 import { FlexBox } from '@/components/styled';
+import type { ServerPostSchema } from '@/schema/post/server_profile';
+import { serverPostSchemaDefault } from '@/schema/post/server_profile';
 
 import EditorWrapper from '../components/Editor';
 import Title from '../components/Title';
 import MinecraftInfo from './MinecraftInfo';
 import ServerCommunity from './ServerCommunity';
 import ServerInfo from './ServerInfo';
-import api from './api';
-import type { ServerPostSchema } from './models';
-import { serverPostSchemaDefault } from './models';
 
 // NOTE:  이 Component는 글 쓰기, 수정 모두 사용될 수 있음
 
@@ -41,13 +41,15 @@ export default function ServerPostEditor({
     // const allValues = methods.getValues();
     // console.log(`data : ${JSON.stringify(allValues)}`);
     if (isEditMode) {
-      await api.query.editServerProfilePost({
+      await serverProfilePostEditorApi.query.editServerProfilePost({
         data: formData,
         postID: postID,
       });
     }
     if (!isEditMode) {
-      const resp = await api.query.createServerProfilePost({ data: formData });
+      const resp = await serverProfilePostEditorApi.query.createServerProfilePost({
+        data: formData,
+      });
       if (resp.status == 200) {
         methods.reset(); // 글 현재 쓰고 있는거 다 지우고
         const { postID } = resp.data;

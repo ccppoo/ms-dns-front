@@ -9,18 +9,9 @@ import InputAdornment from '@mui/material/InputAdornment';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-import { z } from 'zod';
-
+import domainApi from '@/api/domain';
 import { FlexBox, FlexPaper } from '@/components/styled';
-
-import api from '../api';
-import type { RegisterDomain } from '../models';
-
-const searchBarForm = z.object({
-  value: z.string(),
-});
-
-type SearchBarForm = z.infer<typeof searchBarForm>;
+import type { RegisterDomain } from '@/schema/domain';
 
 function SelectDomainHost({ availableDomains }: { availableDomains: string[] }) {
   const methods = useFormContext<RegisterDomain>();
@@ -79,7 +70,7 @@ export default function DomainSearchBar({ availableDomains }: { availableDomains
   });
   const checkSubDomainAvailable = async () => {
     setDomainCheckLoading(true);
-    const data = await api.query.checkDomainAvailable({
+    const data = await domainApi.query.checkDomainAvailable({
       domain: methods.getValues('domain'),
       subdomain: methods.getValues(formPathSubdomain) as string,
     });

@@ -1,5 +1,3 @@
-import chartSample from './samples/chart_example.png';
-
 const icon = {
   discordIconWhite: 'https://cdn.mc-server.kr/static/discord-mark-white.svg',
   discordIconBlue: 'https://cdn.mc-server.kr/static/discord-mark-blue.svg',
@@ -9,8 +7,4 @@ const icon = {
   minecraftIcon: 'https://cdn.mc-server.kr/static/minecraft_logo_icon.svg',
 };
 
-const sample = {
-  chartSample,
-};
-
-export { icon, sample };
+export { icon };

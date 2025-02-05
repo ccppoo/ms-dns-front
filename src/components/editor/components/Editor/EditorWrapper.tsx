@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import type { FieldPath, PathValue } from 'react-hook-form';
 
@@ -6,8 +5,8 @@ import { API, BlockMutationEvent } from '@editorjs/editorjs';
 
 import { uploadImage } from '@/api/image/postImageUpload';
 import useUserProfile from '@/hooks/useUserProfile';
+import type { OutputDataSchemaType } from '@/schema/post';
 
-import type { OutputDataSchemaType } from '../../models';
 import EditorBase from './base/EditorBase';
 import dispatchChangeEvent from './config/eventHandlers';
 import type { onChangeEditorJS } from './types';

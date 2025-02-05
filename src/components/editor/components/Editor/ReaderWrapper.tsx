@@ -1,6 +1,7 @@
 import { API, BlockMutationEvent } from '@editorjs/editorjs';
 
-import type { OutputDataSchemaType } from '../../models';
+import type { OutputDataSchemaType } from '@/schema/post';
+
 import EditorBase from './base/EditorBase';
 import './read_mode.css';
 import type { onChangeEditorJS } from './types';

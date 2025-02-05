@@ -1,8 +1,8 @@
-import { Box, Button, Paper, Typography } from '@mui/material';
+import { Paper } from '@mui/material';
 
-import { FlexBox, FullSizeCenteredFlexBox } from '@/components/styled';
+import { FlexBox } from '@/components/styled';
+import type { OutputDataSchemaType } from '@/schema/post';
 
-import type { OutputDataSchemaType } from '../models';
 import { Reader } from './Editor';
 
 // 데이터는 상위 컴포넌트에서 직접 보냄냄

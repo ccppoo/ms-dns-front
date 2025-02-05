@@ -1,10 +1,8 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import type { DefaultValues, FieldPath, FieldValues, PathValue } from 'react-hook-form';
+import type { DefaultValues } from 'react-hook-form';
 
-import useUserProfile from '@/hooks/useUserProfile';
-
-import api from '../api';
-import type { RegisterDomainInput } from '../models';
+import domainApi from '@/api/domain';
+import type { RegisterDomainInput } from '@/schema/domain';
 
 interface PostFormProviderPropsIntf<T> {
   data?: DefaultValues<T>;
@@ -30,8 +28,8 @@ export default function DomainRegisterFormProvider(
 
   const submit = async (formData: RegisterDomainInput) => {
     const allValues = methods.getValues();
-    console.log(`data : ${JSON.stringify(allValues)}`);
-    await api.query.registerNewDomain({ data: allValues });
+    // console.log(`data : ${JSON.stringify(allValues)}`);
+    await domainApi.query.registerNewDomain({ data: allValues });
     return;
   };
 

@@ -4,9 +4,7 @@ import type { FieldPath, PathValue } from 'react-hook-form';
 import { Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 
-import { FlexBox, FullSizeCenteredFlexBox } from '@/components/styled';
-
-import type { BoardPostTitle, OutputSchemaType } from '../models';
+import type { BoardPostTitle } from '@/schema/post';
 
 // NOTE: 게시글 외에도 OutputData 하고 추가로 관리할 데이터들
 // 1. 수정하는 경우 -> 이미지 삭제시 최종 POST 할 때 삭제할 이미지 첨부하기

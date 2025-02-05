@@ -4,8 +4,7 @@ import type { FieldPath, FieldValues, PathValue } from 'react-hook-form';
 import { TextField, Typography } from '@mui/material';
 
 import { FlexBox, FlexPaper } from '@/components/styled';
-
-import type { RegisterDomain } from '../models';
+import type { RegisterDomain } from '@/schema/domain';
 
 interface FormInputRow<T extends FieldValues> {
   name: string;

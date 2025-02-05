@@ -5,13 +5,10 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import { useQuery } from '@tanstack/react-query';
 
+import announcementPostApi from '@/api/post/announcement';
 import type { PaginationOptions } from '@/api/post/types';
 import { FlexBox, FlexPaper, Image } from '@/components/styled';
 import { AnnouncementListItem } from '@/pages/Announcement/AnnouncementList/AnnouncementList';
-import announcementApi from '@/pages/Announcement/api';
-
-// import api from './api';
-// import type { ServerProfileListing } from './models';
 
 export default function Announcement() {
   // NOTE: 최대 2개
@@ -21,7 +18,7 @@ export default function Announcement() {
   });
   const { data } = useQuery({
     queryKey: ['announcement list', paginationOptions, {}],
-    queryFn: announcementApi.queryFn.getAnnouncementPostList,
+    queryFn: announcementPostApi.queryFn.getAnnouncementPostList,
   });
 
   // console.log(`data : ${JSON.stringify(data)}`);

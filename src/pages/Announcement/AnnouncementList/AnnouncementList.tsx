@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Box, Chip, Divider, Paper, Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -11,14 +10,13 @@ import Pagination from '@mui/material/Pagination';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useSearch } from '@tanstack/react-router';
 
+import announcementPostApi from '@/api/post/announcement';
 import type { PaginationOptions } from '@/api/post/types';
 import { defaultPaginationOptions } from '@/api/post/values';
 import userApi from '@/api/user';
 import PostListActions from '@/components/post/PostListActions';
 import { FlexBox, FlexPaper, Image } from '@/components/styled';
-
-import api from '../api';
-import type { AnnouncementListing } from '../models';
+import type { AnnouncementListing } from '@/schema/post/announcement';
 
 interface IListItemCreator {
   creatorID: string;
@@ -122,7 +120,7 @@ export default function ServerProfileList() {
   });
   const { data } = useQuery({
     queryKey: ['announcement list', paginationOptions, {}],
-    queryFn: api.queryFn.getAnnouncementPostList,
+    queryFn: announcementPostApi.queryFn.getAnnouncementPostList,
   });
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {

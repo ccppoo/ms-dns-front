@@ -1,23 +1,14 @@
-import { ChangeEvent, useState } from 'react';
-
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import LoadingButton from '@mui/lab/LoadingButton';
 import { TextField, Typography } from '@mui/material';
 import { Box, Chip } from '@mui/material';
-import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
-import Container from '@mui/material/Container';
 
 import { useQuery } from '@tanstack/react-query';
 import { Link } from '@tanstack/react-router';
 
+import serverProfilePostApi from '@/api/post/server_profile';
 import ServerLogoPreview from '@/components/server_logo/ServerLogoPreview';
 import { FlexBox, FlexPaper, Image } from '@/components/styled';
-import useUserProfile from '@/hooks/useUserProfile';
-import serverListApi from '@/pages/Server/api';
-
-import api from './api';
-import type { ServerProfileListing } from './models';
+import type { ServerProfileListing } from '@/schema/post/server_profile';
 
 function ServerProfileListItem({
   serverProfileListing,
@@ -98,7 +89,7 @@ export default function ServerList() {
   // NOTE: 최대 5개까지
   const { data } = useQuery({
     queryKey: ['server list', { page: 1, limit: 5 }, {}],
-    queryFn: serverListApi.queryFn.getServerProfilePostList,
+    queryFn: serverProfilePostApi.queryFn.getServerProfilePostList,
   });
 
   // console.log(`userID : ${userID}`);

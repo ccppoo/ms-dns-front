@@ -3,10 +3,9 @@ import Container from '@mui/material/Container';
 import { useQuery } from '@tanstack/react-query';
 import { useSearch } from '@tanstack/react-router';
 
+import serverProfilePostApi from '@/api/post/server_profile';
 import ServerProfileEditor from '@/components/editor/ServerPostEditor';
 import { FlexBox } from '@/components/styled';
-
-import api from '../api';
 
 export default function ServerProfileEdit() {
   const postID = useSearch({
@@ -20,7 +19,7 @@ export default function ServerProfileEdit() {
   // 양식, 공지사항, 등 내용 있을 경우 api로 불러오는 것
   const { data, isSuccess, isFetching } = useQuery({
     queryKey: ['create post', postID],
-    queryFn: api.queryFn.getServerProfilePost,
+    queryFn: serverProfilePostApi.queryFn.getServerProfilePost,
     enabled: !!postID,
   });
 

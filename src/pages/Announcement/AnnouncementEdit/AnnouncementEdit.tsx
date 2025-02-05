@@ -3,10 +3,9 @@ import Container from '@mui/material/Container';
 import { useQuery } from '@tanstack/react-query';
 import { useSearch } from '@tanstack/react-router';
 
+import announcementPostApi from '@/api/post/announcement';
 import AnnouncementEditor from '@/components/editor/AnnouncementEditor';
 import { FlexBox } from '@/components/styled';
-
-import api from '../api';
 
 export default function AnnouncementEdit() {
   const postID = useSearch({
@@ -20,7 +19,7 @@ export default function AnnouncementEdit() {
   // 양식, 공지사항, 등 내용 있을 경우 api로 불러오는 것
   const { data, isSuccess, isFetching } = useQuery({
     queryKey: ['get post', postID],
-    queryFn: api.queryFn.getAnnouncementPost,
+    queryFn: announcementPostApi.queryFn.getAnnouncementPost,
     enabled: !!postID,
   });
 

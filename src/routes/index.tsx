@@ -18,7 +18,6 @@ const routeTree = rootRoute.addChildren([
   domainRoute,
   meRoute,
   announcementRoute,
-  // editorRoute,
 ]);
 
 const router = createRouter({

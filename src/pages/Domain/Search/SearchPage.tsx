@@ -11,10 +11,9 @@ import { useQuery } from '@tanstack/react-query';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { useLocalStorage } from '@uidotdev/usehooks';
 
+import domainApi from '@/api/domain';
 import { FlexBox, FlexPaper } from '@/components/styled';
 import useUserProfile from '@/hooks/useUserProfile';
-
-import api from '../api';
 
 interface IDomainSearchResultLoading {
   domain: string;
@@ -66,7 +65,7 @@ function DomainSearchResult() {
     isFetching,
   } = useQuery({
     queryKey: ['getDomainAvailable', domain, subdomain],
-    queryFn: api.queryFn.getDomainAvailable,
+    queryFn: domainApi.queryFn.getDomainAvailable,
     staleTime: 30 * 1000,
     enabled: doSearch,
   });

@@ -7,9 +7,9 @@ import { useQuery } from '@tanstack/react-query';
 import { useNavigate, useParams, useSearch } from '@tanstack/react-router';
 import { useLocalStorage } from '@uidotdev/usehooks';
 
+import authApi from '@/api/auth';
 import { FlexBox, FlexPaper, FullSizeCenteredFlexBox, Image } from '@/components/styled';
 import useUserProfile from '@/hooks/useUserProfile';
-import api from '@/pages/Auth/api';
 
 export default function CallBack() {
   const SSO_Provider = useParams({
@@ -34,7 +34,7 @@ export default function CallBack() {
 
   const { data, isLoading, isSuccess, isError } = useQuery({
     queryKey: ['oauth callback', code!],
-    queryFn: async () => await api.callbackSSO(SSO_Provider, { code }),
+    queryFn: async () => await authApi.queryFn.getCallbackSSO(SSO_Provider, { code }),
     retry: false,
     enabled: !!code,
   });

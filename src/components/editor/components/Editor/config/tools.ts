@@ -5,6 +5,7 @@ import type { ToolConstructable, ToolSettings } from '@editorjs/editorjs/types/t
 import Header from '@editorjs/header';
 // import ImageTool from '@editorjs/image';
 import NestedList from '@editorjs/nested-list';
+// @ts-ignore
 import Paragraph from '@editorjs/paragraph';
 import Quote from '@editorjs/quote';
 import Underline from '@editorjs/underline';

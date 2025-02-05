@@ -1,22 +1,17 @@
-import { useEffect, useRef } from 'react';
-
-import { Box, Button, ButtonBase, Chip, Divider, Paper, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
 
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from '@tanstack/react-router';
-import { Link } from '@tanstack/react-router';
 
+import announcementPostApi from '@/api/post/announcement';
 import userApi from '@/api/user';
 import EditorReader from '@/components/editor/components/Reader';
 import PostManagements from '@/components/post/PostManagements';
 import PostreadActions from '@/components/post/PostReadActions';
 import { FlexBox, FlexPaper } from '@/components/styled';
-import { ExternalLinkNewTab, Image } from '@/components/styled';
-
-import api from '../api';
 
 interface IAnnouncementTitle {
   title: string;
@@ -80,7 +75,7 @@ export default function AnnouncementRead() {
 
   const { data: postData } = useQuery({
     queryKey: ['announcement', postID],
-    queryFn: api.queryFn.getAnnouncementPost,
+    queryFn: announcementPostApi.queryFn.getAnnouncementPost,
     enabled: !!postID,
   });
 

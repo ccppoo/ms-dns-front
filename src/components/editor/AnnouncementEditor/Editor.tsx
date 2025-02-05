@@ -3,20 +3,16 @@ import type { FieldPath } from 'react-hook-form';
 
 import { Box, Button, Paper, Typography } from '@mui/material';
 
-import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 
+import announcementPostEditorApi from '@/api/post/announcement/post_editor';
 import { FlexBox } from '@/components/styled';
+import type { AnnouncementPostSchema } from '@/schema/post/announcement';
+import { announcementPostSchemaDefault } from '@/schema/post/announcement';
 
 import EditorWrapper from '../components/Editor';
 import Title from '../components/Title';
-import api from './api';
-import type { AnnouncementPostSchema } from './models';
-import { announcementPostSchemaDefault } from './models';
 
-// NOTE:  이 Component는 글 쓰기, 수정 모두 사용될 수 있음
-
-// .ce-block .ce-block__content maxWidth가 보이는 화면 최대 넓이
 export default function AnnouncementEditor({
   data,
   readOnly,
@@ -37,7 +33,7 @@ export default function AnnouncementEditor({
     // const allValues = methods.getValues();
     // console.log(`data : ${JSON.stringify(allValues)}`);
     if (isEditMode) {
-      const resp = await api.query.editAnnouncementPost({
+      const resp = await announcementPostEditorApi.query.editAnnouncementPost({
         data: formData,
         postID: postID,
       });
@@ -48,7 +44,7 @@ export default function AnnouncementEditor({
       }
     }
     if (!isEditMode) {
-      const resp = await api.query.createAnnouncementPost({ data: formData });
+      const resp = await announcementPostEditorApi.query.createAnnouncementPost({ data: formData });
       if (resp.status == 200) {
         methods.reset(); // 글 현재 쓰고 있는거 다 지우고
         const { postID } = resp.data;

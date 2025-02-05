@@ -9,7 +9,6 @@ import { Image } from '@/components/styled';
 import Announcement from './Announcement';
 import SearchDomain from './SearchDomain';
 import ServerList from './ServerList';
-import ServerTags from './ServerTags';
 
 const TEMP_IMAGE = 'https://cdn.mc-server.kr/static/mc-server-logo-200x200.png';
 

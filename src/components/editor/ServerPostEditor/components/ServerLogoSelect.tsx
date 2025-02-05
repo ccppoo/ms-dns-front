@@ -1,37 +1,18 @@
-import * as React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { Controller, FormProvider, useFieldArray, useForm } from 'react-hook-form';
 
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import RefreshOutlinedIcon from '@mui/icons-material/RefreshOutlined';
-import {
-  Box,
-  Button,
-  Divider,
-  MenuItem,
-  Paper,
-  Select,
-  SelectChangeEvent,
-  Typography,
-} from '@mui/material';
-import Chip from '@mui/material/Chip';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import { Divider, Paper, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import TextField from '@mui/material/TextField';
 
 import { useQuery } from '@tanstack/react-query';
 import { Link } from '@tanstack/react-router';
 
-import { uploadMCServerIcon } from '@/api/image/mcServerIconUpload';
 import logoApi from '@/api/logo';
-import type { UserServerLogo } from '@/api/logo';
 import ServerLogoPreview from '@/components/server_logo/ServerLogoPreview';
-import { FlexBox, FlexPaper, Image, VisuallyHiddenInput } from '@/components/styled';
+import { FlexBox } from '@/components/styled';
 import useUserProfile from '@/hooks/useUserProfile';
-
-import type { ServerPostSchema } from '../models';
+import type { ServerPostSchema } from '@/schema/post/server_profile';
 
 interface ISelectableServerLogoPreview {
   logo_id?: string;

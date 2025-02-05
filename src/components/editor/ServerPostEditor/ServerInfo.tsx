@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { Controller, FormProvider, useFieldArray, useForm } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import FileUploadOutlined from '@mui/icons-material/FileUploadOutlined';
@@ -17,9 +17,9 @@ import { uploadMCServerIcon } from '@/api/image/mcServerIconUpload';
 import logoApi from '@/api/logo';
 import { FlexBox, FlexPaper, Image, VisuallyHiddenInput } from '@/components/styled';
 import useUserProfile from '@/hooks/useUserProfile';
+import type { ServerPostSchema } from '@/schema/post/server_profile';
 
 import ServerLogoSelect from './components/ServerLogoSelect';
-import type { ServerPostSchema } from './models';
 
 // NOTE: 게시글 외에도 OutputData 하고 추가로 관리할 데이터들
 // 1. 수정하는 경우 -> 이미지 삭제시 최종 POST 할 때 삭제할 이미지 첨부하기

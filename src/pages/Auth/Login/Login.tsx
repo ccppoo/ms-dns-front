@@ -4,13 +4,8 @@ import Container from '@mui/material/Container';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { useLocalStorage } from '@uidotdev/usehooks';
 
+import authApi from '@/api/auth';
 import { FlexBox, FlexPaper, FullSizeCenteredFlexBox, Image } from '@/components/styled';
-import api from '@/pages/Auth/api';
-
-const openInNewTab = (url: string): void => {
-  const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
-  if (newWindow) newWindow.opener = null;
-};
 
 function DiscordLoginButton() {
   const discord = 'https://cdn.mc-server.kr/static/discord-mark-white.png';
@@ -92,7 +87,7 @@ function GoogleLoginButton() {
 
 function SSOLoginButton({ sso, children }: { sso: string; children: JSX.Element }) {
   const onClickLogin = async () => {
-    const url = await api.getLoginSSO(sso);
+    const url = await authApi.query.getLoginSSO(sso);
     window.location.href = url.data;
     return;
   };
@@ -101,8 +96,6 @@ function SSOLoginButton({ sso, children }: { sso: string; children: JSX.Element 
 }
 
 export default function Login() {
-  const mcserver = 'https://cdn.mc-server.kr/static/mc-server-logo-200x200.png';
-  const mcserver2 = 'https://cdn.mc-server.kr/static/mc-server-logo-450x200.png';
   const mcserver3 = 'https://cdn.mc-server.kr/static/mc-server-logo-black-450x200.png';
   const navigate = useNavigate();
   const [loginRedirect, setLoginRedirect] = useLocalStorage<string | null>('loginRedirect', null);

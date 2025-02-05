@@ -14,11 +14,10 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 
 import { ExternalLinkNewTab, FlexBox, FlexPaper, Image } from '@/components/styled';
+import type { ServerPostSchema } from '@/schema/post/server_profile';
 // NOTE: 게시글 외에도 OutputData 하고 추가로 관리할 데이터들
 // 1. 수정하는 경우 -> 이미지 삭제시 최종 POST 할 때 삭제할 이미지 첨부하기
-import { icon, sample } from '@/static';
-
-import type { ServerPostSchema } from './models';
+import { icon } from '@/static';
 
 interface ServerVersionIntf {
   readOnly: boolean;

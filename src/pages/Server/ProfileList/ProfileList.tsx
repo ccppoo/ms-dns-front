@@ -8,15 +8,13 @@ import Pagination from '@mui/material/Pagination';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useSearch } from '@tanstack/react-router';
 
+import serverProfilePostApi from '@/api/post/server_profile';
 import type { PaginationOptions } from '@/api/post/types';
 import { defaultPaginationOptions } from '@/api/post/values';
-import userApi from '@/api/user';
 import PostListActions from '@/components/post/PostListActions';
 import ServerLogoPreview from '@/components/server_logo/ServerLogoPreview';
 import { FlexBox, FlexPaper, Image } from '@/components/styled';
-
-import api from '../api';
-import type { ServerProfileListing } from '../models';
+import type { ServerProfileListing } from '@/schema/post/server_profile';
 
 interface IServerProfileListItem {
   serverProfileListing: ServerProfileListing;
@@ -128,7 +126,7 @@ export default function ServerProfileList() {
 
   const { data } = useQuery({
     queryKey: ['server list', paginationOptions, {}],
-    queryFn: api.queryFn.getServerProfilePostList,
+    queryFn: serverProfilePostApi.queryFn.getServerProfilePostList,
   });
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {

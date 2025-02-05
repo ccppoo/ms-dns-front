@@ -9,15 +9,14 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams, useSearch } from '@tanstack/react-router';
 import { Link } from '@tanstack/react-router';
 
-import type { ServerInfo } from '@/components/editor/ServerPostEditor/models';
+import serverProfilePostApi from '@/api/post/server_profile';
 import EditorReader from '@/components/editor/components/Reader';
 import PostManagements from '@/components/post/PostManagements';
 import PostreadActions from '@/components/post/PostReadActions';
 import { FlexBox, FlexPaper } from '@/components/styled';
 import { ExternalLinkNewTab, Image } from '@/components/styled';
-import { icon, sample } from '@/static';
-
-import api from '../api';
+import type { ServerInfo } from '@/schema/post/server_profile';
+import { icon } from '@/static';
 
 const TEMP_IMAGE = 'https://cdn.mc-server.kr/static/mc-server-logo-200x200.png';
 
@@ -363,7 +362,7 @@ export default function ProfileRead() {
 
   const { data: postData } = useQuery({
     queryKey: ['server profile', postID],
-    queryFn: api.queryFn.getServerProfilePost,
+    queryFn: serverProfilePostApi.queryFn.getServerProfilePost,
     enabled: !!postID,
   });
 
