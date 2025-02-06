@@ -3,6 +3,7 @@ import { AxiosResponse } from 'axios';
 import API from '@/api';
 import type { QueryName } from '@/api/types';
 
+import type { PostCreateResponse, PostDeleteResponse, PostEditResponse } from './response';
 import type {
   IPostCreate,
   IPostDelete,
@@ -57,11 +58,6 @@ async function getPost<PostType>(params: { queryKey: PostReadQueryKey }): Promis
   return resp.data;
 }
 
-type PostDeleteResponse = {
-  topic: string;
-  message: string;
-};
-
 async function deleteBoardPost(params: IPostDelete): Promise<AxiosResponse<PostDeleteResponse>> {
   const { topic, postID } = params;
 
@@ -72,18 +68,24 @@ async function deleteBoardPost(params: IPostDelete): Promise<AxiosResponse<PostD
   return resp;
 }
 
-async function editBoardPost<T>(params: IPostEdit<T>) {
+async function editBoardPost<T>(params: IPostEdit<T>): Promise<AxiosResponse<PostEditResponse>> {
   const { topic, data, postID } = params;
 
-  const resp = await API.put(`/post/${topic}/${postID}`, data);
+  const resp = await API.put<PostEditResponse>(`/post/${topic}/${postID}`, data, {
+    validateStatus: () => true, // handle every !200
+  });
 
-  return resp.data;
+  return resp;
 }
 
-async function createBoardPost<T>(params: IPostCreate<T>) {
+async function createBoardPost<T>(
+  params: IPostCreate<T>,
+): Promise<AxiosResponse<PostCreateResponse>> {
   const { topic, data } = params;
-  const resp = await API.post(`/post/${topic}`, data);
-  return resp.data;
+  const resp = await API.post<PostCreateResponse>(`/post/${topic}`, data, {
+    validateStatus: () => true, // handle every !200
+  });
+  return resp;
 }
 
 export default {

@@ -5,7 +5,7 @@ async function uploadImage(file: File) {
   formData.append('file', file);
   const [fileType, ext] = file.type.split('/');
 
-  const resp = await API_CDN.post(`/upload`, formData, {
+  const resp = await API_CDN.post(`/upload/image`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },

@@ -38,7 +38,6 @@ export default function AnnouncementEditor({
         postID: postID,
       });
       if (resp.status == 200) {
-        methods.reset(); // 글 현재 쓰고 있는거 다 지우고
         const { postID } = resp.data;
         navigate({ to: `/announcement/read/${postID}` });
       }

@@ -35,23 +35,25 @@ export default function ServerPostEditor({
   const postID = methods.getValues('id' as FieldPath<ServerPostSchema>);
   const navigate = useNavigate({});
   const isEditMode = !!postID;
-  // console.log(`data : ${JSON.stringify(data)}`);
-
+  // console.log(`isEditMode : ${isEditMode}`);
   const submit = async (formData: ServerPostSchema) => {
-    // const allValues = methods.getValues();
-    // console.log(`data : ${JSON.stringify(allValues)}`);
     if (isEditMode) {
-      await serverProfilePostEditorApi.query.editServerProfilePost({
+      const resp = await serverProfilePostEditorApi.query.editServerProfilePost({
         data: formData,
         postID: postID,
       });
+      if (resp.status == 200) {
+        const { postID } = resp.data;
+        navigate({ to: `/server/read/${postID}` });
+        return;
+      }
     }
     if (!isEditMode) {
       const resp = await serverProfilePostEditorApi.query.createServerProfilePost({
         data: formData,
       });
       if (resp.status == 200) {
-        methods.reset(); // 글 현재 쓰고 있는거 다 지우고
+        // methods.reset(); // 글 현재 쓰고 있는거 다 지우고
         const { postID } = resp.data;
         navigate({ to: `/server/read/${postID}` });
       }

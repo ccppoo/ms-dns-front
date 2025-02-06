@@ -15,7 +15,6 @@ type PostListReturn<PostListType> = {
   pages: number;
   limit: number;
 };
-
 export type { PostTopic, PostID, PaginationOptions, PostSearchOptions, PostListReturn };
 
 interface IPost<T> {
