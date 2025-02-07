@@ -13,7 +13,7 @@ import TextField from '@mui/material/TextField';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { uploadMCServerIcon } from '@/api/image/mcServerIconUpload';
+import { uploadMCServerLogo } from '@/api/image/mcServerIconUpload';
 import logoApi from '@/api/logo';
 import { FlexBox, FlexPaper, Image, VisuallyHiddenInput } from '@/components/styled';
 import useUserProfile from '@/hooks/useUserProfile';
@@ -170,7 +170,7 @@ function ServerLogo() {
     // methods.setValue('server_info.server_logo', temp);
 
     console.log(`이미지 업로드 중..`);
-    const { success, file: file_ } = await uploadMCServerIcon(selectedFile);
+    const { success, file: file_ } = await uploadMCServerLogo(selectedFile);
     if (success != 1) {
       // console.log(`에러!`);
       setImageInfoMsg('이미지 사이즈 형식이 옯바르지 않습니다.');

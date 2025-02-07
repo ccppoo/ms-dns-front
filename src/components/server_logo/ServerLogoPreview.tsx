@@ -17,13 +17,35 @@ import {
 import { useQuery } from '@tanstack/react-query';
 
 import { refetchQuery } from '@/api';
-import { uploadMCServerIcon } from '@/api/image/mcServerIconUpload';
+import { uploadMCServerLogo } from '@/api/image/mcServerIconUpload';
 import serverLogoApi from '@/api/logo';
 import { FlexBox, FlexPaper, Image, VisuallyHiddenInput } from '@/components/styled';
 import useUserProfile from '@/hooks/useUserProfile';
 
 const DEFAULT_ICON = 'https://cdn.mc-server.kr/static/mc-server-logo-200x200.png';
-
+function CopyToClipBoard({ text, value }: { text: string; value: string }) {
+  const copyToClipBoard = async () => {
+    try {
+      await window.navigator.clipboard.writeText(value);
+      alert(`복사되었습니다 : ${value}`);
+    } catch (err) {
+      console.error('Unable to copy to clipboard.', err);
+      alert('Copy to clipboard failed.');
+    }
+  };
+  return (
+    <Button
+      onClick={copyToClipBoard}
+      variant="outlined"
+      style={{ textTransform: 'none' }}
+      size="small"
+    >
+      <FlexBox sx={{ columnGap: 1, alignItems: 'center' }}>
+        <Typography>{text}</Typography>
+      </FlexBox>
+    </Button>
+  );
+}
 interface IPostDeleteAlert {
   open: boolean;
   onClose: () => void;
@@ -98,11 +120,12 @@ function LogoDeleteAlert(props: ILogoDeleteAlert) {
 interface IServerLogoPreview {
   editable?: boolean;
   logo_id?: string;
+  showUrl?: boolean;
   notOpaqueOnDefault?: boolean;
 }
 
 export default function ServerLogoPreview(props: IServerLogoPreview) {
-  const { editable, logo_id, notOpaqueOnDefault } = props;
+  const { editable, logo_id, showUrl, notOpaqueOnDefault } = props;
   const [{ uid }] = useUserProfile();
 
   const server_logo = undefined;
@@ -129,7 +152,7 @@ export default function ServerLogoPreview(props: IServerLogoPreview) {
     if (!e.target.files) return;
     const selectedFile = e.target.files[0];
     console.log(`이미지 업로드 중..`);
-    const { success, file: file_ } = await uploadMCServerIcon(selectedFile);
+    const { success, file: file_ } = await uploadMCServerLogo(selectedFile);
     if (success != 1) {
       // console.log(`에러!`);
       setServerLogoAlertOpen(true);
@@ -153,7 +176,7 @@ export default function ServerLogoPreview(props: IServerLogoPreview) {
     if (!e.target.files) return;
     const selectedFile = e.target.files[0];
     console.log(`이미지 업로드 중..`);
-    const { success, file: file_ } = await uploadMCServerIcon(selectedFile);
+    const { success, file: file_ } = await uploadMCServerLogo(selectedFile);
     if (success != 1) {
       // console.log(`에러!`);
       setServerLogoAlertOpen(true);
@@ -223,8 +246,13 @@ export default function ServerLogoPreview(props: IServerLogoPreview) {
           <CircularProgress />
         </FlexBox>
       )}
+      {showUrl && data && (
+        <FlexBox>
+          <CopyToClipBoard text="url 복사하기" value={data.url} />
+        </FlexBox>
+      )}
       {editable && (
-        <FlexBox sx={{ justifyContent: 'space-between' }}>
+        <FlexBox sx={{ justifyContent: 'space-between', columnGap: 1 }}>
           <Button
             color="error"
             variant="contained"
@@ -250,7 +278,7 @@ export default function ServerLogoPreview(props: IServerLogoPreview) {
               component={'label'}
               size="small"
             >
-              수정하기
+              수정
               <VisuallyHiddenInput
                 type="file"
                 multiple

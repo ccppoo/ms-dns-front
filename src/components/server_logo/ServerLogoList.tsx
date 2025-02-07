@@ -11,11 +11,12 @@ const USER_SERVER_LOGO_MAX = 4;
 
 interface IServerLogoList {
   editable?: boolean;
+  showUrl?: boolean;
   uid: string;
 }
 
 export default function ServerLogoList(props: IServerLogoList) {
-  const { editable, uid } = props;
+  const { editable, uid, showUrl } = props;
 
   const { data } = useQuery({
     queryFn: serverLogoApi.queryFn.getUserServerLogoList,
@@ -40,7 +41,12 @@ export default function ServerLogoList(props: IServerLogoList) {
         </FlexBox>
         <FlexPaper sx={{ flexWrap: 'wrap', padding: 1, rowGap: 1, justifyContent: 'space-around' }}>
           {data.logos.map(({ url, id }) => (
-            <ServerLogoPreview editable={editable} logo_id={id} key={`server-logo-${id}`} />
+            <ServerLogoPreview
+              editable={editable}
+              logo_id={id}
+              key={`server-logo-${id}`}
+              showUrl={!!showUrl}
+            />
           ))}
           {[...Array(empty).keys()].map((_, idx) => (
             <ServerLogoPreview editable={editable} key={`empty-user-subdomain-${idx}`} />

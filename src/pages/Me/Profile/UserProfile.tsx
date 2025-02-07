@@ -80,7 +80,7 @@ export default function MyProfile() {
     <Container sx={{ height: '100%' }} maxWidth={'md'}>
       <FlexBox sx={{ flexDirection: 'column', paddingY: 2, rowGap: 4 }}>
         <ProfileHead />
-        <ServerIconList editable uid={uid!} />
+        <ServerIconList editable uid={uid!} showUrl />
         <MyRegisteredDomains />
         <MyServerProfiles />
       </FlexBox>

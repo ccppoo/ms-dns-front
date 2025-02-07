@@ -1,10 +1,10 @@
 import { CDN_OnlyInstance as API_CDN } from '@/api';
 
-async function uploadMCServerIcon(file: File) {
+async function uploadMCServerLogo(file: File) {
   const formData = new FormData();
   formData.append('file', file);
 
-  const resp = await API_CDN.post(`/upload/icon`, formData, {
+  const resp = await API_CDN.post(`/upload/logo`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -23,6 +23,6 @@ type BoardImageUploadType = {
 
 type UploadByFileType = (file: File) => Promise<BoardImageUploadType>;
 
-export { uploadMCServerIcon };
+export { uploadMCServerLogo };
 
 export type { BoardImageUploadType, UploadByFileType };
