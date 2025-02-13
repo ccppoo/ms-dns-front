@@ -18,6 +18,7 @@ env:
   BUILD_MODE: production
   VITE_API_HOST: https://api.mc-server.kr
   VITE_CDN_HOST: https://cdn.mc-server.kr
+  VITE_MODE: production
 
 jobs:
   build:

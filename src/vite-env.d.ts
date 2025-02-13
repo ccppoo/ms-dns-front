@@ -9,4 +9,5 @@ declare module '@editorjs/embed' {
 interface ImportMetaEnv {
   readonly VITE_API_HOST: string
   readonly VITE_CDN_HOST: string
+  readonly VITE_MODE: 'dev' | 'production' | 'preview'
 }
