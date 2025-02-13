@@ -1,15 +1,15 @@
-/// <reference types="vite/client" />
+/// <reference types="vitest/config" />
 import * as path from 'path';
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
 import fs from 'fs';
-import { defineConfig } from 'vite';
 import mkcert from 'vite-plugin-mkcert';
+import { defineConfig as defineTestConfig } from 'vitest/config';
 
 const certPath = path.resolve(__dirname, './certs/cert.pem');
 const keyPath = path.resolve(__dirname, './certs/key.pem');
 
-export default defineConfig(({ command, mode }) => {
+export default defineTestConfig(({ command, mode }) => {
   const isDev = mode == 'dev';
   const defaultPlugins = [TanStackRouterVite(), react()];
   console.log(`isDev : ${isDev}`);
