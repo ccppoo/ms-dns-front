@@ -37,7 +37,7 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: install npm dependencies
-        run: yarn install  --silent
+        run: yarn install --silent
 
       - name: react build
         run: yarn build

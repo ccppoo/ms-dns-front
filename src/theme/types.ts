@@ -1,3 +1,5 @@
+import { JSX } from "react";
+
 enum Themes {
   DARK = 'dark',
   LIGHT = 'light',

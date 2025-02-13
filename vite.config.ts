@@ -22,10 +22,10 @@ export default defineConfig(({ command, mode }) => {
         host: isDev ? 'localhost' : undefined,
       },
       port: 5173,
-      https: {
+      https: isDev ? {
         key: fs.readFileSync(keyPath),
         cert: fs.readFileSync(certPath),
-      },
+      } : undefined,
     },
     preview: {
       strictPort: true,
