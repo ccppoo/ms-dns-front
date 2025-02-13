@@ -14,12 +14,17 @@ on:
         description: 'Test scenario tags'
         default: 'manual trigger'
 
+env:
+  BUILD_MODE: production
+  VITE_API_HOST: https://api.mc-server.kr
+  VITE_CDN_HOST: https://cdn.mc-server.kr
+
 jobs:
   build:
     name: build and deploy to S3
 
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: checkout Github Action
         uses: actions/checkout@v4
@@ -40,7 +45,7 @@ jobs:
         run: yarn install --silent
 
       - name: react build
-        run: yarn build
+        run: yarn build --mode $BUILD_MODE
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4

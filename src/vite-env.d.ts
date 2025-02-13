@@ -4,3 +4,9 @@ declare module '@editorjs/embed' {
   declare class Embed {}
   export default Embed;
 }
+
+
+interface ImportMetaEnv {
+  readonly VITE_API_HOST: string
+  readonly VITE_CDN_HOST: string
+}
