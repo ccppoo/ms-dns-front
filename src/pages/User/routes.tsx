@@ -1,8 +1,11 @@
+import React, { Suspense, lazy } from 'react';
+
 import { Outlet, createRoute } from '@tanstack/react-router';
 
-import UserProfilePage from '@/pages/User/Profile';
 import { Route as rootRoute } from '@/routes/__root';
 import Header from '@/sections/Header';
+
+const UserProfilePage = lazy(() => import('./Profile'));
 
 const userRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -18,7 +21,11 @@ const userRoute = createRoute({
 const userProfileRoute = createRoute({
   getParentRoute: () => userRoute,
   path: '/$userID',
-  component: UserProfilePage,
+  component: () => (
+    <Suspense fallback={<div>Loading...</div>}>
+      <UserProfilePage />
+    </Suspense>
+  ),
 });
 
 userRoute.addChildren([userProfileRoute]);

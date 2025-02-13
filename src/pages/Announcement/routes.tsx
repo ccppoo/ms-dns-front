@@ -1,11 +1,13 @@
+import React, { Suspense, lazy } from 'react';
+
 import { Outlet, createRoute } from '@tanstack/react-router';
 
 import { Route as rootRoute } from '@/routes/__root';
 import Header from '@/sections/Header';
 
-import AnnouncementEdit from './AnnouncementEdit';
-import AnnouncementListPage from './AnnouncementList';
-import AnnouncementRead from './AnnouncementRead';
+const AnnouncementRead = lazy(() => import('./AnnouncementRead'));
+const AnnouncementListPage = lazy(() => import('./AnnouncementList'));
+const AnnouncementEdit = lazy(() => import('./AnnouncementEdit'));
 
 const announcementRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -21,21 +23,33 @@ const announcementRoute = createRoute({
 const announcementReadRoute = createRoute({
   getParentRoute: () => announcementRoute,
   path: '/read/$postID',
-  component: AnnouncementRead,
+  component: () => (
+    <Suspense fallback={<div>Loading...</div>}>
+      <AnnouncementRead />
+    </Suspense>
+  ),
   // TODO: validateSearch:
 });
 
 const announcementListRoute = createRoute({
   getParentRoute: () => announcementRoute,
   path: '/list',
-  component: AnnouncementListPage,
+  component: () => (
+    <Suspense fallback={<div>Loading...</div>}>
+      <AnnouncementListPage />
+    </Suspense>
+  ),
 });
 
 // NOTE: 글 작성, 수정 포함
 const announcementEditRoute = createRoute({
   getParentRoute: () => announcementRoute,
   path: '/edit',
-  component: AnnouncementEdit,
+  component: () => (
+    <Suspense fallback={<div>Loading...</div>}>
+      <AnnouncementEdit />
+    </Suspense>
+  ),
 });
 
 announcementRoute.addChildren([

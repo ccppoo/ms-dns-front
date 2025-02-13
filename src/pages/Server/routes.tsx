@@ -1,10 +1,13 @@
+import React, { Suspense, lazy } from 'react';
+
 import { Outlet, createRoute } from '@tanstack/react-router';
 
-import ServerProfileEdit from '@/pages/Server/ProfileEdit';
-import ServerListPage from '@/pages/Server/ProfileList';
-import ServerProfileRead from '@/pages/Server/ProfileRead';
 import { Route as rootRoute } from '@/routes/__root';
 import Header from '@/sections/Header';
+
+const ServerProfileRead = lazy(() => import('./ProfileRead'));
+const ServerListPage = lazy(() => import('./ProfileList'));
+const ServerProfileEdit = lazy(() => import('./ProfileEdit'));
 
 const serverRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -20,20 +23,32 @@ const serverRoute = createRoute({
 const serverProfileRoute = createRoute({
   getParentRoute: () => serverRoute,
   path: '/read/$postID',
-  component: ServerProfileRead,
+  component: () => (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ServerProfileRead />
+    </Suspense>
+  ),
   // TODO: validateSearch:
 });
 
 const serverListRoute = createRoute({
   getParentRoute: () => serverRoute,
   path: '/list',
-  component: ServerListPage,
+  component: () => (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ServerListPage />
+    </Suspense>
+  ),
 });
 
 const serverProfileWriteRoute = createRoute({
   getParentRoute: () => serverRoute,
   path: '/edit',
-  component: ServerProfileEdit,
+  component: () => (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ServerProfileEdit />
+    </Suspense>
+  ),
 });
 
 serverRoute.addChildren([serverProfileRoute, serverListRoute, serverProfileWriteRoute]);

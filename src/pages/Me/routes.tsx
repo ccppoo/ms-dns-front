@@ -1,9 +1,12 @@
+import React, { Suspense, lazy } from 'react';
+
 import { Outlet, createRoute, redirect } from '@tanstack/react-router';
 
-import MyDomainPage from '@/pages/Me/Domain';
-import MyProfilePage from '@/pages/Me/Profile';
 import { Route as rootRoute } from '@/routes/__root';
 import Header from '@/sections/Header';
+
+const MyDomainPage = lazy(() => import('./Domain'));
+const MyProfilePage = lazy(() => import('./Profile'));
 
 const meRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -30,13 +33,21 @@ const meRoute = createRoute({
 const myProfileRoute = createRoute({
   getParentRoute: () => meRoute,
   path: '/profile',
-  component: MyProfilePage,
+  component: () => (
+    <Suspense fallback={<div>Loading...</div>}>
+      <MyProfilePage />
+    </Suspense>
+  ),
 });
 
 const myDomainRoute = createRoute({
   getParentRoute: () => meRoute,
   path: '/domain',
-  component: MyDomainPage,
+  component: () => (
+    <Suspense fallback={<div>Loading...</div>}>
+      <MyDomainPage />
+    </Suspense>
+  ),
 });
 
 meRoute.addChildren([myProfileRoute, myDomainRoute]);

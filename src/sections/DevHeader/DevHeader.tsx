@@ -43,7 +43,7 @@ const goto: DevLink[] = [
 ];
 
 function DevHeaderLink({ name, path }: DevLink) {
-  return <Link href={path}>{name}</Link>;
+  return <Link to={path}>{name}</Link>;
 }
 
 export default function DevHeader() {

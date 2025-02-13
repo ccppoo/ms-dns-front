@@ -310,46 +310,46 @@ function ServerExternalLinks(props: IServerExternalLinks) {
   );
 }
 
-function ServerProfileIndex() {
-  const index: { name: string; hash: string }[] = [
-    {
-      name: '소개',
-      hash: 'intro',
-    },
-    {
-      name: '서버 상태',
-      hash: 'status',
-    },
-  ];
-  const ref = useRef<HTMLDivElement>(null);
+// function ServerProfileIndex() {
+//   const index: { name: string; hash: string }[] = [
+//     {
+//       name: '소개',
+//       hash: 'intro',
+//     },
+//     {
+//       name: '서버 상태',
+//       hash: 'status',
+//     },
+//   ];
+//   const ref = useRef<HTMLDivElement>(null);
 
-  const onClickSmoothScroll: React.MouseEventHandler<HTMLAnchorElement> = (
-    event: React.MouseEvent,
-  ) => {
-    event.preventDefault();
-    let offset = () => ref.current?.offsetTop;
-    // ref.current?.offsetTop;
-    const href = event.currentTarget.getAttribute('href');
-    const anchorID = href?.split('#')[1];
-    const anchor = document.getElementById(anchorID!)!;
-    const offsetTop = anchor.getBoundingClientRect().top + window.scrollY;
-    window.scroll({
-      top: offsetTop - offset()!,
-      behavior: 'smooth',
-    });
-  };
-  return (
-    <FlexBox sx={{ columnGap: 2 }} ref={ref}>
-      {index.map((indexItem, idx) => (
-        <FlexPaper sx={{ padding: 1 }} key={`idx-item-${idx}`}>
-          <Link hash={indexItem.hash} onClick={onClickSmoothScroll}>
-            {indexItem.name}
-          </Link>
-        </FlexPaper>
-      ))}
-    </FlexBox>
-  );
-}
+//   const onClickSmoothScroll: React.MouseEventHandler<HTMLAnchorElement> = (
+//     event: React.MouseEvent,
+//   ) => {
+//     event.preventDefault();
+//     let offset = () => ref.current?.offsetTop;
+//     // ref.current?.offsetTop;
+//     const href = event.currentTarget.getAttribute('href');
+//     const anchorID = href?.split('#')[1];
+//     const anchor = document.getElementById(anchorID!)!;
+//     const offsetTop = anchor.getBoundingClientRect().top + window.scrollY;
+//     window.scroll({
+//       top: offsetTop - offset()!,
+//       behavior: 'smooth',
+//     });
+//   };
+//   return (
+//     <FlexBox sx={{ columnGap: 2 }} ref={ref}>
+//       {index.map((indexItem, idx) => (
+//         <FlexPaper sx={{ padding: 1 }} key={`idx-item-${idx}`}>
+//           <Link hash={indexItem.hash} onClick={onClickSmoothScroll}>
+//             {indexItem.name}
+//           </Link>
+//         </FlexPaper>
+//       ))}
+//     </FlexBox>
+//   );
+// }
 
 export default function ProfileRead() {
   const postID = useParams({
