@@ -41,7 +41,8 @@
     "react-helmet-async": "^2.0.5",
     "react-hook-form": "^7.53.2",
     "react-redux": "^9.1.0",
-    "vite-plugin-mkcert": "^1.17.6"
+    "vite-plugin-mkcert": "^1.17.6",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@tanstack/router-devtools": "^1.102.5",
@@ -53,8 +54,8 @@
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/node": "^22.9.0",
     "@types/react": "^18.2.47",
-    "@types/react-dom": "^18.2.18",
-    "@vitejs/plugin-react": "^4.2.1",
+    "@types/react-dom": "^19.0.3",
+    "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-react-app": "^7.0.1",
