@@ -7,16 +7,17 @@ import { defineConfig } from 'vite';
 import mkcert from 'vite-plugin-mkcert';
 
 
+
 export default defineConfig(({ command, mode }) => {
   const isDev = mode == 'dev';
+  const isBuild = command == 'build'
   const certPath = isDev ? path.resolve(__dirname, './certs/cert.pem') : ''
   const keyPath =isDev ? path.resolve(__dirname, './certs/key.pem') : ''
   const defaultPlugins = [TanStackRouterVite(), react()];
-  
-  console.log(`isDev : ${isDev}`);
+
+  console.log(`isDev : ${isDev} | isBuild : ${isBuild}`);
 
   return {
-    // plugins: isDev ? [...defaultPlugins, mkcert({})] : defaultPlugins,
     plugins: defaultPlugins,
     server: {
       hmr: {
@@ -26,15 +27,15 @@ export default defineConfig(({ command, mode }) => {
       https: isDev ? {
         key: fs.readFileSync(keyPath),
         cert: fs.readFileSync(certPath),
-      } : undefined,
+      } : undefined, 
     },
     preview: {
       strictPort: true,
       port: 5173,
-      https: {
+      https: isDev ? {
         key: fs.readFileSync(keyPath),
         cert: fs.readFileSync(certPath),
-      },
+      } : undefined, 
     },
     envDir: './env',
     base: '/',
