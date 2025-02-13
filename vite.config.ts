@@ -6,12 +6,13 @@ import fs from 'fs';
 import { defineConfig } from 'vite';
 import mkcert from 'vite-plugin-mkcert';
 
-const certPath = path.resolve(__dirname, './certs/cert.pem');
-const keyPath = path.resolve(__dirname, './certs/key.pem');
 
 export default defineConfig(({ command, mode }) => {
   const isDev = mode == 'dev';
+  const certPath = isDev ? path.resolve(__dirname, './certs/cert.pem') : ''
+  const keyPath =isDev ? path.resolve(__dirname, './certs/key.pem') : ''
   const defaultPlugins = [TanStackRouterVite(), react()];
+  
   console.log(`isDev : ${isDev}`);
 
   return {
