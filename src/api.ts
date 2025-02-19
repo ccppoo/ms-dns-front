@@ -19,7 +19,7 @@ export const ContentTypeHeader = {
 };
 
 export const API_HOST = import.meta.env.VITE_API_HOST;
-export const CDN_HOST = import.meta.env.VITE_CDN_HOST;
+export const IMAGE_API_HOST = import.meta.env.VITE_IMAGE_API_HOST;
 
 const instance = axios.create({
   baseURL: API_HOST,
@@ -27,7 +27,7 @@ const instance = axios.create({
 });
 
 export const CDN_OnlyInstance = axios.create({
-  baseURL: CDN_HOST,
+  baseURL: IMAGE_API_HOST,
   withCredentials: true,
 });
 

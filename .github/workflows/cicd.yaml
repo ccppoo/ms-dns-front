@@ -17,7 +17,7 @@ on:
 env:
   BUILD_MODE: production
   VITE_API_HOST: https://api.mc-server.kr
-  VITE_CDN_HOST: https://cdn.mc-server.kr
+  VITE_IMAGE_API_HOST: https://api.mc-server.kr
   VITE_MODE: production
 
 jobs:
@@ -25,7 +25,7 @@ jobs:
     name: build and deploy to S3
 
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: checkout Github Action
         uses: actions/checkout@v4
@@ -62,9 +62,9 @@ jobs:
           aws s3 sync \
             ./dist s3://$BUCKET_NAME
 
-      # - name: CloudFront Invalidation
-      #   env:
-      #     CLOUD_FRONT_ID: ${{ secrets.AWS_CLOUDFRONT_ID}}
-      #   run: |
-      #     aws cloudfront create-invalidation \
-      #       --distribution-id $CLOUD_FRONT_ID --paths /*
+      - name: CloudFront Invalidation
+        env:
+          CLOUD_FRONT_ID: ${{ secrets.AWS_CLOUDFRONT_S3_SPA_ID }}
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id $CLOUD_FRONT_ID --paths /*
