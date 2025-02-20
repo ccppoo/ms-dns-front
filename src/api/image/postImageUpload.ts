@@ -3,7 +3,6 @@ import { CDN_OnlyInstance as API_CDN } from '@/api';
 async function uploadImage(file: File) {
   const formData = new FormData();
   formData.append('file', file);
-  const [fileType, ext] = file.type.split('/');
 
   const resp = await API_CDN.post(`/upload/image`, formData, {
     headers: {

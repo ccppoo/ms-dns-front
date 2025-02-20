@@ -20,7 +20,7 @@ async function getServerProfilePost({
 }: {
   queryKey: [string, string];
 }): Promise<ServerPostSchemaRead> {
-  const [_, serverProfileID] = queryKey;
+  const [, serverProfileID] = queryKey;
   const data = await api.queryFn.getPost<ServerPostSchemaRead>({
     queryKey: ['get server post', 'server', serverProfileID],
   });

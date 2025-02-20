@@ -17,13 +17,13 @@ export default function AnnouncementEdit() {
   // console.log(`serverID  : ${serverID}`);
 
   // 양식, 공지사항, 등 내용 있을 경우 api로 불러오는 것
-  const { data, isSuccess, isFetching } = useQuery({
+  const { data } = useQuery({
     queryKey: ['get post', postID],
     queryFn: announcementPostApi.queryFn.getAnnouncementPost,
     enabled: !!postID,
   });
 
-  if (!!postID) {
+  if (postID) {
     if (data) {
       return (
         <Container sx={{ height: '100%' }} maxWidth={'md'}>

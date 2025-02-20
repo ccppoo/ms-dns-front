@@ -1,4 +1,4 @@
-import { API, BlockMutationEvent } from '@editorjs/editorjs';
+import type { API, BlockMutationEvent } from '@editorjs/editorjs';
 import type { EditorConfig, ToolboxConfig } from '@editorjs/editorjs';
 import type { OutputData } from '@editorjs/editorjs';
 import type { ToolConstructable, ToolSettings } from '@editorjs/editorjs/types/tools';

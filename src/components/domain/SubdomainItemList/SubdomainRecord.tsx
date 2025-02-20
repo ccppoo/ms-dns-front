@@ -4,7 +4,8 @@ import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOut
 import { Button, Divider, Paper, TextField, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import type { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import Tooltip from '@mui/material/Tooltip';
 
 import { FlexBox } from '@/components/styled';

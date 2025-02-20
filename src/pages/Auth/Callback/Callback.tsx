@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
-import { Button, Paper, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 
 import { useQuery } from '@tanstack/react-query';

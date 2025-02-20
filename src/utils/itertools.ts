@@ -1,4 +1,4 @@
-export function* zip<T, K, G>(arr1: T[], arr2: K[]): Generator<[T, K]> {
+export function* zip<T, K>(arr1: T[], arr2: K[]): Generator<[T, K]> {
   // Create an array of tuples
   const len = arr1.length;
   let cnt = 0;

@@ -153,7 +153,7 @@ export default function ServerLogoPreview(props: IServerLogoPreview) {
     const selectedFile = e.target.files[0];
     console.log(`이미지 업로드 중..`);
     const { success, file: file_ } = await uploadMCServerLogo(selectedFile);
-    if (success != 1) {
+    if (success !== 1) {
       // console.log(`에러!`);
       setServerLogoAlertOpen(true);
       setServerLogoAlertMSG('이미지 사이즈 형식이 옯바르지 않습니다.');
@@ -161,7 +161,7 @@ export default function ServerLogoPreview(props: IServerLogoPreview) {
     }
     const { url } = file_;
     const resp = await serverLogoApi.query.uploadServerLogo({ logo_url: url });
-    if (resp.status != 200) {
+    if (resp.status !== 200) {
       // 업로드 제한횟수 ㅇㅇ
       setServerLogoAlertOpen(true);
       setServerLogoAlertMSG('잘못된 요청입니다.');
@@ -177,7 +177,7 @@ export default function ServerLogoPreview(props: IServerLogoPreview) {
     const selectedFile = e.target.files[0];
     console.log(`이미지 업로드 중..`);
     const { success, file: file_ } = await uploadMCServerLogo(selectedFile);
-    if (success != 1) {
+    if (success !== 1) {
       // console.log(`에러!`);
       setServerLogoAlertOpen(true);
       setServerLogoAlertMSG('이미지 사이즈 형식이 옯바르지 않습니다.');
@@ -185,7 +185,7 @@ export default function ServerLogoPreview(props: IServerLogoPreview) {
     }
     const { url } = file_;
     const resp = await serverLogoApi.query.updateServerLogo({ logo_id: logo_id!, logo_url: url });
-    if (resp.status != 200) {
+    if (resp.status !== 200) {
       // 중간에 다른 작업, 등등 잘못된 경우
       setServerLogoAlertOpen(true);
       setServerLogoAlertMSG('잘못된 요청입니다.');
@@ -199,7 +199,7 @@ export default function ServerLogoPreview(props: IServerLogoPreview) {
     setServerLogoDeleteAlertOpen(true);
     // methods.setValue('server_info.server_logo', undefined);
     const resp = await serverLogoApi.query.deleteServerLogo({ logo_id: logo_id! });
-    if (resp.status != 200) {
+    if (resp.status !== 200) {
       // 중간에 다른 작업, 등등 잘못된 경우
       setServerLogoAlertOpen(true);
       setServerLogoAlertMSG('잘못된 요청입니다.');
@@ -219,7 +219,7 @@ export default function ServerLogoPreview(props: IServerLogoPreview) {
         rowGap: 1,
       }}
     >
-      {!!data ? (
+      {data ? (
         <FlexPaper
           sx={{
             maxWidth: IMAGE_WIDTH,
@@ -270,7 +270,7 @@ export default function ServerLogoPreview(props: IServerLogoPreview) {
             onClose={() => setServerLogoDeleteAlertOpen(false)}
             onDeleteConfirm={onDeleteConfirm}
           />
-          {!!logo_id ? (
+          {logo_id ? (
             <Button
               variant="outlined"
               disabled={!!server_logo}

@@ -1,10 +1,9 @@
 import { useFormContext } from 'react-hook-form';
 import type { FieldPath, PathValue } from 'react-hook-form';
 
-import { API, BlockMutationEvent } from '@editorjs/editorjs';
+import type { API, BlockMutationEvent } from '@editorjs/editorjs';
 
 import { uploadImage } from '@/api/image/postImageUpload';
-import useUserProfile from '@/hooks/useUserProfile';
 import type { OutputDataSchemaType } from '@/schema/post';
 
 import EditorBase from './base/EditorBase';
@@ -21,7 +20,6 @@ const API_IMAGE_UPLOAD_HOST = 'https://example.com';
 
 export default function EditorWrapper<T extends OutputDataSchemaType>(props: EditorContainerIntf) {
   const { readOnly } = props;
-  const [userProfile] = useUserProfile();
   const methods = useFormContext<T>();
   type FormDataType = PathValue<T, FieldPath<T>>;
   const outputDataFormPath = 'data' as FieldPath<T>; // 글 쓴 내용 저장되는 form-path

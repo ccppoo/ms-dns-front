@@ -1,4 +1,4 @@
-import { Outlet, createRootRouteWithContext, createRoute } from '@tanstack/react-router';
+import { Outlet, createRootRouteWithContext } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 
 import Footer from '@/sections/Footer/Footer';
@@ -14,7 +14,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 });
 
 function RootComponent() {
-  if (MODE != 'dev') {
+  if (MODE !== 'dev') {
     return (
       <>
         <div style={{ minHeight: '100vh' }}>

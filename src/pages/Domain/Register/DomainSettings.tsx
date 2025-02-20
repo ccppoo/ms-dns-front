@@ -44,10 +44,7 @@ function FormInputRow<T extends FieldValues>(props: FormInputRow<T>) {
 }
 
 export default function DomainOptionSettings() {
-  const { getValues, setValue, formState, register } = useFormContext<RegisterDomain>();
   const formPathIP = 'ip' as FieldPath<RegisterDomain>;
-  // const formPathPort = 'port' as FieldPath<RegisterDomain>;
-  type FormDataType = PathValue<RegisterDomain, FieldPath<RegisterDomain>>;
 
   return (
     <FlexBox
@@ -78,7 +75,6 @@ export default function DomainOptionSettings() {
           }}
         >
           <FormInputRow formPath={formPathIP} name="IP 주소" />
-          {/* <FormInputRow formPath={formPathPort} name="마인크래프트 접속 포트 번호" /> */}
         </FlexPaper>
       </FlexBox>
     </FlexBox>

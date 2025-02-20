@@ -10,7 +10,8 @@ import { Button, Divider, IconButton, Typography } from '@mui/material';
 import { Grid2 } from '@mui/material';
 import Chip from '@mui/material/Chip';
 import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import type { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 
 import { ExternalLinkNewTab, FlexBox, FlexPaper, Image } from '@/components/styled';
@@ -59,7 +60,7 @@ function ServerTags() {
             setTagInput(event.target.value);
           }}
           onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
-            if (event.key.toLowerCase() == 'enter') {
+            if (event.key.toLowerCase() === 'enter') {
               event.preventDefault();
               event.stopPropagation();
               onEnterServerTag();
@@ -118,7 +119,7 @@ function ServerHrefButton({ name, url }: { name: string; url: string }) {
           fontStyle: 'normal',
         }}
       >
-        {!!imageIcon ? (
+        {imageIcon ? (
           <Image src={imageIcon} sx={{ width: 30, height: 30 }} />
         ) : (
           <LanguageOutlinedIcon sx={{ width: 30, height: 30 }} />
@@ -182,7 +183,7 @@ function ServerCommunityRowItem({ idx }: { idx: number }) {
         sx={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}
       >
         <FlexBox sx={{ padding: 1 }}>
-          {!!imageIcon ? (
+          {imageIcon ? (
             <Image src={imageIcon} sx={{ width: 45, height: 45 }} />
           ) : (
             <LanguageOutlinedIcon sx={{ width: 45, height: 45 }} />
@@ -212,7 +213,7 @@ function ServerCommunityRowItem({ idx }: { idx: number }) {
                 updateSrvCommunity(event.target.value);
               }}
               onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
-                if (event.key.toLowerCase() == 'enter') {
+                if (event.key.toLowerCase() === 'enter') {
                   event.preventDefault();
                   event.stopPropagation();
                   onEnterServerCommunityLinkEdit();
@@ -224,7 +225,7 @@ function ServerCommunityRowItem({ idx }: { idx: number }) {
         )}
       </FlexPaper>
       <FlexBox sx={{ height: '100%' }}>
-        {!!editMode ? (
+        {editMode ? (
           <IconButton onClick={onClickCancelEdit}>
             <RefreshIcon sx={{ width: 30, height: 30 }} />
           </IconButton>
@@ -287,7 +288,7 @@ function ServerCommunityAdd() {
     const prevCommu = methods.getValues('server_community')!;
 
     const duplicated = !!prevCommu.find(
-      ({ name, url }) => name == communitySelection && url == communityURLInput,
+      ({ name, url }) => name === communitySelection && url === communityURLInput,
     );
     if (duplicated) {
       setErrorText('중복');
@@ -312,7 +313,7 @@ function ServerCommunityAdd() {
     const prevCommu = methods.getValues('server_community')!;
 
     const duplicated = !!prevCommu.find(
-      ({ name, url }) => name == communitySelection && url == communityURLInput,
+      ({ name, url }) => name === communitySelection && url === communityURLInput,
     );
     if (duplicated) {
       setErrorText('중복');
@@ -349,7 +350,7 @@ function ServerCommunityAdd() {
               return (
                 <MenuItem value={comu.value} key={`commu-select-${idx}`}>
                   <FlexBox sx={{ columnGap: 1, alignItems: 'center' }}>
-                    {!!comu.icon ? (
+                    {comu.icon ? (
                       <Image src={comu.icon} sx={{ width: 30, height: 30 }} />
                     ) : (
                       <LanguageOutlinedIcon sx={{ width: 30, height: 30 }} />
@@ -383,7 +384,7 @@ function ServerCommunityAdd() {
                 setCommunityName(event.target.value);
               }}
               onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
-                if (event.key.toLowerCase() == 'enter') {
+                if (event.key.toLowerCase() === 'enter') {
                   event.preventDefault();
                   event.stopPropagation();
                   // onEnterServerCommunity();
@@ -410,7 +411,7 @@ function ServerCommunityAdd() {
                 setCommunityLinkInput(event.target.value);
               }}
               onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
-                if (event.key.toLowerCase() == 'enter') {
+                if (event.key.toLowerCase() === 'enter') {
                   event.preventDefault();
                   event.stopPropagation();
                   onEnterServerCommunity();

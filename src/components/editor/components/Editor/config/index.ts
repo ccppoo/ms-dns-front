@@ -1,11 +1,11 @@
-import type { EditorConfig, ToolboxConfig } from '@editorjs/editorjs';
+import type { EditorConfig } from '@editorjs/editorjs';
 import type { OutputData } from '@editorjs/editorjs';
 import ImageTool from '@editorjs/image';
 
-import type { BoardImageUploadType, UploadByFileType } from '@/api/image/postImageUpload';
+import type { UploadByFileType } from '@/api/image/postImageUpload';
 
 import type { onChangeEditorJS } from '../types';
-import { embedTools, getImageTools } from './mediaTools';
+import { getImageTools } from './mediaTools';
 import basicEditorTools from './tools';
 
 interface EditorConfigIntf {
@@ -31,7 +31,7 @@ const getEditorConfig: (props: EditorConfigIntf) => EditorConfig = (props: Edito
   const tempImageRemover = (image_url: string) => {
     console.log(`image_url : ${image_url}`);
   };
-  const _imageTool = !!imageSupported
+  const _imageTool = imageSupported
     ? // ? getImageTools(uploadByFile, removeImageFromBlock)
       getImageTools(uploadByFile)
     : ImageTool;

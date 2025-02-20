@@ -12,7 +12,7 @@ export default function LogginButton() {
 
   const naivgate = useNavigate();
   const onClickLogin = () => {
-    if (window.location.pathname == '/') {
+    if (window.location.pathname === '/') {
       naivgate({
         to: loginPath,
       });

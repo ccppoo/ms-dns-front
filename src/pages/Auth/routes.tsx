@@ -1,4 +1,4 @@
-import React, { lazy } from 'react';
+import { lazy } from 'react';
 
 import { Outlet, createRoute, redirect } from '@tanstack/react-router';
 
@@ -12,7 +12,7 @@ const authRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: 'auth',
   beforeLoad: async ({ location, context }) => {
-    if (!!context.uid) {
+    if (context.uid) {
       throw redirect({
         to: '/',
       });

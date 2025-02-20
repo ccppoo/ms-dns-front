@@ -1,4 +1,4 @@
-import React, { lazy } from 'react';
+import { lazy } from 'react';
 
 import { Outlet, createRoute, redirect } from '@tanstack/react-router';
 

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Box, Chip, Divider, Paper, Typography } from '@mui/material';
+import { Box, Chip, Divider, Typography } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
 import Pagination from '@mui/material/Pagination';
@@ -13,7 +13,7 @@ import type { PaginationOptions } from '@/api/post/types';
 import { defaultPaginationOptions } from '@/api/post/values';
 import PostListActions from '@/components/post/PostListActions';
 import ServerLogoPreview from '@/components/server_logo/ServerLogoPreview';
-import { FlexBox, FlexPaper, Image } from '@/components/styled';
+import { FlexBox, FlexPaper } from '@/components/styled';
 import type { ServerProfileListing } from '@/schema/post/server_profile';
 
 interface IServerProfileListItem {
@@ -33,7 +33,7 @@ export function ServerProfileListItem(props: IServerProfileListItem) {
 
   const serverLogo = server_info.server_logo;
   const _goto = `/server/read/${postID}`;
-  const goto = !!page ? `${_goto}?page=${page}` : _goto;
+  const goto = page ? `${_goto}?page=${page}` : _goto;
   return (
     <FlexBox sx={{ width: '100%', flexDirection: 'column', rowGap: 0.5 }}>
       <FlexPaper sx={{ padding: 1, columnGap: 1, width: '100%' }}>
@@ -135,10 +135,9 @@ export default function ServerProfileList() {
     });
   };
 
-  if (!!data) {
+  if (data) {
     const listingItems = data.list;
     const maxPage = data.pages;
-    const itemLimit = data.limit;
     return (
       <Container sx={{ height: '100%' }} maxWidth={'md'}>
         <FlexBox sx={{ paddingY: 3, flexDirection: 'column', rowGap: 2 }}>

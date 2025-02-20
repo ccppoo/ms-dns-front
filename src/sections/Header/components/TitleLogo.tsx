@@ -1,13 +1,9 @@
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import ButtonBase from '@mui/material/ButtonBase';
-import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 
 import { useNavigate } from '@tanstack/react-router';
 
 import { FlexBox, Image } from '@/components/styled';
-import { title } from '@/config';
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
   position: 'relative',

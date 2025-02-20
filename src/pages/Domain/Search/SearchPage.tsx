@@ -59,11 +59,7 @@ function DomainSearchResult() {
   const fullDomain = `${subdomain}.${domain}`;
   // console.log(`subdomain : ${typeof subdomain} domain : ${typeof domain}`);
   // console.log(`!!domain && !!subdomain : ${!!domain && !!subdomain}`);
-  const {
-    data: availableDomain,
-    isSuccess,
-    isFetching,
-  } = useQuery({
+  const { data: availableDomain, isFetching } = useQuery({
     queryKey: ['getDomainAvailable', domain, subdomain],
     queryFn: domainApi.queryFn.getDomainAvailable,
     staleTime: 30 * 1000,
@@ -153,8 +149,6 @@ function DomainSearchResult() {
 }
 
 export default function DomainRegister() {
-  const DOMAIN = 'mc-server.kr';
-
   const navigate = useNavigate();
 
   const { domain, subdomain } = useSearch({

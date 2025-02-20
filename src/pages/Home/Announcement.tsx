@@ -1,13 +1,13 @@
 import { ChangeEvent, useState } from 'react';
 
-import { TextField, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { useQuery } from '@tanstack/react-query';
 
 import announcementPostApi from '@/api/post/announcement';
 import type { PaginationOptions } from '@/api/post/types';
-import { FlexBox, FlexPaper, Image } from '@/components/styled';
+import { FlexBox } from '@/components/styled';
 import { AnnouncementListItem } from '@/pages/Announcement/AnnouncementList/AnnouncementList';
 
 export default function Announcement() {
@@ -28,7 +28,7 @@ export default function Announcement() {
         <Typography variant="body1">공지사항</Typography>
       </FlexBox>
       <FlexBox sx={{ flexDirection: 'column', padding: 0.5, rowGap: 1 }}>
-        {!!data ? (
+        {data ? (
           data.list.map((item) => (
             <AnnouncementListItem
               announcementListing={item}

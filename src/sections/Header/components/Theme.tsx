@@ -1,23 +1,15 @@
-import DarkModeIcon from "@mui/icons-material/DarkMode"
-import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined"
-import IconButton from "@mui/material/IconButton"
-import Tooltip from "@mui/material/Tooltip"
-import Typography from "@mui/material/Typography"
-
-import { FlexBox } from "@/components/styled"
-import { Image } from "@/components/styled"
-// import useTheme from '@/store/theme';
+import { FlexBox } from '@/components/styled';
 
 export default function ThemeHeader() {
   // const [theme, themeActions] = useTheme();
   return (
     <FlexBox
       sx={{
-        alignItems: "center",
-        justifyContent: "center",
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
     ></FlexBox>
-  )
+  );
   // const isLightMode = theme == 'light';
 
   // return (

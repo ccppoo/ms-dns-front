@@ -1,17 +1,9 @@
-import { useState } from 'react';
-
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { Box, Chip, Divider, Paper, Typography } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
-import Container from '@mui/material/Container';
-import Pagination from '@mui/material/Pagination';
+import { Paper, Typography } from '@mui/material';
 
-import { useQuery } from '@tanstack/react-query';
-import { Link, useSearch } from '@tanstack/react-router';
+import { Link } from '@tanstack/react-router';
 
-import type { PaginationOptions } from '@/api/post/types';
-import { defaultPaginationOptions } from '@/api/post/values';
-import { FlexBox, FlexPaper, Image } from '@/components/styled';
+import { FlexBox } from '@/components/styled';
 import useUserProfile from '@/hooks/useUserProfile';
 import type { PostTopic } from '@/types/post';
 

@@ -1,11 +1,10 @@
-import { Box, Button, Paper, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
 
 import { useQuery } from '@tanstack/react-query';
 
 import serverProfilePostApi from '@/api/post/server_profile';
-import userApi from '@/api/user';
 import MyRegisteredDomains from '@/components/domain/MySubdomains';
 import ServerIconList from '@/components/server_logo/ServerLogoList';
 import { FlexBox, FlexPaper, Image } from '@/components/styled';
@@ -44,7 +43,7 @@ function MyServerProfiles() {
   // console.log(`userID : ${userID}`);
 
   // console.log(`data : ${JSON.stringify(data)}`);
-  if (!!data) {
+  if (data) {
     const listingItems = data.list;
 
     return (
@@ -69,12 +68,6 @@ function MyServerProfiles() {
 
 export default function MyProfile() {
   const [{ uid }] = useUserProfile();
-
-  const { data } = useQuery({
-    queryKey: ['get my profile', uid!],
-    queryFn: userApi.queryFn.getUserProfile,
-    enabled: !!uid,
-  });
 
   return (
     <Container sx={{ height: '100%' }} maxWidth={'md'}>

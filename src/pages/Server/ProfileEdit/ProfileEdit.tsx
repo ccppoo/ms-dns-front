@@ -17,13 +17,13 @@ export default function ServerProfileEdit() {
   console.log(`postID  : ${postID}`);
 
   // 양식, 공지사항, 등 내용 있을 경우 api로 불러오는 것
-  const { data, isSuccess, isFetching } = useQuery({
+  const { data } = useQuery({
     queryKey: ['create post', postID],
     queryFn: serverProfilePostApi.queryFn.getServerProfilePost,
     enabled: !!postID,
   });
 
-  if (!!postID) {
+  if (postID) {
     if (data) {
       return (
         <Container sx={{ height: '100%' }} maxWidth={'md'}>

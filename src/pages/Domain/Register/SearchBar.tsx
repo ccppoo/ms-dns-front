@@ -7,7 +7,8 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { TextField, Typography } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import type { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 
 import domainApi from '@/api/domain';
 import { FlexBox, FlexPaper } from '@/components/styled';

@@ -139,8 +139,8 @@ export default function PostManagements(props: IPostManagements) {
   const { topic, postID, creator } = props;
   const [{ uid, role }] = useUserProfile();
 
-  const isCreator = uid == creator;
-  const isAdmain = role == 'admin';
+  const isCreator = uid === creator;
+  const isAdmain = role === 'admin';
   // console.log(`isCreator : ${isCreator} isAdmain : ${isAdmain}`);
   return (
     <FlexBox sx={{ justifyContent: 'end' }}>

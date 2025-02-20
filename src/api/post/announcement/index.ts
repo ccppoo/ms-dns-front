@@ -23,7 +23,7 @@ async function getAnnouncementPost({
 }: {
   queryKey: [string, number];
 }): Promise<AnnouncementPostSchemaRead> {
-  const [_, postID] = queryKey;
+  const [, postID] = queryKey;
   const data = await api.queryFn.getPost<AnnouncementPostSchemaRead>({
     queryKey: ['get annoucement post', 'announcement', postID],
   });

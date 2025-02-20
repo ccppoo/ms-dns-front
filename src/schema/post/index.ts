@@ -76,25 +76,4 @@ export const outputSchemaDefault: OutputSchemaType = {
   title: '',
 };
 
-// 글쓰기 -> blob으로 일단 업로드 -> 글 작성시 백그라운드에서
-// 1. 수정하고 최종으로 보낼 때
-// 2. 최초 작성시 확정적으로 이미지 사용하는거 확인용
-// added에 없는 경우 게시글 작성
-
-type BoardEditFinal = {
-  image: {
-    deleted: string[];
-    added: string[];
-  };
-};
-// type BoardDataEditForm = OutputData & BoardEditFinal;
-
-// // 읽을 때
-// type BoardDataReadForm = OutputData;
-
 export type OutputSchemaType = z.infer<typeof outputSchema>;
-
-type boardPersonal = {
-  saved: boolean; // 글 목록 저장 (레딧 save처럼)
-  voted: 'up' | 'down'; // 회원인 경우 자신이 투표한 것
-};

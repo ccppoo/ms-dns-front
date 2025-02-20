@@ -1,15 +1,8 @@
-import { AxiosResponse } from 'axios';
+import type { AxiosResponse } from 'axios';
 
 import API from '@/api';
 import type { QueryName, UID } from '@/api/types';
-import type {
-  RegisterDomain,
-  UserDomain,
-  UserDomains,
-  UserSubdomainInfo,
-  UserSubdomainRecord,
-  UserSubdomains,
-} from '@/schema/domain';
+import type { RegisterDomain, UserSubdomainInfo, UserSubdomains } from '@/schema/domain';
 
 import type { SubdomainEditResponse } from './types';
 
@@ -32,7 +25,7 @@ async function getUserDomains(params: {
   queryKey: UserServerLogoListQueryKey;
 }): Promise<UserSubdomains> {
   const { queryKey } = params;
-  const [_, uid] = queryKey;
+  const [, uid] = queryKey;
   const resp = await API.get<UserSubdomains>(`/domain/list/${uid}`);
   const subdomains = resp.data.subdomains.map((value: UserSubdomainInfo) => {
     return { ...value, createdAt: new Date(value.createdAt) };

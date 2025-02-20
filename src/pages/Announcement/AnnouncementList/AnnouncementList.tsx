@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Box, Chip, Divider, Paper, Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
@@ -15,7 +15,7 @@ import type { PaginationOptions } from '@/api/post/types';
 import { defaultPaginationOptions } from '@/api/post/values';
 import userApi from '@/api/user';
 import PostListActions from '@/components/post/PostListActions';
-import { FlexBox, FlexPaper, Image } from '@/components/styled';
+import { FlexBox, FlexPaper } from '@/components/styled';
 import type { AnnouncementListing } from '@/schema/post/announcement';
 
 interface IListItemCreator {
@@ -129,7 +129,7 @@ export default function ServerProfileList() {
     });
   };
 
-  if (!!data) {
+  if (data) {
     const listingItems = data.list;
     const maxPages = data.pages;
     const itemLimit = data.limit;

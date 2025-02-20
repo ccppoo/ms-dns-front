@@ -26,9 +26,9 @@ function SelectableServerLogoPreview(props: ISelectableServerLogoPreview) {
   return (
     <FlexBox
       sx={{
-        opacity: !!selected ? 1 : 0.7,
-        border: !!selected ? '2px solid green' : '2px solid transparent',
-        borderRadius: !!selected ? 1 : null,
+        opacity: selected ? 1 : 0.7,
+        border: selected ? '2px solid green' : '2px solid transparent',
+        borderRadius: selected ? 1 : null,
       }}
       onClick={onClick}
     >
@@ -108,7 +108,7 @@ export default function ServerLogoSelect() {
           </FlexBox>
           <SelectableServerLogoPreview
             onClick={() => onClickServerLogo(undefined)}
-            selected={server_logo == undefined}
+            selected={server_logo === undefined}
             key={`server-logo-select-default`}
           />
         </FlexBox>
@@ -125,7 +125,7 @@ export default function ServerLogoSelect() {
               <SelectableServerLogoPreview
                 logo_id={logo.id}
                 onClick={() => onClickServerLogo(logo.id)}
-                selected={logo.id == server_logo}
+                selected={logo.id === server_logo}
                 key={`server-logo-select-${logo.id}`}
               />
             ))}

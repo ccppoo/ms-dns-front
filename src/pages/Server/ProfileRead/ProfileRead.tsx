@@ -1,13 +1,10 @@
-import { useEffect, useRef } from 'react';
-
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import { Button, ButtonBase, Chip, Divider, Paper, Typography } from '@mui/material';
+import { Button, Chip, Divider, Typography } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
 
 import { useQuery } from '@tanstack/react-query';
-import { useParams, useSearch } from '@tanstack/react-router';
-import { Link } from '@tanstack/react-router';
+import { useParams } from '@tanstack/react-router';
 
 import serverProfilePostApi from '@/api/post/server_profile';
 import EditorReader from '@/components/editor/components/Reader';
@@ -103,7 +100,7 @@ function ServerProfileHeader(props: IServerProfileHeader) {
 
           <FlexBox sx={{ alignItems: 'center', columnGap: 1 }}>
             <Typography>24시간 운영</Typography>
-            {!!server24Hour ? <Typography>O</Typography> : <Typography>X</Typography>}
+            {server24Hour ? <Typography>O</Typography> : <Typography>X</Typography>}
           </FlexBox>
         </FlexBox>
       </FlexBox>

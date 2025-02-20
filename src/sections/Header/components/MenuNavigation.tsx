@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 
 import { Link, useMatchRoute } from '@tanstack/react-router';
 
-import { FlexBox, Image } from '@/components/styled';
+import { FlexBox } from '@/components/styled';
 
 function NavigationButton({ name, path }: { name: string; path: string }) {
   const matchRoute = useMatchRoute();

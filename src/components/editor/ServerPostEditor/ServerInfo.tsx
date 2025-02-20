@@ -1,22 +1,14 @@
 import * as React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { Controller } from 'react-hook-form';
 
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import FileUploadOutlined from '@mui/icons-material/FileUploadOutlined';
-import { Box, Button, Divider, Typography } from '@mui/material';
+import { Divider, Typography } from '@mui/material';
 import Chip from '@mui/material/Chip';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import TextField from '@mui/material/TextField';
 
-import { useQuery } from '@tanstack/react-query';
-
-import { uploadMCServerLogo } from '@/api/image/mcServerIconUpload';
-import logoApi from '@/api/logo';
 import { FlexBox, FlexPaper, Image, VisuallyHiddenInput } from '@/components/styled';
-import useUserProfile from '@/hooks/useUserProfile';
 import type { ServerPostSchema } from '@/schema/post/server_profile';
 
 import ServerLogoSelect from './components/ServerLogoSelect';
@@ -47,7 +39,7 @@ function ServerTags() {
 
   const onDeleteServerTag = (tagIdx: number) => {
     const prevTags = methods.getValues('server_info.tags')!;
-    const removedTags = prevTags.filter((_, idx) => idx != tagIdx);
+    const removedTags = prevTags.filter((_, idx) => idx !== tagIdx);
     methods.setValue('server_info.tags', [...removedTags]);
   };
 
@@ -64,7 +56,7 @@ function ServerTags() {
             setTagInput(event.target.value);
           }}
           onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
-            if (event.key.toLowerCase() == 'enter') {
+            if (event.key.toLowerCase() === 'enter') {
               event.preventDefault();
               event.stopPropagation();
               onEnterServerTag();
@@ -105,7 +97,7 @@ function ServerServiceTime() {
   };
 
   const onChangeService24hr = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if ('true' == (event.target as HTMLInputElement).value) {
+    if ('true' === (event.target as HTMLInputElement).value) {
       methods.setValue('server_info.service24hr', true);
     } else {
       methods.setValue('server_info.service24hr', false);
@@ -145,142 +137,6 @@ function ServerServiceTime() {
   );
 }
 
-function ServerLogo() {
-  const methods = useFormContext<ServerPostSchema>();
-
-  const default_icon = 'https://cdn.mc-server.kr/static/mc-server-logo-200x200.png';
-  const server_logo = methods.watch('server_info.server_logo');
-  const [imageInfoMsg, setImageInfoMsg] = React.useState<string>('');
-
-  const [{ uid }] = useUserProfile();
-  const { data } = useQuery({
-    queryFn: logoApi.queryFn.getUserServerLogoList,
-    queryKey: ['get logo for create server profile', uid!],
-    enabled: !!uid,
-  });
-
-  const handleUploadClick = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setImageInfoMsg('');
-    e.preventDefault();
-    e.persist();
-    if (!e.target.files) return;
-    const selectedFile = e.target.files[0];
-    // setImageFileBuffer(selectedFile);
-    // const temp = URL.createObjectURL(selectedFile);
-    // methods.setValue('server_info.server_logo', temp);
-
-    console.log(`이미지 업로드 중..`);
-    const { success, file: file_ } = await uploadMCServerLogo(selectedFile);
-    if (success != 1) {
-      // console.log(`에러!`);
-      setImageInfoMsg('이미지 사이즈 형식이 옯바르지 않습니다.');
-      return;
-    }
-    const { url } = file_;
-    methods.setValue('server_info.server_logo', url);
-    return;
-  };
-
-  const onClickRemoveImage = () => {
-    methods.setValue('server_info.server_logo', undefined);
-  };
-
-  console.log(`server_logo : ${server_logo}`);
-
-  return (
-    <FlexBox sx={{}}>
-      {/* 서버 아이콘 */}
-      <FlexBox
-        sx={{
-          width: 150,
-          height: 150,
-          flexShrink: 0,
-          padding: 0.5,
-          justifyContent: 'center',
-        }}
-      >
-        <Image
-          src={server_logo || default_icon}
-          sx={{
-            objectFit: 'contain',
-            width: '100%',
-            height: '100%',
-            opacity: !server_logo ? 0.5 : 1,
-          }}
-        />
-      </FlexBox>
-      <Divider flexItem orientation="vertical" />
-      <FlexBox sx={{ flexDirection: 'column', width: '100%', paddingY: 1 }}>
-        <FlexBox sx={{ height: '100%', flexDirection: 'column' }}>
-          <Typography>로고는 PNG 형식이여야하며, 64x64 사이즈이여야 합니다.</Typography>
-          {imageInfoMsg && <Typography color="red">{imageInfoMsg}</Typography>}
-        </FlexBox>
-        <FlexBox sx={{ width: '100%', justifyContent: 'end', columnGap: 1 }}>
-          <Button
-            color="error"
-            variant="contained"
-            size="small"
-            sx={{ paddingY: '2px', paddingX: '2px' }}
-            startIcon={<DeleteOutlineOutlinedIcon />}
-            disabled={!server_logo}
-            onClick={onClickRemoveImage}
-          >
-            삭제
-          </Button>
-          <Button
-            color="info"
-            variant="outlined"
-            size="small"
-            sx={{ paddingY: '2px', paddingX: '2px' }}
-            // startIcon={<DeleteOutlineOutlinedIcon />}
-            disabled={!server_logo}
-            onClick={onClickRemoveImage}
-          >
-            기본 로고
-          </Button>
-          <Controller
-            name="server_info.server_logo"
-            control={methods.control}
-            rules={{
-              required: {
-                value: true,
-                message: 'you sould provide image',
-              },
-            }}
-            render={({ field: { ref, name, onBlur, onChange } }) => (
-              <Button
-                variant="outlined"
-                disabled={!!server_logo}
-                startIcon={<FileUploadOutlined />}
-                component={'label'}
-                size="small"
-              >
-                로고 업로드
-                <VisuallyHiddenInput
-                  ref={ref}
-                  name={name}
-                  onBlur={onBlur}
-                  type="file"
-                  multiple={false}
-                  accept=".png"
-                  onChange={(e) => {
-                    handleUploadClick(e);
-                    methods.trigger('server_info.server_logo');
-                  }}
-                />
-              </Button>
-            )}
-          />
-        </FlexBox>
-      </FlexBox>
-
-      <FlexBox sx={{ alignItems: 'center' }}>
-        <FlexBox sx={{ alignItems: 'center', justifyContent: 'center' }}></FlexBox>
-      </FlexBox>
-    </FlexBox>
-  );
-}
-
 function ServerAddress() {
   const methods = useFormContext<ServerPostSchema>();
 
@@ -305,7 +161,7 @@ function ServerAddress() {
             onChangeServerAddress(event);
           }}
           onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
-            if (event.key.toLowerCase() == 'enter') {
+            if (event.key.toLowerCase() === 'enter') {
               event.preventDefault();
               event.stopPropagation();
               // onEnterServerTag();

@@ -51,7 +51,6 @@ export default function DevHeader() {
   const MainTitleWidth = 100;
 
   return (
-    // <Box sx={{ width: '100%', position: 'sticky' }} data-pw={`theme-${theme}`}>
     <Box sx={{ width: '100%', position: 'sticky' }}>
       <AppBar color="transparent" elevation={1} position="sticky" sx={{ top: 0, paddingX: 0 }}>
         <FlexBox sx={{ paddingX: 3, columnGap: 3, fontSize: 18 }}>

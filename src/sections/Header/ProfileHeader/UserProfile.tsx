@@ -23,7 +23,7 @@ export const RouterLinkWrapper = styled(RouterLink)`
 `;
 
 function PopoverTop({ closeMenu }: { closeMenu: () => void }) {
-  const [_, { removeUserProfile }] = useUserProfile();
+  const [, { removeUserProfile }] = useUserProfile();
 
   const mcserver = 'https://cdn.mc-server.kr/static/mc-server-logo-200x200.png';
   const mcserver2 = 'https://cdn.mc-server.kr/static/mc-server-logo-450x200.png';
@@ -124,18 +124,10 @@ export default function UserProfile() {
   const avatarSize = 32;
   const size = { width: avatarSize, height: avatarSize };
 
-  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {

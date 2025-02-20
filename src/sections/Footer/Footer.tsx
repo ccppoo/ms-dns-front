@@ -91,13 +91,7 @@ const ContactItem = styled(Box)(({ theme }) => ({
 }));
 
 const SmartFooter = () => {
-  const [darkMode, setDarkMode] = useState(false);
-  const theme = useTheme();
-
-  const handleDarkModeToggle = () => {
-    setDarkMode(!darkMode);
-  };
-
+  const darkMode = false;
   return (
     <StyledFooter darkMode={darkMode}>
       <Container maxWidth="md">

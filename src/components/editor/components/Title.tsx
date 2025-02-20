@@ -24,7 +24,7 @@ export default function Title<T extends BoardPostTitle>(props: TitleIntf) {
 
   // console.log(`getValues : ${JSON.stringify(getValues())}`);
   const titleValue = getValues(formPath);
-  const setTitleValue = (value: string) => setValue(formPath, value as FormDataType);
+  // const setTitleValue = (value: string) => setValue(formPath, value as FormDataType);
 
   if (!readOnly) {
     return (

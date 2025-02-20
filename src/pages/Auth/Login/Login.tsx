@@ -6,7 +6,7 @@ import { useLocalStorage } from '@uidotdev/usehooks';
 
 import authApi from '@/api/auth';
 import { FlexBox, FlexPaper, FullSizeCenteredFlexBox, Image } from '@/components/styled';
-import { JSX } from 'react';
+import type { JSX } from 'react';
 
 function DiscordLoginButton() {
   const discord = 'https://cdn.mc-server.kr/static/discord-mark-white.png';

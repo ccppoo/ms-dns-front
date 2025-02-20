@@ -1,4 +1,4 @@
-import { AxiosResponse } from 'axios';
+import type { AxiosResponse } from 'axios';
 
 import API from '@/api';
 import type { QueryName, UID } from '@/api/types';
@@ -29,7 +29,7 @@ async function getUserServerLogoList(params: {
   queryKey: UserServerLogoListQueryKey;
 }): Promise<UserServerLogos> {
   const { queryKey } = params;
-  const [_, uid] = queryKey;
+  const [, uid] = queryKey;
   const resp = await API.get<UserServerLogos>(`/logo/list/${uid}`);
   return resp.data;
 }
@@ -40,7 +40,7 @@ async function getUserServerLogo(params: {
   queryKey: UserServerLogoQueryKey;
 }): Promise<UserServerLogo> {
   const { queryKey } = params;
-  const [_, logoID] = queryKey;
+  const [, logoID] = queryKey;
   const resp = await API.get<UserServerLogo>(`/logo/r/${logoID}`);
   return resp.data;
 }

@@ -1,4 +1,4 @@
-import { API, BlockMutationEvent } from '@editorjs/editorjs';
+import type { API, BlockMutationEvent } from '@editorjs/editorjs';
 
 import type { OutputDataSchemaType } from '@/schema/post';
 

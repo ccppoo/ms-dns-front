@@ -40,7 +40,8 @@ export default function useUserProfile(): [Profile, ProfileActions] {
   };
 
   const removeUserProfile = () => {
-    removeCookie('nickname'), removeCookie('profileImage');
+    removeCookie('nickname');
+    removeCookie('profileImage');
     removeCookie('uid');
   };
 

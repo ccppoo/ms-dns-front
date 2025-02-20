@@ -1,4 +1,4 @@
-import { TextField, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { Box, Chip } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -7,7 +7,7 @@ import { Link } from '@tanstack/react-router';
 
 import serverProfilePostApi from '@/api/post/server_profile';
 import ServerLogoPreview from '@/components/server_logo/ServerLogoPreview';
-import { FlexBox, FlexPaper, Image } from '@/components/styled';
+import { FlexBox, FlexPaper } from '@/components/styled';
 import type { ServerProfileListing } from '@/schema/post/server_profile';
 
 function ServerProfileListItem({
@@ -94,7 +94,7 @@ export default function ServerList() {
 
   // console.log(`userID : ${userID}`);
 
-  if (!!data) {
+  if (data) {
     const listingItems = data.list;
     return (
       <FlexBox sx={{ paddingY: 0, flexDirection: 'column', rowGap: 2 }}>

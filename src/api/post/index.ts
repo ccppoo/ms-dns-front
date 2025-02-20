@@ -1,4 +1,4 @@
-import { AxiosResponse } from 'axios';
+import type { AxiosResponse } from 'axios';
 
 import API from '@/api';
 import type { QueryName } from '@/api/types';
@@ -36,7 +36,7 @@ async function getPostList<PostListType>(params: {
   queryKey: PostListQueryKey;
 }): Promise<PostListReturn<PostListType>> {
   const { queryKey } = params;
-  const [_, postTopic, paginationOptions, searchOptions] = queryKey;
+  const [, postTopic, paginationOptions, searchOptions] = queryKey;
   const q1 = stringifyPaginationOptions(paginationOptions);
   const q2 = stringifySearchOptions(searchOptions);
   const queryParams = [q1.length > 0 ? q1 : null, q2.length > 0 ? q2 : null]
@@ -53,7 +53,7 @@ type PostReadQueryKey = [QueryName, PostTopic, PostID];
 
 async function getPost<PostType>(params: { queryKey: PostReadQueryKey }): Promise<PostType> {
   const { queryKey } = params;
-  const [_, postTopic, postID] = queryKey;
+  const [, postTopic, postID] = queryKey;
   const resp = await API.get<PostType>(`/post/${postTopic}/r/${postID}`);
   return resp.data;
 }

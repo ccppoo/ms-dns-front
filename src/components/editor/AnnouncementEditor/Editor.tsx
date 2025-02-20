@@ -53,8 +53,8 @@ export default function AnnouncementEditor({
     return;
   };
 
-  const EDITOR_MODE = !!data
-    ? !!readOnly
+  const EDITOR_MODE = data
+    ? readOnly
       ? 'READ MODE'
       : 'EDIT MODE'
     : !readOnly

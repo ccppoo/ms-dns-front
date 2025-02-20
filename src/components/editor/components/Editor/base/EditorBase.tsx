@@ -1,9 +1,10 @@
-import { JSX, useEffect, useRef, useState } from 'react';
+import type { JSX} from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { Box } from '@mui/material';
 
-import EditorJS, { API, BlockMutationEvent } from '@editorjs/editorjs';
-import type { EditorConfig } from '@editorjs/editorjs';
+import EditorJS from '@editorjs/editorjs';
+import type { EditorConfig , API, BlockMutationEvent } from '@editorjs/editorjs';
 
 // @ts-ignore
 // import DragDrop from 'editorjs-drag-drop';
@@ -56,7 +57,7 @@ const EditorBase = (props: EditorBaseIntf): JSX.Element => {
         }, // base에서
         defaultBlock: defaultBlock, // base에서
         holder: defaultHolder, // base에서
-        onChange: !!_onChange ? _onChange : dummyOnChange, // container에서
+        onChange: _onChange ? _onChange : dummyOnChange, // container에서
         data: data, // container에서
         uploadByFile: imageUploader, // container에서
         // removeImageFromBlock: imageRemover, // container에서

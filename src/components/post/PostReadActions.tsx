@@ -1,20 +1,10 @@
-import { useState } from 'react';
+import { Box, Paper } from '@mui/material';
 
-import { Box, Button, ButtonBase, Paper, Typography } from '@mui/material';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import { Link, useSearch } from '@tanstack/react-router';
 
-import { Link, useNavigate, useParams, useSearch } from '@tanstack/react-router';
-
-import { queryClient } from '@/api';
-import api from '@/api/post';
-import useUserProfile from '@/hooks/useUserProfile';
 import type { PostTopic } from '@/types/post';
 
-import { FlexBox, FlexPaper } from '../styled';
+import { FlexBox } from '../styled';
 
 interface IReturnToList {
   topic: PostTopic;

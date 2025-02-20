@@ -11,7 +11,7 @@ import userApi from '@/api/user';
 import EditorReader from '@/components/editor/components/Reader';
 import PostManagements from '@/components/post/PostManagements';
 import PostreadActions from '@/components/post/PostReadActions';
-import { FlexBox, FlexPaper } from '@/components/styled';
+import { FlexBox } from '@/components/styled';
 
 interface IAnnouncementTitle {
   title: string;

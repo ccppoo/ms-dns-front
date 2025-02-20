@@ -1,4 +1,4 @@
-import { Button, CircularProgress, Typography } from '@mui/material';
+import { CircularProgress, Typography } from '@mui/material';
 
 import { useQuery } from '@tanstack/react-query';
 

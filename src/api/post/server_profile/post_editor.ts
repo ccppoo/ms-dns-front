@@ -1,7 +1,7 @@
-import { AxiosResponse } from 'axios';
+import type { AxiosResponse } from 'axios';
 
 import api from '@/api/post';
-import type { IPost, IPostCreate, IPostEdit } from '@/api/post/types';
+import type { IPostCreate, IPostEdit } from '@/api/post/types';
 import type { ServerPostSchema } from '@/schema/post/server_profile';
 
 import type { PostCreateResponse, PostEditResponse } from '../response';

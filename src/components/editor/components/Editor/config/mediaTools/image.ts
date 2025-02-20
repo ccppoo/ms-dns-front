@@ -1,21 +1,10 @@
-import { BlockToolConstructable, ConversionConfig } from '@editorjs/editorjs';
-import type { OutputData } from '@editorjs/editorjs';
-import {
-  BlockTool,
-  BlockToolConstructorOptions,
-  PasteConfig,
-  PasteEvent,
-  ToolboxConfig,
-} from '@editorjs/editorjs';
-import type { ToolConstructable, ToolSettings } from '@editorjs/editorjs/types/tools';
+import type { BlockToolConstructorOptions } from '@editorjs/editorjs';
 import ImageTool from '@editorjs/image';
 // @ts-ignore
 import type { ImageConfig, ImageToolData } from '@editorjs/image/dist/types/types';
 
 import type { RemoveBoardUnstagedImageType } from '@/api/image/postImageDelete';
 import type { BoardImageUploadType, UploadByFileType } from '@/api/image/postImageUpload';
-
-// import type { BoardImageUploadType, RemoveBoardImageType, UploadByFileType } from '../../types';
 
 type ImageRemoverConfig = {
   remover: {
