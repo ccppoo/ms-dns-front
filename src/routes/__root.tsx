@@ -13,10 +13,8 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: RootComponent,
 });
 
-
 function RootComponent() {
-
-  if(MODE != 'dev') {
+  if (MODE != 'dev') {
     return (
       <>
         <div style={{ minHeight: '100vh' }}>

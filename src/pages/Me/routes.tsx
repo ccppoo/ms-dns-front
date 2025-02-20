@@ -1,7 +1,8 @@
-import React, { Suspense, lazy } from 'react';
+import React, { lazy } from 'react';
 
 import { Outlet, createRoute, redirect } from '@tanstack/react-router';
 
+import SuspenseLoading from '@/components/Suspense';
 import { Route as rootRoute } from '@/routes/__root';
 import Header from '@/sections/Header';
 
@@ -25,7 +26,9 @@ const meRoute = createRoute({
   component: () => (
     <>
       <Header />
-      <Outlet />
+      <SuspenseLoading>
+        <Outlet />
+      </SuspenseLoading>
     </>
   ),
 });
@@ -33,21 +36,13 @@ const meRoute = createRoute({
 const myProfileRoute = createRoute({
   getParentRoute: () => meRoute,
   path: '/profile',
-  component: () => (
-    <Suspense fallback={<div>Loading...</div>}>
-      <MyProfilePage />
-    </Suspense>
-  ),
+  component: () => <MyProfilePage />,
 });
 
 const myDomainRoute = createRoute({
   getParentRoute: () => meRoute,
   path: '/domain',
-  component: () => (
-    <Suspense fallback={<div>Loading...</div>}>
-      <MyDomainPage />
-    </Suspense>
-  ),
+  component: () => <MyDomainPage />,
 });
 
 meRoute.addChildren([myProfileRoute, myDomainRoute]);

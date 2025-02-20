@@ -1,7 +1,8 @@
-import React, { Suspense, lazy } from 'react';
+import React, { lazy } from 'react';
 
-import { createRoute, redirect } from '@tanstack/react-router';
+import { Outlet, createRoute, redirect } from '@tanstack/react-router';
 
+import SuspenseLoading from '@/components/Suspense';
 import { Route as rootRoute } from '@/routes/__root';
 
 const CallbackPage = lazy(() => import('./Callback'));
@@ -17,18 +18,17 @@ const authRoute = createRoute({
       });
     }
   },
+  component: () => (
+    <SuspenseLoading>
+      <Outlet />
+    </SuspenseLoading>
+  ),
 });
 
 const loginRoute = createRoute({
   getParentRoute: () => authRoute,
   path: '/login',
-  component: () => (
-    <>
-      <Suspense fallback={<div>Loading...</div>}>
-        <LoginPage />
-      </Suspense>
-    </>
-  ),
+  component: () => <LoginPage />,
 });
 
 const callbackRoute = createRoute({
@@ -39,13 +39,7 @@ const callbackRoute = createRoute({
 const ssoCallbackRoute = createRoute({
   getParentRoute: () => callbackRoute,
   path: '/sso/$SSO_Provider',
-  component: () => (
-    <>
-      <Suspense fallback={<div>Loading...</div>}>
-        <CallbackPage />
-      </Suspense>
-    </>
-  ),
+  component: () => <CallbackPage />,
 });
 
 authRoute.addChildren([loginRoute, callbackRoute]);

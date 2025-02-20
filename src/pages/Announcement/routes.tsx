@@ -1,7 +1,8 @@
-import React, { Suspense, lazy } from 'react';
+import React, { lazy } from 'react';
 
 import { Outlet, createRoute } from '@tanstack/react-router';
 
+import SuspenseLoading from '@/components/Suspense';
 import { Route as rootRoute } from '@/routes/__root';
 import Header from '@/sections/Header';
 
@@ -15,7 +16,9 @@ const announcementRoute = createRoute({
   component: () => (
     <>
       <Header />
-      <Outlet />
+      <SuspenseLoading>
+        <Outlet />
+      </SuspenseLoading>
     </>
   ),
 });
@@ -23,33 +26,21 @@ const announcementRoute = createRoute({
 const announcementReadRoute = createRoute({
   getParentRoute: () => announcementRoute,
   path: '/read/$postID',
-  component: () => (
-    <Suspense fallback={<div>Loading...</div>}>
-      <AnnouncementRead />
-    </Suspense>
-  ),
+  component: () => <AnnouncementRead />,
   // TODO: validateSearch:
 });
 
 const announcementListRoute = createRoute({
   getParentRoute: () => announcementRoute,
   path: '/list',
-  component: () => (
-    <Suspense fallback={<div>Loading...</div>}>
-      <AnnouncementListPage />
-    </Suspense>
-  ),
+  component: () => <AnnouncementListPage />,
 });
 
 // NOTE: 글 작성, 수정 포함
 const announcementEditRoute = createRoute({
   getParentRoute: () => announcementRoute,
   path: '/edit',
-  component: () => (
-    <Suspense fallback={<div>Loading...</div>}>
-      <AnnouncementEdit />
-    </Suspense>
-  ),
+  component: () => <AnnouncementEdit />,
 });
 
 announcementRoute.addChildren([

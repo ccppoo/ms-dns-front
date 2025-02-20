@@ -1,7 +1,8 @@
-import React, { Suspense, lazy } from 'react';
+import React, { lazy } from 'react';
 
 import { Outlet, createRoute, redirect } from '@tanstack/react-router';
 
+import SuspenseLoading from '@/components/Suspense';
 import { Route as rootRoute } from '@/routes/__root';
 import Header from '@/sections/Header';
 
@@ -24,7 +25,9 @@ const domainRoute = createRoute({
   component: () => (
     <>
       <Header />
-      <Outlet />
+      <SuspenseLoading>
+        <Outlet />
+      </SuspenseLoading>
     </>
   ),
 });
@@ -32,13 +35,7 @@ const domainRoute = createRoute({
 const domainSearchRoute = createRoute({
   getParentRoute: () => domainRoute,
   path: '/search',
-  component: () => (
-    <>
-      <Suspense fallback={<div>Loading...</div>}>
-        <DomainSearchPage />
-      </Suspense>
-    </>
-  ),
+  component: () => <DomainSearchPage />,
 });
 
 const domainRegisterRoute = createRoute({
@@ -54,13 +51,7 @@ const domainRegisterRoute = createRoute({
       });
     }
   },
-  component: () => (
-    <>
-      <Suspense fallback={<div>Loading...</div>}>
-        <DomainRegisterPage />
-      </Suspense>
-    </>
-  ),
+  component: () => <DomainRegisterPage />,
 });
 
 domainRoute.addChildren([domainRegisterRoute, domainSearchRoute]);
