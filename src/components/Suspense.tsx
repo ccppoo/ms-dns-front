@@ -1,6 +1,10 @@
-import React, { ReactElement, ReactNode, Suspense } from 'react';
+import type { ReactElement, ReactNode} from 'react';
+import React, { Suspense } from 'react';
 
-import { FlexBox } from './styled';
+import { Typography } from '@mui/material';
+import Container from '@mui/material/Container';
+
+import { FullSizeCenteredFlexBox } from './styled';
 
 interface ISuspenseLoading {
   children: ReactNode;
@@ -8,7 +12,13 @@ interface ISuspenseLoading {
 }
 
 function DefaultFallback() {
-  return <FlexBox>Loading...</FlexBox>;
+  return (
+    <Container maxWidth={'md'}>
+      <FullSizeCenteredFlexBox>
+        <Typography>Loading...</Typography>
+      </FullSizeCenteredFlexBox>
+    </Container>
+  );
 }
 
 export default function SuspenseLoading(props: ISuspenseLoading) {

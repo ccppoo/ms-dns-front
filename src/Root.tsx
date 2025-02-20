@@ -11,9 +11,6 @@ import { queryClient } from '@/api';
 import { store } from '@/store';
 import ThemeProvider from '@/theme/Provider';
 
-// import { UseFullWebSocketProvider } from './socket';
-// import { mainSocketConfig } from '@/api/globalSocket';
-
 const container = document.getElementById('root') as HTMLElement;
 const root = createRoot(container);
 
@@ -23,13 +20,11 @@ function render(App: ComponentType) {
       <Provider store={store}>
         <CookiesProvider defaultSetOptions={{ path: '/' }}>
           <QueryClientProvider client={queryClient}>
-            {/* <UseFullWebSocketProvider config={mainSocketConfig}> */}
             <HelmetProvider>
               <ThemeProvider>
                 <App />
               </ThemeProvider>
             </HelmetProvider>
-            {/* </UseFullWebSocketProvider> */}
           </QueryClientProvider>
         </CookiesProvider>
       </Provider>
