@@ -57,7 +57,7 @@ jobs:
 
       - name: Remove old files S3 path - assets
         run: |
-          aws s3 rm s3://${{ secrets.AWS_S3_FRONT_DEPLOY_BUCKET_NAME}}/assets --recursive
+          aws s3 rm "s3://${{ secrets.AWS_S3_FRONT_DEPLOY_BUCKET_NAME }}/assets" --recursive
 
       - name: Upload to S3
         env:
