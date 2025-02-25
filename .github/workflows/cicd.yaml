@@ -55,6 +55,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_S3_FRONT_DEPLOY_SECRET_ACCESS_KEY_ID }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: Remove old files S3 path - assets
+        env:
+          BUCKET_NAME: ${{ secrets.AWS_S3_FRONT_DEPLOY_BUCKET_NAME}}
+        run: |
+          aws s3 rm s3://$BUCKET_NAME/assets/
+
       - name: Upload to S3
         env:
           BUCKET_NAME: ${{ secrets.AWS_S3_FRONT_DEPLOY_BUCKET_NAME}}
