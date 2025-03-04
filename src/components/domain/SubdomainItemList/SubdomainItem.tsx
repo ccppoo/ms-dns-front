@@ -82,13 +82,14 @@ export default function SubdomainItem({ userSubdomain }: { userSubdomain: UserSu
     const allValues = methods.getValues() as UserSubdomainInfo;
     const isChanged = methods.formState.dirtyFields.records;
 
-    console.log(`isChanged  :${isChanged}`);
+    // console.log(`isChanged  :${isChanged}`);
     // console.log(`data : ${JSON.stringify(allValues)}`);
     // NOTE: if not changed, do nothing return
-    if (!isChanged) {
-      setEditMode(false);
-      return;
-    }
+    // NOTE:
+    // if (!isChanged) {
+    //   setEditMode(false);
+    //   return;
+    // }
     const { status, data } = await domainApi.query.editUserDomain({ userSubdomainInfo: formData });
     console.log(`status : ${status}`);
     if (status !== 200) {
