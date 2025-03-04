@@ -6,13 +6,11 @@ import fs from 'fs';
 import { defineConfig } from 'vite';
 import mkcert from 'vite-plugin-mkcert';
 
-
-
 export default defineConfig(({ command, mode }) => {
   const isDev = mode == 'dev';
-  const isBuild = command == 'build'
-  const certPath = isDev ? path.resolve(__dirname, './certs/cert.pem') : ''
-  const keyPath =isDev ? path.resolve(__dirname, './certs/key.pem') : ''
+  const isBuild = command == 'build';
+  const certPath = isDev ? path.resolve(__dirname, './certs/cert.pem') : '';
+  const keyPath = isDev ? path.resolve(__dirname, './certs/key.pem') : '';
   const defaultPlugins = [TanStackRouterVite(), react()];
 
   console.log(`isDev : ${isDev} | isBuild : ${isBuild}`);
@@ -24,18 +22,22 @@ export default defineConfig(({ command, mode }) => {
         host: isDev ? 'localhost' : undefined,
       },
       port: 5173,
-      https: isDev ? {
-        key: fs.readFileSync(keyPath),
-        cert: fs.readFileSync(certPath),
-      } : undefined, 
+      https: isDev
+        ? {
+            key: fs.readFileSync(keyPath),
+            cert: fs.readFileSync(certPath),
+          }
+        : undefined,
     },
     preview: {
       strictPort: true,
       port: 5173,
-      https: isDev ? {
-        key: fs.readFileSync(keyPath),
-        cert: fs.readFileSync(certPath),
-      } : undefined, 
+      https: isDev
+        ? {
+            key: fs.readFileSync(keyPath),
+            cert: fs.readFileSync(certPath),
+          }
+        : undefined,
     },
     envDir: './env',
     base: '/',
@@ -47,8 +49,8 @@ export default defineConfig(({ command, mode }) => {
     test: {
       root: path.resolve(__dirname, './src'),
     },
-    build: {
-      minify: false,
-    },
+    // build: {
+    //   minify: false,
+    // },
   };
 });

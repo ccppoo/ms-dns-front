@@ -9,6 +9,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { refetchQuery } from '@/api';
 import domainApi from '@/api/domain';
 import { FlexBox, FlexPaper, Image } from '@/components/styled';
+import useUserProfile from '@/hooks/useUserProfile';
 import type { UserSubdomainInfo } from '@/schema/domain';
 import { icon } from '@/static';
 
@@ -35,7 +36,7 @@ function SubdomainRecordHeader() {
 
 export default function SubdomainItem({ userSubdomain }: { userSubdomain: UserSubdomainInfo }) {
   const fullDomain = `${userSubdomain.subdomain}.${userSubdomain.domain}`;
-
+  const [{ uid }] = useUserProfile();
   const [originSubdomainInfo, setOriginSubdomainInfo] = useState<UserSubdomainInfo>(userSubdomain);
   const methods = useForm<UserSubdomainInfo>({
     defaultValues: userSubdomain,
@@ -80,6 +81,7 @@ export default function SubdomainItem({ userSubdomain }: { userSubdomain: UserSu
   const submit = async (formData: UserSubdomainInfo) => {
     const allValues = methods.getValues() as UserSubdomainInfo;
     const isChanged = methods.formState.dirtyFields.records;
+
     console.log(`isChanged  :${isChanged}`);
     // console.log(`data : ${JSON.stringify(allValues)}`);
     // NOTE: if not changed, do nothing return
@@ -95,7 +97,7 @@ export default function SubdomainItem({ userSubdomain }: { userSubdomain: UserSu
     // if success reload all my domains
     if (status === 200) {
       setEditMode(false);
-      await refetchQuery(['getMyDomain', 'my domains']);
+      await refetchQuery(['getMyDomain', uid!]);
     }
     return;
   };
