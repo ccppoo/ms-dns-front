@@ -79,9 +79,9 @@ export default function SubdomainItem({ userSubdomain }: { userSubdomain: UserSu
 
   const submit = async (formData: UserSubdomainInfo) => {
     const allValues = methods.getValues() as UserSubdomainInfo;
-    const isChanged = methods.formState.isDirty;
+    const isChanged = methods.formState.dirtyFields.records;
     console.log(`isChanged  :${isChanged}`);
-    console.log(`data : ${JSON.stringify(allValues)}`);
+    // console.log(`data : ${JSON.stringify(allValues)}`);
     // NOTE: if not changed, do nothing return
     if (!isChanged) {
       setEditMode(false);
@@ -89,11 +89,11 @@ export default function SubdomainItem({ userSubdomain }: { userSubdomain: UserSu
     }
     const { status, data } = await domainApi.query.editUserDomain({ userSubdomainInfo: formData });
     console.log(`status : ${status}`);
-    if (status != 200) {
+    if (status !== 200) {
       // failed to edit record
     }
     // if success reload all my domains
-    if (status == 200) {
+    if (status === 200) {
       setEditMode(false);
       await refetchQuery(['getMyDomain', 'my domains']);
     }
