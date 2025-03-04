@@ -76,8 +76,10 @@ async function checkDomainAvailable({ domain, subdomain }: { domain: string; sub
 }
 
 async function registerNewDomain({ data }: { data: RegisterDomain }) {
-  const resp = await API.post(`/domain/register`, data);
-  return resp.data;
+  const resp = await API.post(`/domain/register`, data, {
+    validateStatus: () => true, // handle every !200
+  });
+  return resp;
 }
 
 export default {
